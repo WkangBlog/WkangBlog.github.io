@@ -2,15 +2,6 @@
 
 
 
-
-
-
-
-
-
-
-
-
   
 
 
@@ -18,7 +9,7 @@
 <head><meta name="generator" content="Hexo 3.8.0">
   <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="theme-color" content="#222">
 
 
@@ -29,6 +20,8 @@
 
 
 
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
 
 
 
@@ -45,22 +38,9 @@
 
 
 
-
-<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
-
-<link rel="stylesheet" href="/css/main.css?v=6.7.0">
-
-
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.7.0">
-
-
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.7.0">
-
-
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.7.0">
-
-
-  <link rel="mask-icon" href="/images/logo.svg?v=6.7.0" color="#222">
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
 
 
 
@@ -68,18 +48,61 @@
 
 
 
-<script id="hexo.configurations">
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="嗯哼的博客">
+<meta property="og:url" content="https://wkangblog.github.io/page/11/index.html">
+<meta property="og:site_name" content="嗯哼的博客">
+<meta property="og:locale" content="zh-Hans">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="嗯哼的博客">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
   var NexT = window.NexT || {};
   var CONFIG = {
     root: '/',
     scheme: 'Mist',
-    version: '6.7.0',
+    version: '5.1.4',
     sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
-    fancybox: false,
-    fastclick: false,
-    lazyload: false,
+    fancybox: true,
     tabs: true,
     motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
     algolia: {
       applicationID: '',
       apiKey: '',
@@ -91,33 +114,12 @@
 </script>
 
 
-  
-
-
-
-
-  <meta property="og:type" content="website">
-<meta property="og:title" content="嗯哼的博客">
-<meta property="og:url" content="https://wkangblog.github.io/page/11/index.html">
-<meta property="og:site_name" content="嗯哼的博客">
-<meta property="og:locale" content="zh-Hans">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="嗯哼的博客">
-
-
-
-
-
 
   <link rel="canonical" href="https://wkangblog.github.io/page/11/">
 
 
 
-<script id="page.configurations">
-  CONFIG.page = {
-    sidebar: "",
-  };
-</script>
+
 
   <title>嗯哼的博客</title>
   
@@ -128,35 +130,6 @@
 
 
 
-
-
-
-
-
-  <noscript>
-  <style>
-  .use-motion .motion-element,
-  .use-motion .brand,
-  .use-motion .menu-item,
-  .sidebar-inner,
-  .use-motion .post-block,
-  .use-motion .pagination,
-  .use-motion .comments,
-  .use-motion .post-header,
-  .use-motion .post-body,
-  .use-motion .collection-title { opacity: initial; }
-
-  .use-motion .logo,
-  .use-motion .site-title,
-  .use-motion .site-subtitle {
-    opacity: initial;
-    top: initial;
-  }
-
-  .use-motion .logo-line-before i { left: initial; }
-  .use-motion .logo-line-after i { right: initial; }
-  </style>
-</noscript>
 
 </head>
 
@@ -173,7 +146,7 @@
 
     <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-wrapper">
-  <div class="site-meta">
+  <div class="site-meta ">
     
 
     <div class="custom-logo-site-title">
@@ -183,12 +156,13 @@
         <span class="logo-line-after"><i></i></span>
       </a>
     </div>
-    
-    
+      
+        <p class="site-subtitle"></p>
+      
   </div>
 
   <div class="site-nav-toggle">
-    <button aria-label="切换导航栏">
+    <button>
       <span class="btn-bar"></span>
       <span class="btn-bar"></span>
       <span class="btn-bar"></span>
@@ -196,106 +170,65 @@
   </div>
 </div>
 
-
-
 <nav class="site-nav">
+  
+
   
     <ul id="menu" class="menu">
       
         
-        
-        
-          
-          <li class="menu-item menu-item-home">
-
-    
-    
-    
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
       
-    
-
-    
-
-    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
-
-  </li>
         
-        
-        
-          
-          <li class="menu-item menu-item-about">
-
-    
-    
-    
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-about"></i> <br>
+            
+            关于
+          </a>
+        </li>
       
-    
-
-    
-
-    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-about"></i> <br>关于</a>
-
-  </li>
         
-        
-        
-          
-          <li class="menu-item menu-item-tags">
-
-    
-    
-    
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
       
-    
-
-    
-
-    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
-
-  </li>
         
-        
-        
-          
-          <li class="menu-item menu-item-categories">
-
-    
-    
-    
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-categories"></i> <br>
+            
+            分类
+          </a>
+        </li>
       
-    
-
-    
-
-    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-categories"></i> <br>分类</a>
-
-  </li>
         
-        
-        
-          
-          <li class="menu-item menu-item-archives">
-
-    
-    
-    
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archives"></i> <br>
+            
+            归档
+          </a>
+        </li>
       
-    
 
-    
-
-    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archives"></i> <br>归档</a>
-
-  </li>
-
-      
       
     </ul>
-  
-
-  
-    
-
   
 
   
@@ -303,20 +236,12 @@
 
 
 
-  
-
-
-
-</div>
+ </div>
     </header>
-
-    
-
 
     <main id="main" class="main">
       <div class="main-inner">
         <div class="content-wrap">
-          
           <div id="content" class="content">
             
   <section id="posts" class="posts-expand">
@@ -327,8 +252,6 @@
 
   
   
-  
-
   
 
   <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
@@ -355,20 +278,11 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                
-                <a href="/2017/08/27/posts/Java_SE-解析String为数字用valueOf还是parseXxx/" class="post-title-link" itemprop="url">解析String为数字用valueOf还是parseXxx?</a>
-              
-            
-          </h1>
+                <a class="post-title-link" href="/2017/08/27/posts/Java_SE-解析String为数字用valueOf还是parseXxx/" itemprop="url">解析String为数字用valueOf还是parseXxx?</a></h1>
         
 
         <div class="post-meta">
           <span class="post-time">
-
-            
-            
-            
-
             
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
@@ -376,30 +290,13 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-
-              
-                
-              
-
-              <time title="创建时间：2017-08-27 17:23:09" itemprop="dateCreated datePublished" datetime="2017-08-27T17:23:09+08:00">2017-08-27</time>
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-08-27T17:23:09+08:00">
+                2017-08-27
+              </time>
             
 
             
-              
 
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2018-12-13 00:14:51" itemprop="dateModified" datetime="2018-12-13T00:14:51+08:00">2018-12-13</time>
-              
             
           </span>
 
@@ -415,7 +312,11 @@
                 <span class="post-meta-item-text">分类于</span>
               
               
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/Java-SE/" itemprop="url" rel="index"><span itemprop="name">Java SE</span></a></span>
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java-SE/" itemprop="url" rel="index">
+                    <span itemprop="name">Java SE</span>
+                  </a>
+                </span>
 
                 
                 
@@ -452,29 +353,21 @@
         
           <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>findBuds真是一个好插件, 找到了许多平时都不知道的高危bug。<br>在我解析字符串时<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">long</span> <span class="title">getLong</span><span class="params">(String key)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> Long.valueOf(key == <span class="keyword">null</span> ? <span class="string">"0"</span> : key.toString());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
           <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2017/08/27/posts/Java_SE-解析String为数字用valueOf还是parseXxx/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/08/27/posts/Java_SE-解析String为数字用valueOf还是parseXxx/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
           <!--/noindex-->
         
       
     </div>
-
-    
-
     
     
     
 
     
 
-    
-      
-    
     
 
     
@@ -507,8 +400,6 @@
   
   
 
-  
-
   <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
   
   
@@ -533,20 +424,11 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                
-                <a href="/2017/08/05/posts/Java_Web-SpringMVC返回json乱码/" class="post-title-link" itemprop="url">Spring MVC返回json乱码</a>
-              
-            
-          </h1>
+                <a class="post-title-link" href="/2017/08/05/posts/Java_Web-SpringMVC返回json乱码/" itemprop="url">Spring MVC返回json乱码</a></h1>
         
 
         <div class="post-meta">
           <span class="post-time">
-
-            
-            
-            
-
             
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
@@ -554,30 +436,13 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-
-              
-                
-              
-
-              <time title="创建时间：2017-08-05 16:06:48" itemprop="dateCreated datePublished" datetime="2017-08-05T16:06:48+08:00">2017-08-05</time>
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-08-05T16:06:48+08:00">
+                2017-08-05
+              </time>
             
 
             
-              
 
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2018-12-13 00:14:51" itemprop="dateModified" datetime="2018-12-13T00:14:51+08:00">2018-12-13</time>
-              
             
           </span>
 
@@ -593,7 +458,11 @@
                 <span class="post-meta-item-text">分类于</span>
               
               
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/Java-Web/" itemprop="url" rel="index"><span itemprop="name">Java Web</span></a></span>
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java-Web/" itemprop="url" rel="index">
+                    <span itemprop="name">Java Web</span>
+                  </a>
+                </span>
 
                 
                 
@@ -630,29 +499,21 @@
         
           <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>json又双叒叕返回乱码了!<br>乱码一般都是编码问题，比如一个字符串<code>你好世界</code>, 用<code>GBK</code>编码后, 再用<code>UTF-8</code>解码, 就会出现乱码问题。<br>
           <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2017/08/05/posts/Java_Web-SpringMVC返回json乱码/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/08/05/posts/Java_Web-SpringMVC返回json乱码/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
           <!--/noindex-->
         
       
     </p></div>
-
-    
-
     
     
     
 
     
 
-    
-      
-    
     
 
     
@@ -685,8 +546,6 @@
   
   
 
-  
-
   <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
   
   
@@ -711,20 +570,11 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                
-                <a href="/2017/07/30/posts/Java_SE-trim为什么失效了/" class="post-title-link" itemprop="url">trim为什么失效了</a>
-              
-            
-          </h1>
+                <a class="post-title-link" href="/2017/07/30/posts/Java_SE-trim为什么失效了/" itemprop="url">trim为什么失效了</a></h1>
         
 
         <div class="post-meta">
           <span class="post-time">
-
-            
-            
-            
-
             
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
@@ -732,30 +582,13 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-
-              
-                
-              
-
-              <time title="创建时间：2017-07-30 22:50:06" itemprop="dateCreated datePublished" datetime="2017-07-30T22:50:06+08:00">2017-07-30</time>
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-30T22:50:06+08:00">
+                2017-07-30
+              </time>
             
 
             
-              
 
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2018-12-13 00:14:51" itemprop="dateModified" datetime="2018-12-13T00:14:51+08:00">2018-12-13</time>
-              
             
           </span>
 
@@ -771,7 +604,11 @@
                 <span class="post-meta-item-text">分类于</span>
               
               
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/Java-SE/" itemprop="url" rel="index"><span itemprop="name">Java SE</span></a></span>
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java-SE/" itemprop="url" rel="index">
+                    <span itemprop="name">Java SE</span>
+                  </a>
+                </span>
 
                 
                 
@@ -809,29 +646,21 @@
           <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>一直以为<code>String#trim()</code>是去掉字符串两边空格的。但是以下代码却与预期不同。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">System.out.println(<span class="string">"测试:["</span>+<span class="string">"820000    "</span>.trim()+<span class="string">"]"</span>); <span class="comment">// ASCII码 160 的空格</span></span><br><span class="line">System.out.println(<span class="string">"测试:["</span>+<span class="string">"　市辖区"</span>+<span class="string">"]"</span>); <span class="comment">// ASCII码 12288 的空格</span></span><br><span class="line"><span class="comment">// 测试:[820000    ]</span></span><br><span class="line"><span class="comment">// 测试:[　市辖区]</span></span><br></pre></td></tr></table></figure></p>
 <p>这段数字加空格是我从<a href="http://www.stats.gov.cn/tjsj/tjbz/xzqhdm/201703/t20170310_1471429.html" target="_blank" rel="noopener">最新县及县以上行政区划代码</a>爬取的。</p>
           <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2017/07/30/posts/Java_SE-trim为什么失效了/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/07/30/posts/Java_SE-trim为什么失效了/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
           <!--/noindex-->
         
       
     </div>
-
-    
-
     
     
     
 
     
 
-    
-      
-    
     
 
     
@@ -864,8 +693,6 @@
   
   
 
-  
-
   <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
   
   
@@ -890,20 +717,11 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                
-                <a href="/2017/07/25/posts/算法-如何高效的获取一个数字的首位数字/" class="post-title-link" itemprop="url">如何高效的获取一个数字的首位数字</a>
-              
-            
-          </h1>
+                <a class="post-title-link" href="/2017/07/25/posts/算法-如何高效的获取一个数字的首位数字/" itemprop="url">如何高效的获取一个数字的首位数字</a></h1>
         
 
         <div class="post-meta">
           <span class="post-time">
-
-            
-            
-            
-
             
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
@@ -911,30 +729,13 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-
-              
-                
-              
-
-              <time title="创建时间：2017-07-25 00:41:03" itemprop="dateCreated datePublished" datetime="2017-07-25T00:41:03+08:00">2017-07-25</time>
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-25T00:41:03+08:00">
+                2017-07-25
+              </time>
             
 
             
-              
 
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2018-12-13 00:14:51" itemprop="dateModified" datetime="2018-12-13T00:14:51+08:00">2018-12-13</time>
-              
             
           </span>
 
@@ -950,7 +751,11 @@
                 <span class="post-meta-item-text">分类于</span>
               
               
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/算法/" itemprop="url" rel="index"><span itemprop="name">算法</span></a></span>
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/算法/" itemprop="url" rel="index">
+                    <span itemprop="name">算法</span>
+                  </a>
+                </span>
 
                 
                 
@@ -987,29 +792,21 @@
         
           <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>一直以来都是通过转化为String的方式来获得首位数字, 但是直觉告诉我, 这个肯定不是最高效的。<br>在stackoverflow上找到了这篇文章。虽然看标题是C#的, 但是算法没有语言之分。同样适用于java<br><a href="https://stackoverflow.com/questions/701322" target="_blank" rel="noopener">How can you get the first digit in an int (C#)?</a></p>
           <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2017/07/25/posts/算法-如何高效的获取一个数字的首位数字/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/07/25/posts/算法-如何高效的获取一个数字的首位数字/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
           <!--/noindex-->
         
       
     </div>
-
-    
-
     
     
     
 
     
 
-    
-      
-    
     
 
     
@@ -1042,8 +839,6 @@
   
   
 
-  
-
   <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
   
   
@@ -1068,20 +863,11 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                
-                <a href="/2017/07/18/posts/JavaScript-为什么jQuery选择器只返回一个元素/" class="post-title-link" itemprop="url">为什么jQuery选择器只返回一个元素?</a>
-              
-            
-          </h1>
+                <a class="post-title-link" href="/2017/07/18/posts/JavaScript-为什么jQuery选择器只返回一个元素/" itemprop="url">为什么jQuery选择器只返回一个元素?</a></h1>
         
 
         <div class="post-meta">
           <span class="post-time">
-
-            
-            
-            
-
             
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
@@ -1089,30 +875,13 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-
-              
-                
-              
-
-              <time title="创建时间：2017-07-18 11:31:08" itemprop="dateCreated datePublished" datetime="2017-07-18T11:31:08+08:00">2017-07-18</time>
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-18T11:31:08+08:00">
+                2017-07-18
+              </time>
             
 
             
-              
 
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2018-12-13 00:14:51" itemprop="dateModified" datetime="2018-12-13T00:14:51+08:00">2018-12-13</time>
-              
             
           </span>
 
@@ -1128,7 +897,11 @@
                 <span class="post-meta-item-text">分类于</span>
               
               
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/JavaScript/" itemprop="url" rel="index"><span itemprop="name">JavaScript</span></a></span>
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/JavaScript/" itemprop="url" rel="index">
+                    <span itemprop="name">JavaScript</span>
+                  </a>
+                </span>
 
                 
                 
@@ -1165,29 +938,21 @@
         
           <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>稍有常识的人都知道, 如果我们使用形如<code>$(&#39;p&#39;)</code>、<code>$(&#39;.myclass&#39;)</code>之类的选择器，会返回一个数组。<br>但今天在<a href="https://www.bing.com" target="_blank" rel="noopener">必应</a>中进行控制台js调试时, 却发现不管怎么用, 都只返回<code>第一个</code>元素。</p>
           <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2017/07/18/posts/JavaScript-为什么jQuery选择器只返回一个元素/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/07/18/posts/JavaScript-为什么jQuery选择器只返回一个元素/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
           <!--/noindex-->
         
       
     </div>
-
-    
-
     
     
     
 
     
 
-    
-      
-    
     
 
     
@@ -1220,8 +985,6 @@
   
   
 
-  
-
   <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
   
   
@@ -1246,20 +1009,11 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                
-                <a href="/2017/07/18/posts/算法-康托展开/" class="post-title-link" itemprop="url">康托展开</a>
-              
-            
-          </h1>
+                <a class="post-title-link" href="/2017/07/18/posts/算法-康托展开/" itemprop="url">康托展开</a></h1>
         
 
         <div class="post-meta">
           <span class="post-time">
-
-            
-            
-            
-
             
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
@@ -1267,30 +1021,13 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-
-              
-                
-              
-
-              <time title="创建时间：2017-07-18 09:10:38" itemprop="dateCreated datePublished" datetime="2017-07-18T09:10:38+08:00">2017-07-18</time>
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-18T09:10:38+08:00">
+                2017-07-18
+              </time>
             
 
             
-              
 
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2018-12-13 00:14:51" itemprop="dateModified" datetime="2018-12-13T00:14:51+08:00">2018-12-13</time>
-              
             
           </span>
 
@@ -1306,7 +1043,11 @@
                 <span class="post-meta-item-text">分类于</span>
               
               
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/算法/" itemprop="url" rel="index"><span itemprop="name">算法</span></a></span>
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/算法/" itemprop="url" rel="index">
+                    <span itemprop="name">算法</span>
+                  </a>
+                </span>
 
                 
                 
@@ -1343,29 +1084,21 @@
         
           <h1 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h1><p>康托展开是一个全排列到一个自然数的双射, 常用于构建哈希表时的空间压缩,  康托展开的实质是计算当前排列在所有由小到大全排列中的顺序，因此是可逆的。<br>
           <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2017/07/18/posts/算法-康托展开/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/07/18/posts/算法-康托展开/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
           <!--/noindex-->
         
       
     </p></div>
-
-    
-
     
     
     
 
     
 
-    
-      
-    
     
 
     
@@ -1398,8 +1131,6 @@
   
   
 
-  
-
   <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
   
   
@@ -1424,20 +1155,11 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                
-                <a href="/2017/07/04/posts/Java_Web-记一次SpringMVC访问静态资源405错误修复/" class="post-title-link" itemprop="url">记一次SpringMVC访问静态资源405错误修复</a>
-              
-            
-          </h1>
+                <a class="post-title-link" href="/2017/07/04/posts/Java_Web-记一次SpringMVC访问静态资源405错误修复/" itemprop="url">记一次SpringMVC访问静态资源405错误修复</a></h1>
         
 
         <div class="post-meta">
           <span class="post-time">
-
-            
-            
-            
-
             
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
@@ -1445,30 +1167,13 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-
-              
-                
-              
-
-              <time title="创建时间：2017-07-04 21:38:35" itemprop="dateCreated datePublished" datetime="2017-07-04T21:38:35+08:00">2017-07-04</time>
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-04T21:38:35+08:00">
+                2017-07-04
+              </time>
             
 
             
-              
 
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2018-12-13 00:14:51" itemprop="dateModified" datetime="2018-12-13T00:14:51+08:00">2018-12-13</time>
-              
             
           </span>
 
@@ -1484,7 +1189,11 @@
                 <span class="post-meta-item-text">分类于</span>
               
               
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/Java-Web/" itemprop="url" rel="index"><span itemprop="name">Java Web</span></a></span>
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java-Web/" itemprop="url" rel="index">
+                    <span itemprop="name">Java Web</span>
+                  </a>
+                </span>
 
                 
                 
@@ -1522,29 +1231,21 @@
           <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>访问静态资源出现405错误<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">警告 [http-nio-8080-exec-8] org.springframework.web.servlet.PageNotFound.handleHttpRequestMethodNotSupported Request method &apos;GET&apos; not supported</span><br></pre></td></tr></table></figure></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">HTTP Status 405 - Request method &apos;GET&apos; not supported</span><br><span class="line">type Status report</span><br><span class="line">message Request method &apos;GET&apos; not supported</span><br><span class="line">description The specified HTTP method is not allowed for the requested resource.</span><br></pre></td></tr></table></figure>
           <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2017/07/04/posts/Java_Web-记一次SpringMVC访问静态资源405错误修复/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/07/04/posts/Java_Web-记一次SpringMVC访问静态资源405错误修复/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
           <!--/noindex-->
         
       
     </div>
-
-    
-
     
     
     
 
     
 
-    
-      
-    
     
 
     
@@ -1577,8 +1278,6 @@
   
   
 
-  
-
   <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
   
   
@@ -1603,20 +1302,11 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                
-                <a href="/2017/07/02/posts/Redis-Redis学习笔记/" class="post-title-link" itemprop="url">Redis学习笔记</a>
-              
-            
-          </h1>
+                <a class="post-title-link" href="/2017/07/02/posts/Redis-Redis学习笔记/" itemprop="url">Redis学习笔记</a></h1>
         
 
         <div class="post-meta">
           <span class="post-time">
-
-            
-            
-            
-
             
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
@@ -1624,30 +1314,13 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-
-              
-                
-              
-
-              <time title="创建时间：2017-07-02 23:00:55" itemprop="dateCreated datePublished" datetime="2017-07-02T23:00:55+08:00">2017-07-02</time>
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-02T23:00:55+08:00">
+                2017-07-02
+              </time>
             
 
             
-              
 
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2018-12-13 00:14:51" itemprop="dateModified" datetime="2018-12-13T00:14:51+08:00">2018-12-13</time>
-              
             
           </span>
 
@@ -1663,7 +1336,11 @@
                 <span class="post-meta-item-text">分类于</span>
               
               
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/Redis/" itemprop="url" rel="index"><span itemprop="name">Redis</span></a></span>
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/Redis/" itemprop="url" rel="index">
+                    <span itemprop="name">Redis</span>
+                  </a>
+                </span>
 
                 
                 
@@ -1700,29 +1377,21 @@
         
           <h1 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h1><p><code>Redis</code>是一种NoSQL(No Only SQL) 非关系型数据库，是高性能<code>键值对</code>数据库。<br>常用于缓存、分布式Session分离，或者任务队列，网站访问统计。<br><code>Redis</code>建议运行于<code>Linux</code>上。Java推荐<code>JRedis</code><br>
           <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2017/07/02/posts/Redis-Redis学习笔记/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/07/02/posts/Redis-Redis学习笔记/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
           <!--/noindex-->
         
       
     </p></div>
-
-    
-
     
     
     
 
     
 
-    
-      
-    
     
 
     
@@ -1755,8 +1424,6 @@
   
   
 
-  
-
   <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
   
   
@@ -1781,20 +1448,11 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                
-                <a href="/2017/06/04/posts/Java_SE-复制构造函数与clone/" class="post-title-link" itemprop="url">复制构造函数与clone</a>
-              
-            
-          </h1>
+                <a class="post-title-link" href="/2017/06/04/posts/Java_SE-复制构造函数与clone/" itemprop="url">复制构造函数与clone</a></h1>
         
 
         <div class="post-meta">
           <span class="post-time">
-
-            
-            
-            
-
             
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
@@ -1802,30 +1460,13 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-
-              
-                
-              
-
-              <time title="创建时间：2017-06-04 09:29:00" itemprop="dateCreated datePublished" datetime="2017-06-04T09:29:00+08:00">2017-06-04</time>
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-04T09:29:00+08:00">
+                2017-06-04
+              </time>
             
 
             
-              
 
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2018-12-13 00:14:51" itemprop="dateModified" datetime="2018-12-13T00:14:51+08:00">2018-12-13</time>
-              
             
           </span>
 
@@ -1841,7 +1482,11 @@
                 <span class="post-meta-item-text">分类于</span>
               
               
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/Java-SE/" itemprop="url" rel="index"><span itemprop="name">Java SE</span></a></span>
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java-SE/" itemprop="url" rel="index">
+                    <span itemprop="name">Java SE</span>
+                  </a>
+                </span>
 
                 
                 
@@ -1878,29 +1523,21 @@
         
           <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>对一个对象的复制，通常实现<code>Cloneable</code>接口使用<code>clone</code>方法。<br>但这有一个设计缺陷。<code>Cloneable</code>没有<code>clone</code>方法，反而在<code>Object</code>里面调用了<code>native</code>修饰的<code>clone</code>方法。</p>
           <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2017/06/04/posts/Java_SE-复制构造函数与clone/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/06/04/posts/Java_SE-复制构造函数与clone/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
           <!--/noindex-->
         
       
     </div>
-
-    
-
     
     
     
 
     
 
-    
-      
-    
     
 
     
@@ -1933,8 +1570,6 @@
   
   
 
-  
-
   <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
   
   
@@ -1959,20 +1594,11 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                
-                <a href="/2017/05/30/posts/Java_SE-阿里巴巴Java开发手册学习笔记/" class="post-title-link" itemprop="url">阿里巴巴Java开发手册学习笔记</a>
-              
-            
-          </h1>
+                <a class="post-title-link" href="/2017/05/30/posts/Java_SE-阿里巴巴Java开发手册学习笔记/" itemprop="url">阿里巴巴Java开发手册学习笔记</a></h1>
         
 
         <div class="post-meta">
           <span class="post-time">
-
-            
-            
-            
-
             
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
@@ -1980,30 +1606,13 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-
-              
-                
-              
-
-              <time title="创建时间：2017-05-30 17:21:18" itemprop="dateCreated datePublished" datetime="2017-05-30T17:21:18+08:00">2017-05-30</time>
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-30T17:21:18+08:00">
+                2017-05-30
+              </time>
             
 
             
-              
 
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2018-12-13 00:14:51" itemprop="dateModified" datetime="2018-12-13T00:14:51+08:00">2018-12-13</time>
-              
             
           </span>
 
@@ -2019,7 +1628,11 @@
                 <span class="post-meta-item-text">分类于</span>
               
               
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/Java-SE/" itemprop="url" rel="index"><span itemprop="name">Java SE</span></a></span>
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java-SE/" itemprop="url" rel="index">
+                    <span itemprop="name">Java SE</span>
+                  </a>
+                </span>
 
                 
                 
@@ -2056,29 +1669,21 @@
         
           <h1 id="下载地址"><a href="#下载地址" class="headerlink" title="下载地址"></a>下载地址</h1><p><a href="https://yq.aliyun.com/articles/69327" target="_blank" rel="noopener">【Java编码规范】《阿里巴巴Java开发手册（正式版）》更新（v1.2.0版）——迄今最完善版本</a><br>
           <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2017/05/30/posts/Java_SE-阿里巴巴Java开发手册学习笔记/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/05/30/posts/Java_SE-阿里巴巴Java开发手册学习笔记/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
           <!--/noindex-->
         
       
     </p></div>
-
-    
-
     
     
     
 
     
 
-    
-      
-    
     
 
     
@@ -2107,12 +1712,15 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/10/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/10/">10</a><span class="page-number current">11</span><a class="page-number" href="/page/12/">12</a><span class="space">&hellip;</span><a class="page-number" href="/page/18/">18</a><a class="extend next" rel="next" href="/page/12/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/10/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/10/">10</a><span class="page-number current">11</span><a class="page-number" href="/page/12/">12</a><span class="space">&hellip;</span><a class="page-number" href="/page/18/">18</a><a class="extend next" rel="next" href="/page/12/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
 
           </div>
+          
+
+
           
 
         </div>
@@ -2135,7 +1743,7 @@
 
       
 
-      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
@@ -2143,259 +1751,57 @@
               <p class="site-description motion-element" itemprop="description"></p>
           </div>
 
-          
-            <nav class="site-state motion-element">
-              
-                <div class="site-state-item site-state-posts">
-                
-                  <a href="/archives/">
-                
-                    <span class="site-state-item-count">177</span>
-                    <span class="site-state-item-name">日志</span>
-                  </a>
-                </div>
-              
+          <nav class="site-state motion-element">
 
-              
-                
-                
-                <div class="site-state-item site-state-categories">
-                  <a href="/categories/index.html">
-                    
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                    <span class="site-state-item-count">20</span>
-                    <span class="site-state-item-name">分类</span>
-                  </a>
-                </div>
-              
-
-              
-                
-                
-                <div class="site-state-item site-state-tags">
-                  <a href="/tags/index.html">
-                    
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                    <span class="site-state-item-count">78</span>
-                    <span class="site-state-item-name">标签</span>
-                  </a>
-                </div>
-              
-            </nav>
-          
-
-          
-
-          
-
-          
-
-          
-          
-
-          
             
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">177</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">20</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">78</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
           
+
+          
+
+          
+          
+
+          
+          
+
           
 
         </div>
-      </div>
+      </section>
 
       
 
@@ -2412,18 +1818,16 @@
     <footer id="footer" class="footer">
       <div class="footer-inner">
         <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
-  <span class="with-love" id="animate">
+  <span class="with-love">
     <i class="fa fa-user"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">Wkang</span>
 
   
-
-  
 </div>
 
 
-  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.8.0</div>
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
 
 
 
@@ -2431,13 +1835,12 @@
 
 
 
-  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> v6.7.0</div>
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
 
 
 
 
         
-
 
 
 
@@ -2458,14 +1861,11 @@
 
     
 
-    
-
-    
   </div>
 
   
 
-<script>
+<script type="text/javascript">
   if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
     window.Promise = null;
   }
@@ -2479,17 +1879,7 @@
 
 
 
-
-
-
-
-
   
-    
-    
-  
-  <script color="0,0,255" opacity="0.5" zindex="-1" count="99" src="/lib/canvas-nest/canvas-nest.min.js"></script>
-
 
 
 
@@ -2503,65 +1893,95 @@
 
 
   
-  <script src="/lib/jquery/index.js?v=2.1.3"></script>
-
   
-  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
-
-  
-  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-
-
-  
-
-
-  <script src="/js/src/utils.js?v=6.7.0"></script>
-
-  <script src="/js/src/motion.js?v=6.7.0"></script>
-
-
-
-  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
   
 
   
-
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
   
 
-
-  <script src="/js/src/bootstrap.js?v=6.7.0"></script>
-
-
-
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
   
 
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
 
 
   
 
 
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
 
-
-
-
-
-
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
 
 
 
   
-
-
-
-
-
   
 
   
 
   
 
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
   
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
 
   
 
@@ -2570,9 +1990,6 @@
   
 
   
-
-  
-
   
 
   

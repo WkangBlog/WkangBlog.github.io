@@ -2,15 +2,6 @@
 
 
 
-
-
-
-
-
-
-
-
-
   
 
 
@@ -18,7 +9,7 @@
 <head><meta name="generator" content="Hexo 3.8.0">
   <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="theme-color" content="#222">
 
 
@@ -29,6 +20,8 @@
 
 
 
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
 
 
 
@@ -45,22 +38,9 @@
 
 
 
-
-<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
-
-<link rel="stylesheet" href="/css/main.css?v=6.7.0">
-
-
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.7.0">
-
-
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.7.0">
-
-
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.7.0">
-
-
-  <link rel="mask-icon" href="/images/logo.svg?v=6.7.0" color="#222">
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
 
 
 
@@ -68,18 +48,61 @@
 
 
 
-<script id="hexo.configurations">
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="嗯哼的博客">
+<meta property="og:url" content="https://wkangblog.github.io/page/18/index.html">
+<meta property="og:site_name" content="嗯哼的博客">
+<meta property="og:locale" content="zh-Hans">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="嗯哼的博客">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
   var NexT = window.NexT || {};
   var CONFIG = {
     root: '/',
     scheme: 'Mist',
-    version: '6.7.0',
+    version: '5.1.4',
     sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
-    fancybox: false,
-    fastclick: false,
-    lazyload: false,
+    fancybox: true,
     tabs: true,
     motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
     algolia: {
       applicationID: '',
       apiKey: '',
@@ -91,33 +114,12 @@
 </script>
 
 
-  
-
-
-
-
-  <meta property="og:type" content="website">
-<meta property="og:title" content="嗯哼的博客">
-<meta property="og:url" content="https://wkangblog.github.io/page/18/index.html">
-<meta property="og:site_name" content="嗯哼的博客">
-<meta property="og:locale" content="zh-Hans">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="嗯哼的博客">
-
-
-
-
-
 
   <link rel="canonical" href="https://wkangblog.github.io/page/18/">
 
 
 
-<script id="page.configurations">
-  CONFIG.page = {
-    sidebar: "",
-  };
-</script>
+
 
   <title>嗯哼的博客</title>
   
@@ -128,35 +130,6 @@
 
 
 
-
-
-
-
-
-  <noscript>
-  <style>
-  .use-motion .motion-element,
-  .use-motion .brand,
-  .use-motion .menu-item,
-  .sidebar-inner,
-  .use-motion .post-block,
-  .use-motion .pagination,
-  .use-motion .comments,
-  .use-motion .post-header,
-  .use-motion .post-body,
-  .use-motion .collection-title { opacity: initial; }
-
-  .use-motion .logo,
-  .use-motion .site-title,
-  .use-motion .site-subtitle {
-    opacity: initial;
-    top: initial;
-  }
-
-  .use-motion .logo-line-before i { left: initial; }
-  .use-motion .logo-line-after i { right: initial; }
-  </style>
-</noscript>
 
 </head>
 
@@ -173,7 +146,7 @@
 
     <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-wrapper">
-  <div class="site-meta">
+  <div class="site-meta ">
     
 
     <div class="custom-logo-site-title">
@@ -183,12 +156,13 @@
         <span class="logo-line-after"><i></i></span>
       </a>
     </div>
-    
-    
+      
+        <p class="site-subtitle"></p>
+      
   </div>
 
   <div class="site-nav-toggle">
-    <button aria-label="切换导航栏">
+    <button>
       <span class="btn-bar"></span>
       <span class="btn-bar"></span>
       <span class="btn-bar"></span>
@@ -196,106 +170,65 @@
   </div>
 </div>
 
-
-
 <nav class="site-nav">
+  
+
   
     <ul id="menu" class="menu">
       
         
-        
-        
-          
-          <li class="menu-item menu-item-home">
-
-    
-    
-    
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
       
-    
-
-    
-
-    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
-
-  </li>
         
-        
-        
-          
-          <li class="menu-item menu-item-about">
-
-    
-    
-    
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-about"></i> <br>
+            
+            关于
+          </a>
+        </li>
       
-    
-
-    
-
-    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-about"></i> <br>关于</a>
-
-  </li>
         
-        
-        
-          
-          <li class="menu-item menu-item-tags">
-
-    
-    
-    
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
       
-    
-
-    
-
-    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
-
-  </li>
         
-        
-        
-          
-          <li class="menu-item menu-item-categories">
-
-    
-    
-    
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-categories"></i> <br>
+            
+            分类
+          </a>
+        </li>
       
-    
-
-    
-
-    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-categories"></i> <br>分类</a>
-
-  </li>
         
-        
-        
-          
-          <li class="menu-item menu-item-archives">
-
-    
-    
-    
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archives"></i> <br>
+            
+            归档
+          </a>
+        </li>
       
-    
 
-    
-
-    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archives"></i> <br>归档</a>
-
-  </li>
-
-      
       
     </ul>
-  
-
-  
-    
-
   
 
   
@@ -303,20 +236,12 @@
 
 
 
-  
-
-
-
-</div>
+ </div>
     </header>
-
-    
-
 
     <main id="main" class="main">
       <div class="main-inner">
         <div class="content-wrap">
-          
           <div id="content" class="content">
             
   <section id="posts" class="posts-expand">
@@ -327,8 +252,6 @@
 
   
   
-  
-
   
 
   <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
@@ -355,20 +278,11 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                
-                <a href="/2016/06/25/posts/Android-getWidth()_getHeight()_方法返回的值为0/" class="post-title-link" itemprop="url">getWidth()、getHeight()方法返回的值为0</a>
-              
-            
-          </h1>
+                <a class="post-title-link" href="/2016/06/25/posts/Android-getWidth()_getHeight()_方法返回的值为0/" itemprop="url">getWidth()、getHeight()方法返回的值为0</a></h1>
         
 
         <div class="post-meta">
           <span class="post-time">
-
-            
-            
-            
-
             
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
@@ -376,30 +290,13 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-
-              
-                
-              
-
-              <time title="创建时间：2016-06-25 08:56:12" itemprop="dateCreated datePublished" datetime="2016-06-25T08:56:12+08:00">2016-06-25</time>
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-06-25T08:56:12+08:00">
+                2016-06-25
+              </time>
             
 
             
-              
 
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2018-12-13 00:14:51" itemprop="dateModified" datetime="2018-12-13T00:14:51+08:00">2018-12-13</time>
-              
             
           </span>
 
@@ -415,7 +312,11 @@
                 <span class="post-meta-item-text">分类于</span>
               
               
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/Android/" itemprop="url" rel="index"><span itemprop="name">Android</span></a></span>
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android/" itemprop="url" rel="index">
+                    <span itemprop="name">Android</span>
+                  </a>
+                </span>
 
                 
                 
@@ -452,29 +353,21 @@
         
           <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>在自定义<code>View</code>的构造方法中使用<code>getWidth()</code>和<code>getHeight()</code>返回值为0，<br>因为过早的使用了这些方法，也就是说在这个<code>view</code>被加入到<code>rootview</code>之前你就调用了这些方法，返回的值自然为0。<br>
           <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2016/06/25/posts/Android-getWidth()_getHeight()_方法返回的值为0/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
+          <div class="post-button text-center">
+            <a class="btn" href="/2016/06/25/posts/Android-getWidth()_getHeight()_方法返回的值为0/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
           <!--/noindex-->
         
       
     </p></div>
-
-    
-
     
     
     
 
     
 
-    
-      
-    
     
 
     
@@ -507,8 +400,6 @@
   
   
 
-  
-
   <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
   
   
@@ -533,20 +424,11 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                
-                <a href="/2016/06/24/posts/Android-自定义一个简单的TextView/" class="post-title-link" itemprop="url">自定义一个简单的TextView</a>
-              
-            
-          </h1>
+                <a class="post-title-link" href="/2016/06/24/posts/Android-自定义一个简单的TextView/" itemprop="url">自定义一个简单的TextView</a></h1>
         
 
         <div class="post-meta">
           <span class="post-time">
-
-            
-            
-            
-
             
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
@@ -554,30 +436,13 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-
-              
-                
-              
-
-              <time title="创建时间：2016-06-24 08:58:31" itemprop="dateCreated datePublished" datetime="2016-06-24T08:58:31+08:00">2016-06-24</time>
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-06-24T08:58:31+08:00">
+                2016-06-24
+              </time>
             
 
             
-              
 
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2018-12-13 00:14:51" itemprop="dateModified" datetime="2018-12-13T00:14:51+08:00">2018-12-13</time>
-              
             
           </span>
 
@@ -593,7 +458,11 @@
                 <span class="post-meta-item-text">分类于</span>
               
               
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/Android/" itemprop="url" rel="index"><span itemprop="name">Android</span></a></span>
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android/" itemprop="url" rel="index">
+                    <span itemprop="name">Android</span>
+                  </a>
+                </span>
 
                 
                 
@@ -630,29 +499,21 @@
         
           <h1 id="定义、使用属性"><a href="#定义、使用属性" class="headerlink" title="定义、使用属性"></a>定义、使用属性</h1><p>首先在<code>res/values/attrs.xml</code>文件夹（没有的话自己创建一个）中设置好自定义的属性。<br>注意，因为<code>Toolbar</code>中已经有了<code>titleTextColor</code>的属性，如果我们进行声明，则会编译不通过。<br>所以这里进行了引用，也就是不写format。<br>
           <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2016/06/24/posts/Android-自定义一个简单的TextView/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
+          <div class="post-button text-center">
+            <a class="btn" href="/2016/06/24/posts/Android-自定义一个简单的TextView/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
           <!--/noindex-->
         
       
     </p></div>
-
-    
-
     
     
     
 
     
 
-    
-      
-    
     
 
     
@@ -685,8 +546,6 @@
   
   
 
-  
-
   <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
   
   
@@ -711,20 +570,11 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                
-                <a href="/2016/06/23/posts/Android-View的onMeasure/" class="post-title-link" itemprop="url">View的onMeasure()</a>
-              
-            
-          </h1>
+                <a class="post-title-link" href="/2016/06/23/posts/Android-View的onMeasure/" itemprop="url">View的onMeasure()</a></h1>
         
 
         <div class="post-meta">
           <span class="post-time">
-
-            
-            
-            
-
             
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
@@ -732,30 +582,13 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-
-              
-                
-              
-
-              <time title="创建时间：2016-06-23 09:28:19" itemprop="dateCreated datePublished" datetime="2016-06-23T09:28:19+08:00">2016-06-23</time>
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-06-23T09:28:19+08:00">
+                2016-06-23
+              </time>
             
 
             
-              
 
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2018-12-13 00:14:51" itemprop="dateModified" datetime="2018-12-13T00:14:51+08:00">2018-12-13</time>
-              
             
           </span>
 
@@ -771,7 +604,11 @@
                 <span class="post-meta-item-text">分类于</span>
               
               
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/Android/" itemprop="url" rel="index"><span itemprop="name">Android</span></a></span>
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android/" itemprop="url" rel="index">
+                    <span itemprop="name">Android</span>
+                  </a>
+                </span>
 
                 
                 
@@ -814,29 +651,21 @@
 <li>还有个<code>UnSpecified</code>(未指定模式)，不指定<code>View</code>的大小，想多大就多大，用于<code>scrollView</code>等类。</li>
 </ul>
           <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2016/06/23/posts/Android-View的onMeasure/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
+          <div class="post-button text-center">
+            <a class="btn" href="/2016/06/23/posts/Android-View的onMeasure/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
           <!--/noindex-->
         
       
     </div>
-
-    
-
     
     
     
 
     
 
-    
-      
-    
     
 
     
@@ -869,8 +698,6 @@
   
   
 
-  
-
   <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
   
   
@@ -895,20 +722,11 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                
-                <a href="/2016/06/23/posts/Android-Android命名规范和编码规范/" class="post-title-link" itemprop="url">Android命名规范和编码规范</a>
-              
-            
-          </h1>
+                <a class="post-title-link" href="/2016/06/23/posts/Android-Android命名规范和编码规范/" itemprop="url">Android命名规范和编码规范</a></h1>
         
 
         <div class="post-meta">
           <span class="post-time">
-
-            
-            
-            
-
             
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
@@ -916,30 +734,13 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-
-              
-                
-              
-
-              <time title="创建时间：2016-06-23 09:11:07" itemprop="dateCreated datePublished" datetime="2016-06-23T09:11:07+08:00">2016-06-23</time>
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-06-23T09:11:07+08:00">
+                2016-06-23
+              </time>
             
 
             
-              
 
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2018-12-13 00:14:51" itemprop="dateModified" datetime="2018-12-13T00:14:51+08:00">2018-12-13</time>
-              
             
           </span>
 
@@ -955,7 +756,11 @@
                 <span class="post-meta-item-text">分类于</span>
               
               
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/Android/" itemprop="url" rel="index"><span itemprop="name">Android</span></a></span>
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android/" itemprop="url" rel="index">
+                    <span itemprop="name">Android</span>
+                  </a>
+                </span>
 
                 
                 
@@ -996,29 +801,21 @@
 <p>编码规范是泯灭程序猿个性的一项制度，但对于整个团队而言，却是一件利器<br>-《App 研发录》</p>
 </blockquote>
           <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2016/06/23/posts/Android-Android命名规范和编码规范/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
+          <div class="post-button text-center">
+            <a class="btn" href="/2016/06/23/posts/Android-Android命名规范和编码规范/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
           <!--/noindex-->
         
       
     </div>
-
-    
-
     
     
     
 
     
 
-    
-      
-    
     
 
     
@@ -1051,8 +848,6 @@
   
   
 
-  
-
   <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
   
   
@@ -1077,20 +872,11 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                
-                <a href="/2016/06/23/posts/Android-Android常用配置文件/" class="post-title-link" itemprop="url">常用配置文件</a>
-              
-            
-          </h1>
+                <a class="post-title-link" href="/2016/06/23/posts/Android-Android常用配置文件/" itemprop="url">常用配置文件</a></h1>
         
 
         <div class="post-meta">
           <span class="post-time">
-
-            
-            
-            
-
             
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
@@ -1098,30 +884,13 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-
-              
-                
-              
-
-              <time title="创建时间：2016-06-23 09:07:59" itemprop="dateCreated datePublished" datetime="2016-06-23T09:07:59+08:00">2016-06-23</time>
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-06-23T09:07:59+08:00">
+                2016-06-23
+              </time>
             
 
             
-              
 
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2018-12-13 00:14:51" itemprop="dateModified" datetime="2018-12-13T00:14:51+08:00">2018-12-13</time>
-              
             
           </span>
 
@@ -1137,7 +906,11 @@
                 <span class="post-meta-item-text">分类于</span>
               
               
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/Android/" itemprop="url" rel="index"><span itemprop="name">Android</span></a></span>
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android/" itemprop="url" rel="index">
+                    <span itemprop="name">Android</span>
+                  </a>
+                </span>
 
                 
                 
@@ -1174,29 +947,21 @@
         
           <h1 id="dimens-xml"><a href="#dimens-xml" class="headerlink" title="dimens.xml"></a>dimens.xml</h1><p>经常需要使用到一些尺寸，这里就记录一下，方便拷贝。<br>直接在<code>values中</code>的<code>dimens.xml</code>文件中粘贴即可<br>使用方法，如：<code>Android:TextSize=&quot;@dimens/offset_2dp&quot;</code><br>
           <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2016/06/23/posts/Android-Android常用配置文件/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
+          <div class="post-button text-center">
+            <a class="btn" href="/2016/06/23/posts/Android-Android常用配置文件/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
           <!--/noindex-->
         
       
     </p></div>
-
-    
-
     
     
     
 
     
 
-    
-      
-    
     
 
     
@@ -1229,8 +994,6 @@
   
   
 
-  
-
   <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
   
   
@@ -1255,20 +1018,11 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                
-                <a href="/2016/06/21/posts/Android-Canvas中rotate-translate-save和restore/" class="post-title-link" itemprop="url">Canvas中rotate,translate,save和restore</a>
-              
-            
-          </h1>
+                <a class="post-title-link" href="/2016/06/21/posts/Android-Canvas中rotate-translate-save和restore/" itemprop="url">Canvas中rotate,translate,save和restore</a></h1>
         
 
         <div class="post-meta">
           <span class="post-time">
-
-            
-            
-            
-
             
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
@@ -1276,30 +1030,13 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-
-              
-                
-              
-
-              <time title="创建时间：2016-06-21 09:34:13" itemprop="dateCreated datePublished" datetime="2016-06-21T09:34:13+08:00">2016-06-21</time>
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-06-21T09:34:13+08:00">
+                2016-06-21
+              </time>
             
 
             
-              
 
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2018-12-13 00:14:51" itemprop="dateModified" datetime="2018-12-13T00:14:51+08:00">2018-12-13</time>
-              
             
           </span>
 
@@ -1315,7 +1052,11 @@
                 <span class="post-meta-item-text">分类于</span>
               
               
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/Android/" itemprop="url" rel="index"><span itemprop="name">Android</span></a></span>
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android/" itemprop="url" rel="index">
+                    <span itemprop="name">Android</span>
+                  </a>
+                </span>
 
                 
                 
@@ -1352,29 +1093,21 @@
         
           <h1 id="rotate"><a href="#rotate" class="headerlink" title="rotate()"></a>rotate()</h1><p>rotate()是对坐标系的旋转，而不是对屏幕的旋转。<br>
           <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2016/06/21/posts/Android-Canvas中rotate-translate-save和restore/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
+          <div class="post-button text-center">
+            <a class="btn" href="/2016/06/21/posts/Android-Canvas中rotate-translate-save和restore/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
           <!--/noindex-->
         
       
     </p></div>
-
-    
-
     
     
     
 
     
 
-    
-      
-    
     
 
     
@@ -1407,8 +1140,6 @@
   
   
 
-  
-
   <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
   
   
@@ -1433,20 +1164,11 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                
-                <a href="/2016/06/21/posts/Android-LayoutParams的addRule方法/" class="post-title-link" itemprop="url">LayoutParams的addRule方法</a>
-              
-            
-          </h1>
+                <a class="post-title-link" href="/2016/06/21/posts/Android-LayoutParams的addRule方法/" itemprop="url">LayoutParams的addRule方法</a></h1>
         
 
         <div class="post-meta">
           <span class="post-time">
-
-            
-            
-            
-
             
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
@@ -1454,30 +1176,13 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-
-              
-                
-              
-
-              <time title="创建时间：2016-06-21 09:32:19" itemprop="dateCreated datePublished" datetime="2016-06-21T09:32:19+08:00">2016-06-21</time>
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-06-21T09:32:19+08:00">
+                2016-06-21
+              </time>
             
 
             
-              
 
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2018-12-13 00:14:51" itemprop="dateModified" datetime="2018-12-13T00:14:51+08:00">2018-12-13</time>
-              
             
           </span>
 
@@ -1493,7 +1198,11 @@
                 <span class="post-meta-item-text">分类于</span>
               
               
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/Android/" itemprop="url" rel="index"><span itemprop="name">Android</span></a></span>
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android/" itemprop="url" rel="index">
+                    <span itemprop="name">Android</span>
+                  </a>
+                </span>
 
                 
                 
@@ -1530,29 +1239,21 @@
         
           <p>自定义<code>ViewGroup</code>中，需要用<code>LayoutParams</code>对子<code>View</code>进行布局<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mLeftParams = <span class="keyword">new</span> LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT);</span><br><span class="line">mLeftParams.addRule(RelativeLayout.ALIGN_PARENT_LEFT, TRUE);</span><br><span class="line">mLeftParams.addRule(RelativeLayout.RIGHT_OF, R.id.leftView);</span><br></pre></td></tr></table></figure></p>
           <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2016/06/21/posts/Android-LayoutParams的addRule方法/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          
+          <div class="post-button text-center">
+            <a class="btn" href="/2016/06/21/posts/Android-LayoutParams的addRule方法/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
           <!--/noindex-->
         
       
     </div>
-
-    
-
     
     
     
 
     
 
-    
-      
-    
     
 
     
@@ -1581,12 +1282,15 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/17/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/17/">17</a><span class="page-number current">18</span>
+    <a class="extend prev" rel="prev" href="/page/17/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/17/">17</a><span class="page-number current">18</span>
   </nav>
 
 
 
           </div>
+          
+
+
           
 
         </div>
@@ -1609,7 +1313,7 @@
 
       
 
-      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
@@ -1617,259 +1321,57 @@
               <p class="site-description motion-element" itemprop="description"></p>
           </div>
 
-          
-            <nav class="site-state motion-element">
-              
-                <div class="site-state-item site-state-posts">
-                
-                  <a href="/archives/">
-                
-                    <span class="site-state-item-count">177</span>
-                    <span class="site-state-item-name">日志</span>
-                  </a>
-                </div>
-              
+          <nav class="site-state motion-element">
 
-              
-                
-                
-                <div class="site-state-item site-state-categories">
-                  <a href="/categories/index.html">
-                    
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                    <span class="site-state-item-count">20</span>
-                    <span class="site-state-item-name">分类</span>
-                  </a>
-                </div>
-              
-
-              
-                
-                
-                <div class="site-state-item site-state-tags">
-                  <a href="/tags/index.html">
-                    
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                    <span class="site-state-item-count">78</span>
-                    <span class="site-state-item-name">标签</span>
-                  </a>
-                </div>
-              
-            </nav>
-          
-
-          
-
-          
-
-          
-
-          
-          
-
-          
             
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">177</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">20</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">78</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
           
+
+          
+
+          
+          
+
+          
+          
+
           
 
         </div>
-      </div>
+      </section>
 
       
 
@@ -1886,18 +1388,16 @@
     <footer id="footer" class="footer">
       <div class="footer-inner">
         <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
-  <span class="with-love" id="animate">
+  <span class="with-love">
     <i class="fa fa-user"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">Wkang</span>
 
   
-
-  
 </div>
 
 
-  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.8.0</div>
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
 
 
 
@@ -1905,13 +1405,12 @@
 
 
 
-  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> v6.7.0</div>
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
 
 
 
 
         
-
 
 
 
@@ -1932,14 +1431,11 @@
 
     
 
-    
-
-    
   </div>
 
   
 
-<script>
+<script type="text/javascript">
   if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
     window.Promise = null;
   }
@@ -1953,17 +1449,7 @@
 
 
 
-
-
-
-
-
   
-    
-    
-  
-  <script color="0,0,255" opacity="0.5" zindex="-1" count="99" src="/lib/canvas-nest/canvas-nest.min.js"></script>
-
 
 
 
@@ -1977,65 +1463,95 @@
 
 
   
-  <script src="/lib/jquery/index.js?v=2.1.3"></script>
-
   
-  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
-
-  
-  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-
-
-  
-
-
-  <script src="/js/src/utils.js?v=6.7.0"></script>
-
-  <script src="/js/src/motion.js?v=6.7.0"></script>
-
-
-
-  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
   
 
   
-
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
   
 
-
-  <script src="/js/src/bootstrap.js?v=6.7.0"></script>
-
-
-
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
   
 
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
 
 
   
 
 
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
 
-
-
-
-
-
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
 
 
 
   
-
-
-
-
-
   
 
   
 
   
 
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
   
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
 
   
 
@@ -2044,9 +1560,6 @@
   
 
   
-
-  
-
   
 
   

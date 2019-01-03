@@ -2,15 +2,6 @@
 
 
 
-
-
-
-
-
-
-
-
-
   
 
 
@@ -18,7 +9,7 @@
 <head><meta name="generator" content="Hexo 3.8.0">
   <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="theme-color" content="#222">
 
 
@@ -29,6 +20,8 @@
 
 
 
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
 
 
 
@@ -45,22 +38,9 @@
 
 
 
-
-<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
-
-<link rel="stylesheet" href="/css/main.css?v=6.7.0">
-
-
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.7.0">
-
-
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.7.0">
-
-
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.7.0">
-
-
-  <link rel="mask-icon" href="/images/logo.svg?v=6.7.0" color="#222">
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
 
 
 
@@ -68,18 +48,62 @@
 
 
 
-<script id="hexo.configurations">
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="tags">
+<meta property="og:url" content="https://wkangblog.github.io/tags/index.html">
+<meta property="og:site_name" content="嗯哼的博客">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-12-12T16:14:51.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="tags">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
   var NexT = window.NexT || {};
   var CONFIG = {
     root: '/',
     scheme: 'Mist',
-    version: '6.7.0',
+    version: '5.1.4',
     sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
-    fancybox: false,
-    fastclick: false,
-    lazyload: false,
+    fancybox: true,
     tabs: true,
     motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
     algolia: {
       applicationID: '',
       apiKey: '',
@@ -91,34 +115,12 @@
 </script>
 
 
-  
-
-
-
-
-  <meta property="og:type" content="website">
-<meta property="og:title" content="tags">
-<meta property="og:url" content="https://wkangblog.github.io/tags/index.html">
-<meta property="og:site_name" content="嗯哼的博客">
-<meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-12-12T16:14:51.000Z">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="tags">
-
-
-
-
-
 
   <link rel="canonical" href="https://wkangblog.github.io/tags/">
 
 
 
-<script id="page.configurations">
-  CONFIG.page = {
-    sidebar: "",
-  };
-</script>
+
 
   <title>tags | 嗯哼的博客</title>
   
@@ -129,35 +131,6 @@
 
 
 
-
-
-
-
-
-  <noscript>
-  <style>
-  .use-motion .motion-element,
-  .use-motion .brand,
-  .use-motion .menu-item,
-  .sidebar-inner,
-  .use-motion .post-block,
-  .use-motion .pagination,
-  .use-motion .comments,
-  .use-motion .post-header,
-  .use-motion .post-body,
-  .use-motion .collection-title { opacity: initial; }
-
-  .use-motion .logo,
-  .use-motion .site-title,
-  .use-motion .site-subtitle {
-    opacity: initial;
-    top: initial;
-  }
-
-  .use-motion .logo-line-before i { left: initial; }
-  .use-motion .logo-line-after i { right: initial; }
-  </style>
-</noscript>
 
 </head>
 
@@ -173,7 +146,7 @@
 
     <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-wrapper">
-  <div class="site-meta">
+  <div class="site-meta ">
     
 
     <div class="custom-logo-site-title">
@@ -183,12 +156,13 @@
         <span class="logo-line-after"><i></i></span>
       </a>
     </div>
-    
-    
+      
+        <p class="site-subtitle"></p>
+      
   </div>
 
   <div class="site-nav-toggle">
-    <button aria-label="切换导航栏">
+    <button>
       <span class="btn-bar"></span>
       <span class="btn-bar"></span>
       <span class="btn-bar"></span>
@@ -196,128 +170,65 @@
   </div>
 </div>
 
-
-
 <nav class="site-nav">
+  
+
   
     <ul id="menu" class="menu">
       
         
-        
-        
-          
-          <li class="menu-item menu-item-home">
-
-    
-    
-    
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
       
-    
-
-    
-
-    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
-
-  </li>
         
-        
-        
-          
-          <li class="menu-item menu-item-about">
-
-    
-    
-    
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-about"></i> <br>
+            
+            关于
+          </a>
+        </li>
       
-    
-
-    
-
-    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-about"></i> <br>关于</a>
-
-  </li>
         
-        
-        
-          
-          <li class="menu-item menu-item-tags menu-item-active">
-
-    
-    
-    
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
       
-    
-
-    
-
-    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
-
-  </li>
         
-        
-        
-          
-          <li class="menu-item menu-item-categories">
-
-    
-    
-    
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-categories"></i> <br>
+            
+            分类
+          </a>
+        </li>
       
-    
-
-    
-
-    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-categories"></i> <br>分类</a>
-
-  </li>
         
-        
-        
-          
-          <li class="menu-item menu-item-archives">
-
-    
-    
-    
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archives"></i> <br>
+            
+            归档
+          </a>
+        </li>
       
-    
 
-    
-
-    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archives"></i> <br>归档</a>
-
-  </li>
-
-      
       
     </ul>
-  
-
-  
-    
-
-    
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-    
-
-  
-
-
   
 
   
@@ -325,20 +236,12 @@
 
 
 
-  
-
-
-
-</div>
+ </div>
     </header>
-
-    
-
 
     <main id="main" class="main">
       <div class="main-inner">
         <div class="content-wrap">
-          
           <div id="content" class="content">
             
 
@@ -349,17 +252,9 @@
     <div class="post-block page">
       <header class="post-header">
 
-<h1 class="post-title" itemprop="name headline">tags
-
-</h1>
-
-<div class="post-meta">
-  
-  
+	<h1 class="post-title" itemprop="name headline">tags</h1>
 
 
-
-</div>
 
 </header>
 
@@ -371,321 +266,7 @@
         
           <div class="tag-cloud">
             <div class="tag-cloud-title">
-              
-              
-                
-                  
-                
-              
-                
-                  
-                
-              
-                
-                  
-                
-              
-                
-                  
-                
-              
-                
-                  
-                
-              
-                
-                  
-                
-              
-                
-                  
-                
-              
-                
-                  
-                
-              
-                
-                  
-                
-              
-                
-                  
-                
-              
-                
-                  
-                
-              
-                
-                  
-                
-              
-                
-                  
-                
-              
-                
-                  
-                
-              
-                
-                  
-                
-              
-                
-                  
-                
-              
-                
-                  
-                
-              
-                
-                  
-                
-              
-                
-                  
-                
-              
-                
-                  
-                
-              
-                
-                  
-                
-              
-                
-                  
-                
-              
-                
-                  
-                
-              
-                
-                  
-                
-              
-                
-                  
-                
-              
-                
-                  
-                
-              
-                
-                  
-                
-              
-                
-                  
-                
-              
-                
-                  
-                
-              
-                
-                  
-                
-              
-                
-                  
-                
-              
-                
-                  
-                
-              
-                
-                  
-                
-              
-                
-                  
-                
-              
-                
-                  
-                
-              
-                
-                  
-                
-              
-                
-                  
-                
-              
-                
-                  
-                
-              
-                
-                  
-                
-              
-                
-                  
-                
-              
-                
-                  
-                
-              
-                
-                  
-                
-              
-                
-                  
-                
-              
-                
-                  
-                
-              
-                
-                  
-                
-              
-                
-                  
-                
-              
-                
-                  
-                
-              
-                
-                  
-                
-              
-                
-                  
-                
-              
-                
-                  
-                
-              
-                
-                  
-                
-              
-                
-                  
-                
-              
-                
-                  
-                
-              
-                
-                  
-                
-              
-                
-                  
-                
-              
-                
-                  
-                
-              
-                
-                  
-                
-              
-                
-                  
-                
-              
-                
-                  
-                
-              
-                
-                  
-                
-              
-                
-                  
-                
-              
-                
-                  
-                
-              
-                
-                  
-                
-              
-                
-                  
-                
-              
-                
-                  
-                
-              
-                
-                  
-                
-              
-                
-                  
-                
-              
-                
-                  
-                
-              
-                
-                  
-                
-              
-                
-                  
-                
-              
-                
-                  
-                
-              
-                
-                  
-                
-              
-                
-                  
-                
-              
-                
-                  
-                
-              
-                
-                  
-                
-              
-                
-                  
-                
-              
-                
-                  
-                
-              
-                
-                  
-                
-              
-              目前共计 78 个标签
+                目前共计 78 个标签
             </div>
             <div class="tag-cloud-tags">
               <a href="/tags/AJAX/" style="font-size: 12px; color: #ccc">AJAX</a> <a href="/tags/Activity/" style="font-size: 13.8px; color: #b9b9b9">Activity</a> <a href="/tags/Ajax/" style="font-size: 13.8px; color: #b9b9b9">Ajax</a> <a href="/tags/AlertDialog/" style="font-size: 12px; color: #ccc">AlertDialog</a> <a href="/tags/Android/" style="font-size: 12px; color: #ccc">Android</a> <a href="/tags/Annotation/" style="font-size: 12px; color: #ccc">Annotation</a> <a href="/tags/BandwagonHost/" style="font-size: 12px; color: #ccc">BandwagonHost</a> <a href="/tags/CSS/" style="font-size: 17.4px; color: #949494">CSS</a> <a href="/tags/Chrome/" style="font-size: 12px; color: #ccc">Chrome</a> <a href="/tags/Cookie/" style="font-size: 12px; color: #ccc">Cookie</a> <a href="/tags/Docker/" style="font-size: 12px; color: #ccc">Docker</a> <a href="/tags/Exception/" style="font-size: 12px; color: #ccc">Exception</a> <a href="/tags/FFmpeg/" style="font-size: 12px; color: #ccc">FFmpeg</a> <a href="/tags/Fragment/" style="font-size: 13.8px; color: #b9b9b9">Fragment</a> <a href="/tags/Git/" style="font-size: 12px; color: #ccc">Git</a> <a href="/tags/GitHub/" style="font-size: 13.8px; color: #b9b9b9">GitHub</a> <a href="/tags/Hexo/" style="font-size: 13.8px; color: #b9b9b9">Hexo</a> <a href="/tags/Hibernate/" style="font-size: 12px; color: #ccc">Hibernate</a> <a href="/tags/IDEA/" style="font-size: 15.6px; color: #a7a7a7">IDEA</a> <a href="/tags/IE8/" style="font-size: 12px; color: #ccc">IE8</a> <a href="/tags/JDBC/" style="font-size: 12px; color: #ccc">JDBC</a> <a href="/tags/JSP/" style="font-size: 12px; color: #ccc">JSP</a> <a href="/tags/JUnit/" style="font-size: 12px; color: #ccc">JUnit</a> <a href="/tags/Java8/" style="font-size: 13.8px; color: #b9b9b9">Java8</a> <a href="/tags/JavaScript/" style="font-size: 19.2px; color: #818181">JavaScript</a> <a href="/tags/LintCode/" style="font-size: 13.8px; color: #b9b9b9">LintCode</a> <a href="/tags/Linux/" style="font-size: 28.2px; color: #242424">Linux</a> <a href="/tags/Linux软件安装/" style="font-size: 15.6px; color: #a7a7a7">Linux软件安装</a> <a href="/tags/ListView/" style="font-size: 12px; color: #ccc">ListView</a> <a href="/tags/Log4j/" style="font-size: 12px; color: #ccc">Log4j</a> <a href="/tags/Logback/" style="font-size: 15.6px; color: #a7a7a7">Logback</a> <a href="/tags/Lombok/" style="font-size: 12px; color: #ccc">Lombok</a> <a href="/tags/Markdown/" style="font-size: 13.8px; color: #b9b9b9">Markdown</a> <a href="/tags/Maven/" style="font-size: 13.8px; color: #b9b9b9">Maven</a> <a href="/tags/MongoDB/" style="font-size: 12px; color: #ccc">MongoDB</a> <a href="/tags/MySQL/" style="font-size: 13.8px; color: #b9b9b9">MySQL</a> <a href="/tags/Mybatis/" style="font-size: 13.8px; color: #b9b9b9">Mybatis</a> <a href="/tags/Nginx/" style="font-size: 19.2px; color: #818181">Nginx</a> <a href="/tags/OKHttp/" style="font-size: 12px; color: #ccc">OKHttp</a> <a href="/tags/ORM/" style="font-size: 12px; color: #ccc">ORM</a> <a href="/tags/Quartz/" style="font-size: 13.8px; color: #b9b9b9">Quartz</a> <a href="/tags/Redis/" style="font-size: 12px; color: #ccc">Redis</a> <a href="/tags/SEO/" style="font-size: 12px; color: #ccc">SEO</a> <a href="/tags/SLF4J/" style="font-size: 12px; color: #ccc">SLF4J</a> <a href="/tags/SQL-Server/" style="font-size: 15.6px; color: #a7a7a7">SQL Server</a> <a href="/tags/Servlet/" style="font-size: 17.4px; color: #949494">Servlet</a> <a href="/tags/Shell/" style="font-size: 12px; color: #ccc">Shell</a> <a href="/tags/Shiro/" style="font-size: 12px; color: #ccc">Shiro</a> <a href="/tags/Spring/" style="font-size: 22.8px; color: #5c5c5c">Spring</a> <a href="/tags/Spring-Boot/" style="font-size: 13.8px; color: #b9b9b9">Spring Boot</a> <a href="/tags/Spring-MVC/" style="font-size: 24.6px; color: #494949">Spring MVC</a> <a href="/tags/Struts2/" style="font-size: 19.2px; color: #818181">Struts2</a> <a href="/tags/Tomcat/" style="font-size: 21px; color: #6f6f6f">Tomcat</a> <a href="/tags/Toolbar/" style="font-size: 12px; color: #ccc">Toolbar</a> <a href="/tags/Travis-CI/" style="font-size: 15.6px; color: #a7a7a7">Travis-CI</a> <a href="/tags/UML/" style="font-size: 12px; color: #ccc">UML</a> <a href="/tags/VMware/" style="font-size: 12px; color: #ccc">VMware</a> <a href="/tags/XML/" style="font-size: 15.6px; color: #a7a7a7">XML</a> <a href="/tags/jQuery/" style="font-size: 13.8px; color: #b9b9b9">jQuery</a> <a href="/tags/shadowsocks/" style="font-size: 12px; color: #ccc">shadowsocks</a> <a href="/tags/东方project/" style="font-size: 12px; color: #ccc">东方project</a> <a href="/tags/二进制/" style="font-size: 13.8px; color: #b9b9b9">二进制</a> <a href="/tags/反射/" style="font-size: 12px; color: #ccc">反射</a> <a href="/tags/发票/" style="font-size: 13.8px; color: #b9b9b9">发票</a> <a href="/tags/工具/" style="font-size: 19.2px; color: #818181">工具</a> <a href="/tags/数据库/" style="font-size: 12px; color: #ccc">数据库</a> <a href="/tags/最佳实践/" style="font-size: 30px; color: #111">最佳实践</a> <a href="/tags/正则表达式/" style="font-size: 12px; color: #ccc">正则表达式</a> <a href="/tags/源码分析/" style="font-size: 22.8px; color: #5c5c5c">源码分析</a> <a href="/tags/生活/" style="font-size: 13.8px; color: #b9b9b9">生活</a> <a href="/tags/算法/" style="font-size: 26.4px; color: #363636">算法</a> <a href="/tags/编码规范/" style="font-size: 12px; color: #ccc">编码规范</a> <a href="/tags/翻译/" style="font-size: 13.8px; color: #b9b9b9">翻译</a> <a href="/tags/自定义View/" style="font-size: 19.2px; color: #818181">自定义View</a> <a href="/tags/计算机网络/" style="font-size: 12px; color: #ccc">计算机网络</a> <a href="/tags/设计模式/" style="font-size: 22.8px; color: #5c5c5c">设计模式</a> <a href="/tags/配置文件/" style="font-size: 12px; color: #ccc">配置文件</a> <a href="/tags/金融/" style="font-size: 12px; color: #ccc">金融</a>
@@ -698,16 +279,15 @@
       
     </div>
     
-
-
-
-    
     
     
   </div>
 
 
           </div>
+          
+
+
           
 
         </div>
@@ -730,7 +310,7 @@
 
       
 
-      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
@@ -738,259 +318,57 @@
               <p class="site-description motion-element" itemprop="description"></p>
           </div>
 
-          
-            <nav class="site-state motion-element">
-              
-                <div class="site-state-item site-state-posts">
-                
-                  <a href="/archives/">
-                
-                    <span class="site-state-item-count">177</span>
-                    <span class="site-state-item-name">日志</span>
-                  </a>
-                </div>
-              
+          <nav class="site-state motion-element">
 
-              
-                
-                
-                <div class="site-state-item site-state-categories">
-                  <a href="/categories/index.html">
-                    
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                    <span class="site-state-item-count">20</span>
-                    <span class="site-state-item-name">分类</span>
-                  </a>
-                </div>
-              
-
-              
-                
-                
-                <div class="site-state-item site-state-tags">
-                  <a href="/tags/index.html">
-                    
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                    <span class="site-state-item-count">78</span>
-                    <span class="site-state-item-name">标签</span>
-                  </a>
-                </div>
-              
-            </nav>
-          
-
-          
-
-          
-
-          
-
-          
-          
-
-          
             
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">177</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">20</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">78</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
           
+
+          
+
+          
+          
+
+          
+          
+
           
 
         </div>
-      </div>
+      </section>
 
       
 
@@ -1007,18 +385,16 @@
     <footer id="footer" class="footer">
       <div class="footer-inner">
         <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
-  <span class="with-love" id="animate">
+  <span class="with-love">
     <i class="fa fa-user"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">Wkang</span>
 
   
-
-  
 </div>
 
 
-  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.8.0</div>
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
 
 
 
@@ -1026,13 +402,12 @@
 
 
 
-  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> v6.7.0</div>
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
 
 
 
 
         
-
 
 
 
@@ -1053,14 +428,11 @@
 
     
 
-    
-
-    
   </div>
 
   
 
-<script>
+<script type="text/javascript">
   if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
     window.Promise = null;
   }
@@ -1074,17 +446,7 @@
 
 
 
-
-
-
-
-
   
-    
-    
-  
-  <script color="0,0,255" opacity="0.5" zindex="-1" count="99" src="/lib/canvas-nest/canvas-nest.min.js"></script>
-
 
 
 
@@ -1098,59 +460,97 @@
 
 
   
-  <script src="/lib/jquery/index.js?v=2.1.3"></script>
-
   
-  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
-
-  
-  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-
-
-  
-
-
-  <script src="/js/src/utils.js?v=6.7.0"></script>
-
-  <script src="/js/src/motion.js?v=6.7.0"></script>
-
-
-
-  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
   
 
   
-  <script src="/js/src/scrollspy.js?v=6.7.0"></script>
-<script src="/js/src/post-details.js?v=6.7.0"></script>
-
-
-
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
   
 
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
 
-  <script src="/js/src/bootstrap.js?v=6.7.0"></script>
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
 
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
 
 
   
 
 
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
 
   
+  
 
-
-
-
-
-
-
-
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
 
 
 
   
 
 
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
 
 
 
@@ -1161,17 +561,6 @@
   
 
   
-
-  
-
-  
-
-  
-
-  
-
-  
-
   
 
   
