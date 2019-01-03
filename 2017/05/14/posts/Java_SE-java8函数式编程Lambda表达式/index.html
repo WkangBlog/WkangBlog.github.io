@@ -1,0 +1,1063 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=6.7.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.7.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.7.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.7.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.7.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '6.7.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="前言在开发安卓的时候就通过RxJava进行过函数式编程。java源码中的建造者模式也是类似函数式编程的玩意。举个例子1234String url = builder.baseUrl(url)                    .param(&quot;username&quot;, &quot;admin&quot;)                    .param(&quot;password&quot;, &quot;admin&quot;)">
+<meta name="keywords" content="Java8">
+<meta property="og:type" content="article">
+<meta property="og:title" content="java8函数式编程Lambda表达式">
+<meta property="og:url" content="http://yoursite.com/2017/05/14/posts/Java_SE-java8函数式编程Lambda表达式/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="前言在开发安卓的时候就通过RxJava进行过函数式编程。java源码中的建造者模式也是类似函数式编程的玩意。举个例子1234String url = builder.baseUrl(url)                    .param(&quot;username&quot;, &quot;admin&quot;)                    .param(&quot;password&quot;, &quot;admin&quot;)">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-12-12T16:14:51.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="java8函数式编程Lambda表达式">
+<meta name="twitter:description" content="前言在开发安卓的时候就通过RxJava进行过函数式编程。java源码中的建造者模式也是类似函数式编程的玩意。举个例子1234String url = builder.baseUrl(url)                    .param(&quot;username&quot;, &quot;admin&quot;)                    .param(&quot;password&quot;, &quot;admin&quot;)">
+
+
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/05/14/posts/Java_SE-java8函数式编程Lambda表达式/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>java8函数式编程Lambda表达式 | Hexo</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hexo</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Startseite</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>Über</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>Tags</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>Kategorien</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archiv</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-commonweal">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/404/" rel="section"><i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br>Commonweal 404</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/14/posts/Java_SE-java8函数式编程Lambda表达式/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">java8函数式编程Lambda表达式
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+
+              
+                
+              
+
+              <time title="Post created: 2017-05-14 10:56:53" itemprop="dateCreated datePublished" datetime="2017-05-14T10:56:53+08:00">2017-05-14</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Updated at: 2018-12-13 00:14:51" itemprop="dateModified" datetime="2018-12-13T00:14:51+08:00">2018-12-13</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">in</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/Java-SE/" itemprop="url" rel="index"><span itemprop="name">Java SE</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>在开发安卓的时候就通过<code>RxJava</code>进行过函数式编程。java源码中的建造者模式也是类似函数式编程的玩意。<br>举个例子<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">String url = builder.baseUrl(url)</span><br><span class="line">                    .param(<span class="string">"username"</span>, <span class="string">"admin"</span>)</span><br><span class="line">                    .param(<span class="string">"password"</span>, <span class="string">"admin"</span>)</span><br><span class="line">                    .build();</span><br></pre></td></tr></table></figure></p>
+<a id="more"></a>
+<h1 id="Lambda表达式-使代码更简洁"><a href="#Lambda表达式-使代码更简洁" class="headerlink" title="Lambda表达式-使代码更简洁"></a>Lambda表达式-使代码更简洁</h1><p>通过<code>匿名内部类</code>，我们可以减少类的数量，并且逻辑更清晰。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">new</span> Thread(<span class="keyword">new</span> Runnable() &#123;</span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            System.out.println(<span class="string">"测试"</span>);     </span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>但是，这明显还不够简洁。<code>Runable</code>只有一个方法<code>run()</code>，每次都要重复相同的代码。<br>java8提供了Lambda表达式。用于满足这种<code>只有一个方法的接口</code>的简洁写法。<br>原本<code>5</code>行代码浓缩成了<code>1</code>行！<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">new</span> Thread(() -&gt; System.out.println(<span class="string">"测试"</span>));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>常见的表达式<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">Runable noArguments = () -&gt; System.out.println(<span class="string">"无参Lambda"</span>);</span><br><span class="line">ActionListener oneArguments = event -&gt; System.out.println(<span class="string">"含有一个参数的Lambda"</span>);</span><br><span class="line">Runable multiStatement = () -&gt; &#123;</span><br><span class="line">    System.out.println(<span class="string">"含有多行"</span>);</span><br><span class="line">    System.out.println(<span class="string">"代码的Lambda"</span>);</span><br><span class="line">&#125;;</span><br><span class="line">BinaryOperator(Long) multiArgument = (x,y) -&gt; &#123;</span><br><span class="line">    System.out.println(<span class="string">"含有多个参数的Lambda"</span>);</span><br><span class="line">    <span class="keyword">return</span> x+y;</span><br><span class="line">&#125;</span><br><span class="line">BinaryOperator(Long) multiArgument = (Long x, Long y) -&gt; &#123;</span><br><span class="line">    System.out.println(<span class="string">"含有多个指定类型的参数的Lambda"</span>);</span><br><span class="line">    <span class="keyword">return</span> x+y;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h1 id="Stream流-新的迭代方式"><a href="#Stream流-新的迭代方式" class="headerlink" title="Stream流-新的迭代方式"></a>Stream流-新的迭代方式</h1><p>在java8以前，迭代一般都是通过<code>for</code>或者<code>while</code>实现。<br>在java5，产生了<code>foreach</code>的迭代方式。<br>现在，java8提供了新的<code>Stream</code>的迭代方式。</p>
+<h2 id="基本使用"><a href="#基本使用" class="headerlink" title="基本使用"></a>基本使用</h2><p><strong>collect(toList())创建集合</strong><br>通过<code></code><br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"> <span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    List&lt;Integer&gt; list = Stream.of(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>).collect(Collectors.toList());</span><br><span class="line">    System.out.println(list);<span class="comment">//[1, 2, 3, 4, 5, 6, 7, 8, 9]</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><strong>filter()过滤</strong><br>有时候需要获取满足条件的集合元素。<br>比如大于5的元素<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    List&lt;String&gt; list = Stream.of(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>)</span><br><span class="line">            .filter(x -&gt; x&gt;<span class="number">5</span>)</span><br><span class="line">            .collect(Collectors.toList());</span><br><span class="line">    System.out.println(list);<span class="comment">//[6, 7, 8, 9]</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><strong>max()最大值与min()最小值</strong><br>这里的最大值最小值不只是指长度或数值上的大小。可以进行自定义排序的指标。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">@Test</span><br><span class="line">public void test() &#123;</span><br><span class="line">    String max = Stream.of(&quot;i&quot;,&quot;love&quot;,&quot;you&quot;).max(Comparator.comparing(String::length)).get();</span><br><span class="line">    String min = Stream.of(&quot;i&quot;,&quot;love&quot;,&quot;you&quot;).min(Comparator.comparing(String::length)).get();</span><br><span class="line">    System.out.println(max+&quot;,&quot;+min);// love, i</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="Map转换"><a href="#Map转换" class="headerlink" title="Map转换"></a>Map转换</h2><p><strong>map()转换类型</strong><br>将<code>int</code>转换为<code>String</code>类型<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">@Test</span><br><span class="line">public void test() &#123;</span><br><span class="line">    List&lt;String&gt; list = Stream.of(1, 2, 3, 4, 5, 6, 7, 8, 9)</span><br><span class="line">            .map(x -&gt; &quot;数字&quot;+x)</span><br><span class="line">            .collect(Collectors.toList());</span><br><span class="line">    System.out.println(list);</span><br><span class="line">    //[数字1, 数字2, 数字3, 数字4, 数字5, 数字6, 数字7, 数字8, 数字9]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><strong>flatMap()转换类型</strong><br>将<code>多个Stream</code>压缩成<code>一个Stream</code><br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    List&lt;Integer&gt; list1 = Stream.of(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>).collect(Collectors.toList());</span><br><span class="line">    List&lt;Character&gt; list2 = Stream.of(<span class="string">'a'</span>,<span class="string">'b'</span>,<span class="string">'c'</span>).collect(Collectors.toList());</span><br><span class="line">    </span><br><span class="line">    System.out.println(Stream.of(list1, list2)</span><br><span class="line">                                .flatMap(list -&gt; list.stream())</span><br><span class="line">                              <span class="comment">//.flatMap(Collection::stream) //方法引用</span></span><br><span class="line">                                .collect(Collectors.toList()));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="reduce-一组数据生成一个数据"><a href="#reduce-一组数据生成一个数据" class="headerlink" title="reduce()一组数据生成一个数据"></a>reduce()一组数据生成一个数据</h2><p>上面的<code>max()</code>和<code>min()</code>都是<code>reduce操作</code><br>求和例子，<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">@Test</span><br><span class="line">public void test() &#123;</span><br><span class="line">    int sum = Stream.of(1, 2, 3, 4, 5, 6, 7, 8, 9)</span><br><span class="line">                    .reduce(0, (acc, element) -&gt; acc+element);</span><br><span class="line">//  long sum2 = Stream.of(1, 2, 3, 4, 5, 6, 7, 8, 9).mapToInt(x -&gt; x).summaryStatistics().getSum();                    </span><br><span class="line">//  开发时应使用这种方式求和</span><br><span class="line">    System.out.println(sum);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h1 id="方法引用"><a href="#方法引用" class="headerlink" title="::方法引用"></a>::方法引用</h1><p>上面的flatMap方法中，使用了<code>Collection::stream</code>，类似C++的语法。<br>等价于<code>list -&gt; list.stream()</code>。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    List&lt;String&gt; list1 = Stream.of(<span class="string">"i"</span>, <span class="string">"love"</span>,<span class="string">"you"</span>).collect(Collectors.toList());</span><br><span class="line">    String max = list1.stream().max(Comparator.comparing(String::length)).get();</span><br><span class="line">    System.out.println(max);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h1 id="collect收集器的使用"><a href="#collect收集器的使用" class="headerlink" title="collect收集器的使用"></a>collect收集器的使用</h1><p>上面的例子中有一个<code>collect</code>方法，可以将<code>Stream</code>转化为<code>List</code>等集合对象。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    List&lt;String&gt; list = Stream.of(<span class="string">"i"</span>, <span class="string">"love"</span>,<span class="string">"you"</span>).collect(Collectors.toList());</span><br><span class="line">    System.out.println(list);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><strong> 转化为指定集合类型 </strong><br>有时候需要指定特定的集合比如<code>TreeSet</code>之类的。需要手动指定产生集合。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    Set&lt;String&gt; set = Stream.of(<span class="string">"i"</span>, <span class="string">"love"</span>,<span class="string">"you"</span>)</span><br><span class="line">                .collect(Collectors.toCollection(TreeSet::<span class="keyword">new</span>));</span><br><span class="line">    System.out.println(set);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><strong> 转化为值 </strong><br>有时候需要按照某种顺序找到一个值。比如找一个最长的单词。<br>这个例子在实际开发中不使用。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">reduce</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    String max = Stream.of(<span class="string">"i"</span>, <span class="string">"love"</span>,<span class="string">"you"</span>)</span><br><span class="line">            .collect(Collectors.maxBy(</span><br><span class="line">                                Comparator.comparing(String::length)</span><br><span class="line">                    ))</span><br><span class="line">            .get();</span><br><span class="line">    System.out.println(max);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><strong> 集合生成字符串 </strong><br>有时候需要将集合的所有字符提取出来，组合在一起<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">reduce</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    String str = Stream.of(<span class="string">"i"</span>, <span class="string">"love"</span>,<span class="string">"you"</span>).collect(Collectors.joining(<span class="string">"*"</span>,<span class="string">"("</span>,<span class="string">")"</span>));</span><br><span class="line">    System.out.println(str);<span class="comment">//(i*love*you)</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><strong> 数据分块分组 </strong><br><code>partitioningBy</code>将Stream分成两个部分，存储在一个Map中，以<code>true</code>和<code>false</code>为键。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">@Test</span><br><span class="line">public void test() &#123;</span><br><span class="line">    Map&lt;Boolean, List&lt;String&gt;&gt; map = Stream.of(&quot;i&quot;, &quot;love&quot;,&quot;you&quot;)</span><br><span class="line">            .collect(Collectors.partitioningBy(str-&gt;str.length()&gt;3));</span><br><span class="line">    for(Map.Entry entry : map.entrySet())&#123;</span><br><span class="line">        System.out.println(entry.getKey()+&quot;,&quot;+entry.getValue());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>大部分情况需要分成不止两个部分，可能更多。<br><code>groupingBy</code>可以将Stream分成多个部分，下面的例子是将相同长度的字符串存储到一起。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">@Test</span><br><span class="line">public void test() &#123;</span><br><span class="line">    Map&lt;Integer, List&lt;String&gt;&gt; map = Stream.of(&quot;i&quot;, &quot;love&quot;,&quot;you&quot;, &quot;hhh&quot;)</span><br><span class="line">        .collect(Collectors.groupingBy(String::length));</span><br><span class="line">    for(Map.Entry entry : map.entrySet())&#123;</span><br><span class="line">        System.out.println(entry.getKey()+&quot;,&quot;+entry.getValue());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><strong> 下游收集器 </strong><br>使用<code>groupingBy</code>的时候发现有多个重载方法。<br><code>groupingBy(Function classifier, Collector downstream)</code>提供了一个下游收集器<code>downstream</code>。<br>可以将<code>classifier</code>收集的流，通过downstream转化。<br>如下面代码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">@Test</span><br><span class="line">public void test()&#123;</span><br><span class="line">    List&lt;String&gt; list = Stream.of(&quot;i&quot;,&quot;love&quot;,&quot;you&quot;,&quot;too&quot;).collect(Collectors.toList());</span><br><span class="line">    Map&lt;Integer, Long&gt; map = list.stream().collect(</span><br><span class="line">        Collectors.groupingBy(String::length,   //根据字符串长度转化为map集合</span><br><span class="line">                                Collectors.counting()));    //处理上游的map集合，转化为集合的个数</span><br><span class="line">    for(Map.Entry entry : map.entrySet())&#123;</span><br><span class="line">        System.out.println(entry.getKey()+&quot;,&quot;+entry.getValue());</span><br><span class="line">    &#125;</span><br><span class="line">    // 1, 1</span><br><span class="line">    // 3, 2</span><br><span class="line">    // 4, 1</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Java8/" rel="tag"># Java8</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/05/14/posts/MySQL-MySQL获取字段注释comment/" rel="next" title="MySQL获取字段注释comment">
+                <i class="fa fa-chevron-left"></i> MySQL获取字段注释comment
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/05/16/posts/Java_Web-HttpServlet源码详解/" rel="prev" title="HttpServlet源码详解">
+                HttpServlet源码详解 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Inhaltsverzeichnis
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Übersicht
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">John Doe</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">177</span>
+                    <span class="site-state-item-name">Artikel</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">20</span>
+                    <span class="site-state-item-name">Kategorien</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">78</span>
+                    <span class="site-state-item-name">Tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Lambda表达式-使代码更简洁"><span class="nav-number">2.</span> <span class="nav-text">Lambda表达式-使代码更简洁</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Stream流-新的迭代方式"><span class="nav-number">3.</span> <span class="nav-text">Stream流-新的迭代方式</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#基本使用"><span class="nav-number">3.1.</span> <span class="nav-text">基本使用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Map转换"><span class="nav-number">3.2.</span> <span class="nav-text">Map转换</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#reduce-一组数据生成一个数据"><span class="nav-number">3.3.</span> <span class="nav-text">reduce()一组数据生成一个数据</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#方法引用"><span class="nav-number">4.</span> <span class="nav-text">::方法引用</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#collect收集器的使用"><span class="nav-number">5.</span> <span class="nav-text">collect收集器的使用</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">Erstellt mit  <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v6.7.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=6.7.0"></script>
+
+  <script src="/js/src/motion.js?v=6.7.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/affix.js?v=6.7.0"></script>
+
+  <script src="/js/src/schemes/pisces.js?v=6.7.0"></script>
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=6.7.0"></script>
+<script src="/js/src/post-details.js?v=6.7.0"></script>
+
+
+
+  
+
+
+  <script src="/js/src/bootstrap.js?v=6.7.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

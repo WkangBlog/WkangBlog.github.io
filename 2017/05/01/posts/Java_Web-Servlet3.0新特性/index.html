@@ -1,0 +1,1130 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=6.7.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.7.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.7.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.7.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.7.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '6.7.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="前言Servlet3.0使用了注解来配置web应用，极大缩减了web.xml的配置。">
+<meta name="keywords" content="Servlet">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Servlet3.0新特性">
+<meta property="og:url" content="http://yoursite.com/2017/05/01/posts/Java_Web-Servlet3.0新特性/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="前言Servlet3.0使用了注解来配置web应用，极大缩减了web.xml的配置。">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-12-12T16:14:51.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Servlet3.0新特性">
+<meta name="twitter:description" content="前言Servlet3.0使用了注解来配置web应用，极大缩减了web.xml的配置。">
+
+
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/05/01/posts/Java_Web-Servlet3.0新特性/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>Servlet3.0新特性 | Hexo</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hexo</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Startseite</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>Über</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>Tags</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>Kategorien</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archiv</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-commonweal">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/404/" rel="section"><i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br>Commonweal 404</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/01/posts/Java_Web-Servlet3.0新特性/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Servlet3.0新特性
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+
+              
+                
+              
+
+              <time title="Post created: 2017-05-01 21:45:34" itemprop="dateCreated datePublished" datetime="2017-05-01T21:45:34+08:00">2017-05-01</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Updated at: 2018-12-13 00:14:51" itemprop="dateModified" datetime="2018-12-13T00:14:51+08:00">2018-12-13</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">in</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/Java-Web/" itemprop="url" rel="index"><span itemprop="name">Java Web</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p><code>Servlet3.0</code>使用了注解来配置<code>web</code>应用，极大缩减了<code>web.xml</code>的配置。<br><a id="more"></a></p>
+<h1 id="新增注解"><a href="#新增注解" class="headerlink" title="新增注解"></a>新增注解</h1><table>
+<thead>
+<tr>
+<th style="text-align:left">注解</th>
+<th style="text-align:left">作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><code>@WebServlet</code></td>
+<td style="text-align:left">修饰一个<code>Servlet</code>类</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>@WebFilter</code></td>
+<td style="text-align:left">修饰一个<code>Filter</code>类</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>@WebListener</code></td>
+<td style="text-align:left">修饰一个<code>Listener</code>类</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>@WebInitParam</code></td>
+<td style="text-align:left">为<code>Servlet</code>、<code>Filter</code>类配置参数</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>@MultipartConfig</code></td>
+<td style="text-align:left">指定<code>Servlet</code>处理文件上传</td>
+</tr>
+</tbody>
+</table>
+<h1 id="对Web模块支持"><a href="#对Web模块支持" class="headerlink" title="对Web模块支持"></a>对Web模块支持</h1><p><code>Servlet3.0</code>不再要求所有<code>Web</code>组件全部写在<code>web.xml</code>中。</p>
+<p>需要在<code>META-INF</code>中添加<code>Web</code>模块部署描述符<code>web-fragment.xml</code>。<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version="1.0" encoding="GBK" ?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">web-fragment</span> <span class="attr">xmlns</span>=<span class="string">"http://java.sun.com/xml/ns/javaee"</span></span></span><br><span class="line"><span class="tag">              <span class="attr">xmlns:xsi</span>=<span class="string">"http://www.w3.org/2001/XMLSchema-instance"</span></span></span><br><span class="line"><span class="tag">              <span class="attr">xsi:schemaLocation</span>=<span class="string">"http://java.sun.com/xml/ns/javaee</span></span></span><br><span class="line"><span class="tag"><span class="string">               http://java.sun.com/xml/ns/javaee/web-fragment_3_0.xsd</span></span></span><br><span class="line"><span class="tag"><span class="string">              version="</span><span class="attr">3.0</span>"&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">name</span>&gt;</span>模块名<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">ordering</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">after</span>&gt;</span><span class="comment">&lt;!-- 在哪些模块后加载 --&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">name</span>&gt;</span>模块1<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">others</span>/&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- others --&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">after</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">before</span>&gt;</span><span class="comment">&lt;!-- 在哪些模块前加载 --&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">name</span>&gt;</span>模块2<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">others</span>/&gt;</span></span><br><span class="line">            <span class="comment">&lt;!-- others --&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">before</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">ordering</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 配置Servlet、Filter、Listener --&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">web-fragment</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>也可以在<code>web.xml</code>中指定加载顺序<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">web-app</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">absolute-ordering</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">name</span>&gt;</span>模块名<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">others</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">absolute-ordering</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">web-app</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<h1 id="注解配置Web组件"><a href="#注解配置Web组件" class="headerlink" title="注解配置Web组件"></a>注解配置Web组件</h1><blockquote>
+<p>不能在<code>web.xml</code>的<code>&lt;web-app/&gt;</code>指定<code>metadata-complete=&quot;true&quot;</code></p>
+</blockquote>
+<p>如果<code>metadata-complete</code>设置为<code>true</code>，部署工具必须必须忽略存在于应用的类文件中的所有<code>servlet</code>注解和<code>web fragments</code>。<br>如果<code>metadata-complete</code>属性没有指定或设置为<code>false</code>，部署工具必须检查应用的类文件的注解，并扫描<code>web fragments</code>。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Servlet</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyServlet</span> <span class="keyword">extends</span> <span class="title">HttpServlet</span></span>&#123;</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">@WebFilter</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyFilter</span> <span class="keyword">implements</span> <span class="title">Filter</span></span>&#123;</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">@WebListener</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyListener</span> <span class="keyword">implements</span> <span class="title">ServletContextAttributeListener</span></span>&#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="动态注册Web组件"><a href="#动态注册Web组件" class="headerlink" title="动态注册Web组件"></a>动态注册Web组件</h1><p><code>Servlet3.0</code>提供了<code>ServletContext</code>添加组件的方式<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/** 添加Servlet */</span> </span><br><span class="line"><span class="keyword">public</span> ServletRegistration.<span class="function">Dynamic <span class="title">addServlet</span><span class="params">(String servletName, </span></span></span><br><span class="line"><span class="function"><span class="params">    String className)</span></span>; </span><br><span class="line"><span class="keyword">public</span> ServletRegistration.<span class="function">Dynamic <span class="title">addServlet</span><span class="params">(String servletName, </span></span></span><br><span class="line"><span class="function"><span class="params">    Servlet servlet)</span></span>; </span><br><span class="line"><span class="keyword">public</span> ServletRegistration.<span class="function">Dynamic <span class="title">addServlet</span><span class="params">(String servletName, </span></span></span><br><span class="line"><span class="function"><span class="params">    Class&lt;? extends Servlet&gt; servletClass)</span></span>; </span><br><span class="line"></span><br><span class="line"><span class="comment">/** 添加Filter */</span> </span><br><span class="line"><span class="keyword">public</span> FilterRegistration.<span class="function">Dynamic <span class="title">addFilter</span><span class="params">(String filterName, </span></span></span><br><span class="line"><span class="function"><span class="params">    String className)</span></span>; </span><br><span class="line"><span class="keyword">public</span> FilterRegistration.<span class="function">Dynamic <span class="title">addFilter</span><span class="params">(String filterName, Filter filter)</span></span>; </span><br><span class="line"><span class="keyword">public</span> FilterRegistration.<span class="function">Dynamic <span class="title">addFilter</span><span class="params">(String filterName, </span></span></span><br><span class="line"><span class="function"><span class="params">    Class&lt;? extends Filter&gt; filterClass)</span></span>; </span><br><span class="line"></span><br><span class="line"><span class="comment">/** 添加Listener */</span> </span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">addListener</span><span class="params">(String className)</span></span>; </span><br><span class="line"><span class="keyword">public</span> &lt;T extends EventListener&gt; <span class="function"><span class="keyword">void</span> <span class="title">addListener</span><span class="params">(T t)</span></span>; </span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">addListener</span><span class="params">(Class&lt;? extends EventListener&gt; listenerClass)</span></span>;</span><br></pre></td></tr></table></figure></p>
+<h2 id="通过ServletContextListener注册"><a href="#通过ServletContextListener注册" class="headerlink" title="通过ServletContextListener注册"></a>通过ServletContextListener注册</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//这里不用@Servlet注解配置</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyServlet</span> <span class="keyword">extends</span> <span class="title">HttpServlet</span></span>&#123;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">InitListener</span> <span class="keyword">implements</span> <span class="title">ServletContextListener</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">contextDestroyed</span><span class="params">(ServletContextEvent event)</span> </span>&#123;  </span><br><span class="line">        System.out.println(<span class="string">"服务器关闭时会调用该方法"</span>);  </span><br><span class="line">    &#125;  </span><br><span class="line">  </span><br><span class="line">    <span class="meta">@Override</span>  </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">contextInitialized</span><span class="params">(ServletContextEvent event)</span> </span>&#123;  </span><br><span class="line">        System.out.println(<span class="string">"服务器启动时会调用该方法"</span>);  </span><br><span class="line">        ServletContext context = contextEvent.getServletContext();  </span><br><span class="line">          </span><br><span class="line">        <span class="comment">//注册一个没有使用@WebServlet注解的类为Servlet</span></span><br><span class="line">        ServletRegistration register = context.addServlet(<span class="string">"helloServlet"</span>, HelloServlet.class);  </span><br><span class="line">          </span><br><span class="line">        <span class="comment">//为动态注册的Servlet设定访问URL(可设定多个)  </span></span><br><span class="line">        register.addMapping(<span class="string">"/hello"</span>, <span class="string">"/servlet/hello"</span>);  </span><br><span class="line">          </span><br><span class="line">        <span class="comment">//为动态注册的Servlet设定初始参数</span></span><br><span class="line">        <span class="comment">//相当于以前的&lt;init-param&gt;</span></span><br><span class="line">        register.setInitParameter(<span class="string">"logPath"</span>, <span class="string">"/app/log"</span>);  </span><br><span class="line">        register.setInitParameter(<span class="string">"savePath"</span>, <span class="string">"/app/upload"</span>);  </span><br><span class="line">    &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="通过ServletContainerInitializer注册"><a href="#通过ServletContainerInitializer注册" class="headerlink" title="通过ServletContainerInitializer注册"></a>通过ServletContainerInitializer注册</h2><p>添加<code>META-INF/services/javax.servlet.ServletContainerInitializer</code>文件。<br>文件内容为<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">com.ahao.demo.MyServletContainerInitializer</span><br></pre></td></tr></table></figure></p>
+<p>指定自定义的<code>ServletContainerInitializer</code>。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@HandlesTypes</span>(&#123; WebApplicationInitializer.class &#125;) </span><br><span class="line"><span class="comment">//@HandlesTypes(&#123; HttpServlet.class &#125;)</span></span><br><span class="line"><span class="comment">//实现或者继承HandlesTypes注解中的类的都会被加载</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyServletContainerInitializer</span> <span class="keyword">implements</span> <span class="title">ServletContainerInitializer</span> </span>&#123; </span><br><span class="line"></span><br><span class="line">    <span class="comment">//以Set集合的方式传递注解中指定的类型的所有子类(包括子接口、实现类等)的class对象</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onStartup</span><span class="params">(Set&lt;Class&lt;?&gt;&gt; c, ServletContext servletContext)</span></span></span><br><span class="line"><span class="function">                            <span class="keyword">throws</span> ServletException </span>&#123;</span><br><span class="line">        <span class="comment">// 动态注册Servlet</span></span><br><span class="line">        ServletContext context = sce.getServletContext();</span><br><span class="line">        ServletRegistration.Dynamic servlet = context.addServlet(<span class="string">"myServlet"</span>, MyServlet.class); </span><br><span class="line">        dynamicServlet.addMapping(<span class="string">"/myServlet"</span>);</span><br><span class="line">        dynamicServlet.setAsyncSupported(<span class="keyword">true</span>);</span><br><span class="line">        dynamicServlet.setLoadOnStartup(<span class="number">1</span>);</span><br><span class="line">        <span class="comment">// 动态注册Filter</span></span><br><span class="line">        FilterRegistration.Dynamic filter = context.addFilter(<span class="string">"MyFilter"</span>, MyFilter.class);</span><br><span class="line">        <span class="comment">// 动态注册Listener</span></span><br><span class="line">        context.addListener(<span class="string">"com.ahao.demo.MyListener"</span>);</span><br><span class="line">  &#125; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h1 id="文件上传"><a href="#文件上传" class="headerlink" title="文件上传"></a>文件上传</h1><p><code>HttpServletRequest</code>提供处理文件上传的支持。</p>
+<ol>
+<li><code>Part getPart(String name)</code></li>
+<li><code>Collection&lt;Part&gt; getParts()</code></li>
+</ol>
+<p><code>Part</code>对应一个文件上传域，支持访问文件类型、大小、输入流等。<br>文件上传需要给<code>form</code>表单添加<code>enctype</code>属性，该属性有三个值：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">属性值</th>
+<th style="text-align:left">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><code>application/x-www-form-urlencoded</code></td>
+<td style="text-align:left">默认编码方式，对<code>form</code>的<code>value</code>属性进行<code>URL</code>编码</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>multipart/form-data</code></td>
+<td style="text-align:left">二进制方式处理表单数据，上传文件用</td>
+</tr>
+<tr>
+<td style="text-align:left"><code>text/plain</code></td>
+<td style="text-align:left">适用于直接通过表单发送邮件</td>
+</tr>
+</tbody>
+</table>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">action</span>=<span class="string">"upload"</span> <span class="attr">method</span>=<span class="string">"post"</span> <span class="attr">enctype</span>=<span class="string">"multipart/form-data"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"file"</span> <span class="attr">name</span>=<span class="string">"myfile"</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"submit"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>在<code>Servlet</code>中处理上传数据，使用<code>@MultipartConfig</code>修饰，或者在<code>web.xml</code>中<code>&lt;servlet&gt;</code>标签中添加<code>&lt;multipart-config/&gt;</code>子标签<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@WebServlet</span>(name=<span class="string">"upload"</span>,urlPatterns=&#123;<span class="string">"/upload"</span>&#125;)</span><br><span class="line"><span class="meta">@MultipartConfig</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UploadServlet</span> <span class="keyword">extends</span> <span class="title">HttpServlet</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">doPost</span><span class="params">(HttpServletRequest request,HttpServletResponse response)</span></span>&#123;</span><br><span class="line">        Part part = request.getPart(<span class="string">"myfile"</span>);</span><br><span class="line">        out.println(<span class="string">"文件类型:"</span>+part.getContentType()+<span class="string">"&lt;br/&gt;"</span>);</span><br><span class="line">        out.println(<span class="string">"文件大小:"</span>+part.getSize()+<span class="string">"&lt;br/&gt;"</span>);</span><br><span class="line">        part.write(getServletContext().getRealPath(<span class="string">"/uploadFiles"</span>)+<span class="string">"/"</span>+<span class="string">"myfile"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h1 id="异步处理"><a href="#异步处理" class="headerlink" title="异步处理"></a>异步处理</h1><blockquote>
+<p>支持<code>Servlet</code>、<code>Filter</code>。</p>
+</blockquote>
+<p>当<code>Servlet</code>执行耗时操作时，必须等完成操作才能生成响应。<br><code>Servlet3.0</code>允许<code>Servlet</code>创建一个线程去执行耗时操作。</p>
+<h2 id="先要给Servlet配置允许异步操作"><a href="#先要给Servlet配置允许异步操作" class="headerlink" title="先要给Servlet配置允许异步操作"></a>先要给<code>Servlet</code>配置允许异步操作</h2><ul>
+<li><p>在<code>xml</code>中配置：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">servlet</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">servlet-name</span>&gt;</span>MyServlet<span class="tag">&lt;/<span class="name">servlet-name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">async-supported</span>&gt;</span>true<span class="tag">&lt;/<span class="name">async-supported</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">servlet</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在注解中配置：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@WebServlet</span>(urlPattern=<span class="string">"/async"</span>,asyncSupported=<span class="keyword">true</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AsyncServlet</span> <span class="keyword">extends</span> <span class="title">HttpServlet</span></span>&#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="通过ServletRequest创建AsyncContext对象"><a href="#通过ServletRequest创建AsyncContext对象" class="headerlink" title="通过ServletRequest创建AsyncContext对象"></a>通过ServletRequest创建AsyncContext对象</h2><p>通过<code>AsyncContext</code>类实现，重复调用创建方法得到同一个<code>AsyncContext</code>对象。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@WebServlet</span>(urlPattern=<span class="string">"/async"</span>,asyncSupported=<span class="keyword">true</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AsyncServlet</span> <span class="keyword">extends</span> <span class="title">HttpServlet</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">doGet</span><span class="params">(HttpServletRequest request,HttpServletResponse response)</span></span>&#123;</span><br><span class="line">        AsyncContext actx = request.startAsync();</span><br><span class="line">        <span class="comment">//AsyncContext actx = reuqets.startAsync(request,response);</span></span><br><span class="line">        actx.setTimeout(<span class="number">3000</span>);<span class="comment">//设置超时时间</span></span><br><span class="line">        actx.start(<span class="keyword">new</span> Executor(actx));<span class="comment">//启用线程</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="异步监听"><a href="#异步监听" class="headerlink" title="异步监听"></a>异步监听</h2><p>当需要了解异步操作执行细节时，可以使用<code>AsyncListener</code>监听器。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//actx.addListener(new MyAsyncListener());</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyAsyncListener</span> <span class="keyword">implements</span> <span class="title">AsyncListener</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onStartAsync</span><span class="params">(AsyncContext event)</span></span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"异步调用开始"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onComplete</span><span class="params">(AsyncContext event)</span></span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"异步调用完成"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onError</span><span class="params">(AsyncContext event)</span></span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"异步调用异常"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onTimeout</span><span class="params">(AsyncContext event)</span></span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"异步调用超时"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Servlet/" rel="tag"># Servlet</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/03/28/posts/Java_Web-SpringMVC简单使用/" rel="next" title="SpringMVC简单使用">
+                <i class="fa fa-chevron-left"></i> SpringMVC简单使用
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/05/03/posts/Java_Web-Spring自动装配@Autowired的三种方式/" rel="prev" title="Spring自动装配@Autowired的三种方式">
+                Spring自动装配@Autowired的三种方式 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Inhaltsverzeichnis
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Übersicht
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">John Doe</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">177</span>
+                    <span class="site-state-item-name">Artikel</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">20</span>
+                    <span class="site-state-item-name">Kategorien</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">78</span>
+                    <span class="site-state-item-name">Tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#新增注解"><span class="nav-number">2.</span> <span class="nav-text">新增注解</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#对Web模块支持"><span class="nav-number">3.</span> <span class="nav-text">对Web模块支持</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#注解配置Web组件"><span class="nav-number">4.</span> <span class="nav-text">注解配置Web组件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#动态注册Web组件"><span class="nav-number">5.</span> <span class="nav-text">动态注册Web组件</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#通过ServletContextListener注册"><span class="nav-number">5.1.</span> <span class="nav-text">通过ServletContextListener注册</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#通过ServletContainerInitializer注册"><span class="nav-number">5.2.</span> <span class="nav-text">通过ServletContainerInitializer注册</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#文件上传"><span class="nav-number">6.</span> <span class="nav-text">文件上传</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#异步处理"><span class="nav-number">7.</span> <span class="nav-text">异步处理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#先要给Servlet配置允许异步操作"><span class="nav-number">7.1.</span> <span class="nav-text">先要给Servlet配置允许异步操作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#通过ServletRequest创建AsyncContext对象"><span class="nav-number">7.2.</span> <span class="nav-text">通过ServletRequest创建AsyncContext对象</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#异步监听"><span class="nav-number">7.3.</span> <span class="nav-text">异步监听</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">Erstellt mit  <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v6.7.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=6.7.0"></script>
+
+  <script src="/js/src/motion.js?v=6.7.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/affix.js?v=6.7.0"></script>
+
+  <script src="/js/src/schemes/pisces.js?v=6.7.0"></script>
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=6.7.0"></script>
+<script src="/js/src/post-details.js?v=6.7.0"></script>
+
+
+
+  
+
+
+  <script src="/js/src/bootstrap.js?v=6.7.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

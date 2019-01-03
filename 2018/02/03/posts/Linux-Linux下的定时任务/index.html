@@ -1,0 +1,1166 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=6.7.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.7.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.7.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.7.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.7.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '6.7.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="前言同步数据之类的工作需要定时去完成, 如果要人工去做, 那是费时费力的。既然是定时, 有规律可循, 那就应该使用编程完成, 而不是依赖人力完成。Java 有 Quartz 可以完成。Linux 和 Windows 也有相同的工具。">
+<meta name="keywords" content="Linux">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux下的定时任务">
+<meta property="og:url" content="http://yoursite.com/2018/02/03/posts/Linux-Linux下的定时任务/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="前言同步数据之类的工作需要定时去完成, 如果要人工去做, 那是费时费力的。既然是定时, 有规律可循, 那就应该使用编程完成, 而不是依赖人力完成。Java 有 Quartz 可以完成。Linux 和 Windows 也有相同的工具。">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-12-12T16:14:51.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Linux下的定时任务">
+<meta name="twitter:description" content="前言同步数据之类的工作需要定时去完成, 如果要人工去做, 那是费时费力的。既然是定时, 有规律可循, 那就应该使用编程完成, 而不是依赖人力完成。Java 有 Quartz 可以完成。Linux 和 Windows 也有相同的工具。">
+
+
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/02/03/posts/Linux-Linux下的定时任务/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>Linux下的定时任务 | Hexo</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hexo</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Startseite</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>Über</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>Tags</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>Kategorien</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archiv</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-commonweal">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/404/" rel="section"><i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br>Commonweal 404</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/02/03/posts/Linux-Linux下的定时任务/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Linux下的定时任务
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+
+              
+                
+              
+
+              <time title="Post created: 2018-02-03 17:17:46" itemprop="dateCreated datePublished" datetime="2018-02-03T17:17:46+08:00">2018-02-03</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Updated at: 2018-12-13 00:14:51" itemprop="dateModified" datetime="2018-12-13T00:14:51+08:00">2018-12-13</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">in</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>同步数据之类的工作需要定时去完成, 如果要人工去做, 那是费时费力的。<br>既然是定时, 有规律可循, 那就应该使用编程完成, 而不是依赖人力完成。<br><code>Java</code> 有 <code>Quartz</code> 可以完成。<code>Linux</code> 和 <code>Windows</code> 也有相同的工具。</p>
+<a id="more"></a>
+<h1 id="一次执行和多次执行"><a href="#一次执行和多次执行" class="headerlink" title="一次执行和多次执行"></a>一次执行和多次执行</h1><p>一次执行: <code>at</code>命令, 需要<code>atd</code>服务的支持。<br>多次执行: <code>crontab</code>命令, 需要<code>crond</code>服务的支持。</p>
+<h1 id="只执行一次的定时任务"><a href="#只执行一次的定时任务" class="headerlink" title="只执行一次的定时任务"></a>只执行一次的定时任务</h1><h2 id="打开atd服务"><a href="#打开atd服务" class="headerlink" title="打开atd服务"></a>打开atd服务</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 确保打开 atd</span></span><br><span class="line">[root@localhost ~]<span class="comment"># /etc/init.d/atd restart</span></span><br><span class="line">停止 atd：                                                 [确定]</span><br><span class="line">启动 atd：                                                 [确定]</span><br><span class="line"><span class="comment"># 将启动 atd 服务写入配置文件, 开机自动打开</span></span><br><span class="line">[root@localhost  ~]<span class="comment"># chkconfig atd on</span></span><br></pre></td></tr></table></figure>
+<h2 id="指定允许使用at的用户"><a href="#指定允许使用at的用户" class="headerlink" title="指定允许使用at的用户"></a>指定允许使用at的用户</h2><p><code>at</code> 有两个重要的文件, 用来限制可以使用<code>at</code>定时任务的用户。<br>一个用户名占一行。<br><code>/etc/at.allow</code>白名单和<code>/etc/at.deny</code>黑名单。<br><code>at</code>根据文件是否存在判断使用白名单或者黑名单。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center"><code>/etc/at.allow</code></th>
+<th style="text-align:center"><code>/etc/at.deny</code></th>
+<th style="text-align:center">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">√</td>
+<td style="text-align:center">无论是否存在</td>
+<td style="text-align:center">只允许<code>/etc/at.allow</code>的用户执行<code>at</code></td>
+</tr>
+<tr>
+<td style="text-align:center">×</td>
+<td style="text-align:center">√</td>
+<td style="text-align:center">禁止<code>/etc/at.deny</code>的用户执行<code>at</code></td>
+</tr>
+<tr>
+<td style="text-align:center">×</td>
+<td style="text-align:center">×</td>
+<td style="text-align:center">只有<code>root</code>能执行<code>at</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1. 创建一次性的5分钟后创建文件的定时任务</span></span><br><span class="line">[root@localhost ~]<span class="comment"># at -m now + 5 minutes </span></span><br><span class="line">at&gt; cat <span class="string">'now+5minutes file'</span> &gt; /tmp/now+5minutes.file</span><br><span class="line">at&gt; <span class="built_in">echo</span> <span class="string">'execute at task'</span> <span class="comment"># 使用 -m 选项可以将输出信息发送到email中</span></span><br><span class="line">at&gt; &lt;EOT&gt; <span class="comment"># 按Ctrl+D结束输入</span></span><br><span class="line">job 6 at 2017-10-19 04:31</span><br><span class="line"></span><br><span class="line"><span class="comment"># 2. 查看at定时任务队列(queue), 或者 at -l</span></span><br><span class="line">[root@localhost ~]<span class="comment"># atq</span></span><br><span class="line">6	2017-10-19 04:31 a root</span><br><span class="line"></span><br><span class="line"><span class="comment"># 3. 查询定时任务的内容, -c 指定任务号</span></span><br><span class="line">[root@localhost ~]<span class="comment"># at -c 6</span></span><br><span class="line"><span class="meta">#!/bin/sh</span></span><br><span class="line"><span class="comment"># 省略一堆环境变量</span></span><br><span class="line"><span class="comment"># 进入创建定时任务时所在的文件夹</span></span><br><span class="line"><span class="built_in">cd</span> /root || &#123;</span><br><span class="line">	 <span class="built_in">echo</span> <span class="string">'Execution directory inaccessible'</span> &gt;&amp;2</span><br><span class="line">	 <span class="built_in">exit</span> 1</span><br><span class="line">&#125;</span><br><span class="line">cat <span class="string">'now+5minutes file'</span> &gt; /tmp/now+5minutes.file</span><br><span class="line"><span class="built_in">echo</span> <span class="string">'execute at task'</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 4. 根据任务号6, 移除(remove)定时任务</span></span><br><span class="line">[root@localhost ~]<span class="comment"># atrm 6</span></span><br><span class="line"><span class="comment"># 5. 再次查看任务列表, 没有定时任务, 已经被删除了</span></span><br><span class="line">[root@localhost ~]<span class="comment"># atq</span></span><br></pre></td></tr></table></figure>
+<h2 id="其他的时间格式"><a href="#其他的时间格式" class="headerlink" title="其他的时间格式"></a>其他的时间格式</h2><p>除了用<code>now + 5 minutes</code>指定时间外, 还有其他的时间格式</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">时间格式</th>
+<th style="text-align:center">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">HH:MM</td>
+<td style="text-align:center">在HH时MM分执行一次</td>
+</tr>
+<tr>
+<td style="text-align:center">HH:MM YYYY-MM-DD</td>
+<td style="text-align:center">在YYYY年MM月DD日HH时MM分执行一次</td>
+</tr>
+<tr>
+<td style="text-align:center">HH:MM[am/pm] [Month] [Date]</td>
+<td style="text-align:center">在Month月Date日早上/下午HH时MM分执行一次, 月份是<strong>英文</strong>表示</td>
+</tr>
+<tr>
+<td style="text-align:center">HH:MM[am/pm] + number [minutes/hours/days/weeks]</td>
+<td style="text-align:center">在早上/下午HH时MM分的number分钟/小时/天/周后执行一次</td>
+</tr>
+</tbody>
+</table>
+<h2 id="batch空闲时运行"><a href="#batch空闲时运行" class="headerlink" title="batch空闲时运行"></a>batch空闲时运行</h2><p><code>batch</code>可以控制在工作负载低于<code>0.8</code>的时候执行一次定时任务。<br>工作负载为1, 说明这个时间点有1个程序在运行。<br>工作负载为2, 说明这个时间点有2个程序在运行。<br>负载越高, 说明CPU单位时间内切换程序的次数越多。<br>当然, 程序不可能一直在运算, 所以也有低于1的情况产生。<br><code>batch</code>可以避免在程序繁忙的时候执行一些操作, 比如定时重启。让定时任务延后运行。<br>可以看到最后一行代码是执行了<code>at</code>命令, 只是附带了一些参数而已。<br>和<code>at</code>命令一样的用法。<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]<span class="comment"># nl /usr/bin/batch</span></span><br><span class="line">42  <span class="built_in">exec</span> /usr/bin/at <span class="variable">$OPT_f</span> <span class="variable">$OPT_m</span> <span class="variable">$OPT_q</span> <span class="variable">$OPT_v</span> <span class="variable">$OPT_V</span> <span class="variable">$time_date_arg</span></span><br></pre></td></tr></table></figure></p>
+<h1 id="多次执行的定时任务"><a href="#多次执行的定时任务" class="headerlink" title="多次执行的定时任务"></a>多次执行的定时任务</h1><p><code>Java</code>下有<code>Quartz</code>这个定时任务框架, 也使用到了<code>corn</code>表达式。<br><code>Linux</code>下的多次执行的定时任务是通过<code>cron</code>服务实现的。<br>检查<code>crontab</code>工具是否安装: <code>crontab -l</code><br>检查<code>crond</code>服务是否启动: <code>service  crond status</code></p>
+<h2 id="指定允许使用cron的用户"><a href="#指定允许使用cron的用户" class="headerlink" title="指定允许使用cron的用户"></a>指定允许使用cron的用户</h2><p>和<code>at</code>一样, <code>cron</code>也有两个文件用来限制可以使用<code>cron</code>定时任务的用户。<br>一个用户名占一行。<br><code>/etc/cron.allow</code>白名单和<code>/etc/cron.deny</code>黑名单。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center"><code>/etc/cron.allow</code></th>
+<th style="text-align:center"><code>/etc/cron.deny</code></th>
+<th style="text-align:center">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">√</td>
+<td style="text-align:center">无论是否存在</td>
+<td style="text-align:center">只允许<code>/etc/cron.allow</code>的用户执行<code>cron</code></td>
+</tr>
+<tr>
+<td style="text-align:center">×</td>
+<td style="text-align:center">√</td>
+<td style="text-align:center">禁止<code>/etc/cron.deny</code>的用户执行<code>cron</code></td>
+</tr>
+<tr>
+<td style="text-align:center">×</td>
+<td style="text-align:center">×</td>
+<td style="text-align:center">只有<code>root</code>能执行<code>cron</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="配置文件"><a href="#配置文件" class="headerlink" title="配置文件"></a>配置文件</h2><p><code>/etc/crontab</code>文件存储了<strong>系统</strong>的定时任务<br><code>/var/spool/cron/用户名</code>文件存储了各个<strong>用户</strong>的定时任务<br><code>/etc/cron.allow</code>文件指定了允许执行定时任务的<strong>白名单</strong><br><code>/etc/cron.deny</code>文件指定了允许执行定时任务的<strong>黑名单</strong></p>
+<p>通过查看<code>/etc/crontab</code>可以看到看到<strong>系统</strong>的定时任务<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]<span class="comment"># cat /etc/crontab </span></span><br><span class="line">SHELL=/bin/bash</span><br><span class="line">PATH=/sbin:/bin:/usr/sbin:/usr/bin</span><br><span class="line">MAILTO=root</span><br><span class="line">HOME=/</span><br><span class="line"></span><br><span class="line"><span class="comment"># run-parts 后面跟一个目录, 可以执行目录下所有可执行文件</span></span><br><span class="line">01 * * * * root run-parts /etc/cron.hourly</span><br><span class="line">02 4 * * * root run-parts /etc/cron.daily</span><br><span class="line">22 4 * * 0 root run-parts /etc/cron.weekly</span><br><span class="line">42 4 1 * * root run-parts /etc/cron.monthly</span><br></pre></td></tr></table></figure></p>
+<h1 id="cron表达式"><a href="#cron表达式" class="headerlink" title="cron表达式"></a>cron表达式</h1><p>从上可以看出cron表达式的格式如下</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center"></th>
+<th style="text-align:center">分</th>
+<th style="text-align:center">时</th>
+<th style="text-align:center">日</th>
+<th style="text-align:center">月</th>
+<th style="text-align:center">星期几</th>
+<th style="text-align:center">用户名</th>
+<th style="text-align:center">命令</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">取值范围</td>
+<td style="text-align:center">0~59</td>
+<td style="text-align:center">0~23</td>
+<td style="text-align:center">1~31</td>
+<td style="text-align:center">1~12</td>
+<td style="text-align:center">0~7(0或7都是星期天)</td>
+<td style="text-align:center">可选</td>
+<td style="text-align:center">命令</td>
+</tr>
+</tbody>
+</table>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]<span class="comment"># who</span></span><br><span class="line">ahao     pts/1        2017-10-19 06:40 (192.168.94.121)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 1. 编辑任务, 每分钟输出一次hello到终端屏幕/dev/pts/1上</span></span><br><span class="line">[root@localhost ~]<span class="comment"># crontab -e</span></span><br><span class="line">*/1 * * * * <span class="built_in">echo</span> <span class="string">'hello'</span> &gt; /dev/pts/1</span><br><span class="line"></span><br><span class="line"><span class="comment"># 2. 查看定时任务列表</span></span><br><span class="line">[root@localhost ~]<span class="comment"># crontab -l</span></span><br><span class="line">*/1 * * * * <span class="built_in">echo</span> <span class="string">'hello'</span> &gt; /dev/pts/1</span><br><span class="line"></span><br><span class="line"><span class="comment"># 3. 清空定时任务, 单项删除用 crontab -e 编辑</span></span><br><span class="line">[root@localhost ~]<span class="comment"># crontab -r</span></span><br></pre></td></tr></table></figure>
+<h2 id="例子-1"><a href="#例子-1" class="headerlink" title="例子"></a>例子</h2><p>具体的用法, 只要看懂下面几个例子就行了<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 每天21:30重启apache</span></span><br><span class="line">30 21 * * * service httpd restart</span><br><span class="line"></span><br><span class="line"><span class="comment"># 每月1、10、22日4:45重启apache, 逗号表示或</span></span><br><span class="line">45 4 1,10,22 * * service httpd restart</span><br><span class="line"></span><br><span class="line"><span class="comment"># 每月的1-10日4:45重启apache, 横杠表示区间</span></span><br><span class="line">45 4 1-10 * * service httpd restart</span><br><span class="line"></span><br><span class="line"><span class="comment"># 每隔2分钟重启apache, 斜杠表示每隔一段时间</span></span><br><span class="line">*/2 * * * * service httpd restart</span><br><span class="line"></span><br><span class="line"><span class="comment"># 每天23点到7点每隔1小时重启apache</span></span><br><span class="line">0 23-7/1 * * * service httpd restart</span><br><span class="line"></span><br><span class="line"><span class="comment"># 每天18:00到23:00每隔30分钟重启apache</span></span><br><span class="line">*/30 18-23 * * * service httpd restart</span><br><span class="line"></span><br><span class="line"><span class="comment"># 4月的1-7号或每个星期日早晨1时59分重启apache</span></span><br><span class="line">59 1 1-7 * 4 0 service httpd restart</span><br><span class="line"></span><br><span class="line"><span class="comment"># 4月的第1个星期日早晨1时59分重启apache, 第三个时间位置和第五个时间位置是【或】的关系</span></span><br><span class="line">59 1 1-7 4 * <span class="built_in">test</span> $(date +%w) -eq 0 &amp;&amp; service httpd restart</span><br><span class="line"></span><br><span class="line"><span class="comment"># 每30秒重启apache, 通过sleep进行精确到秒级的操作, 注意要两个任务都存在</span></span><br><span class="line">*/1 * * * * service httpd restart</span><br><span class="line">*/1 * * * * sleep 30s; service httpd restart</span><br></pre></td></tr></table></figure></p>
+<h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><ul>
+<li><a href="http://man.linuxde.net/at" target="_blank" rel="noopener">at命令</a></li>
+<li><a href="http://man.linuxde.net/crontab" target="_blank" rel="noopener">crontab命令</a></li>
+</ul>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Linux/" rel="tag"># Linux</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/02/03/posts/Linux-Linux之sudo权限/" rel="next" title="Linux之sudo权限">
+                <i class="fa fa-chevron-left"></i> Linux之sudo权限
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/02/03/posts/SQL_Server-SQL Server分页/" rel="prev" title="SQL Server分页">
+                SQL Server分页 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Inhaltsverzeichnis
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Übersicht
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">John Doe</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">177</span>
+                    <span class="site-state-item-name">Artikel</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">20</span>
+                    <span class="site-state-item-name">Kategorien</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">78</span>
+                    <span class="site-state-item-name">Tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#一次执行和多次执行"><span class="nav-number">2.</span> <span class="nav-text">一次执行和多次执行</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#只执行一次的定时任务"><span class="nav-number">3.</span> <span class="nav-text">只执行一次的定时任务</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#打开atd服务"><span class="nav-number">3.1.</span> <span class="nav-text">打开atd服务</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#指定允许使用at的用户"><span class="nav-number">3.2.</span> <span class="nav-text">指定允许使用at的用户</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#例子"><span class="nav-number">3.3.</span> <span class="nav-text">例子</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#其他的时间格式"><span class="nav-number">3.4.</span> <span class="nav-text">其他的时间格式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#batch空闲时运行"><span class="nav-number">3.5.</span> <span class="nav-text">batch空闲时运行</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#多次执行的定时任务"><span class="nav-number">4.</span> <span class="nav-text">多次执行的定时任务</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#指定允许使用cron的用户"><span class="nav-number">4.1.</span> <span class="nav-text">指定允许使用cron的用户</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置文件"><span class="nav-number">4.2.</span> <span class="nav-text">配置文件</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#cron表达式"><span class="nav-number">5.</span> <span class="nav-text">cron表达式</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#例子-1"><span class="nav-number">5.1.</span> <span class="nav-text">例子</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考资料"><span class="nav-number">6.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">Erstellt mit  <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v6.7.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=6.7.0"></script>
+
+  <script src="/js/src/motion.js?v=6.7.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/affix.js?v=6.7.0"></script>
+
+  <script src="/js/src/schemes/pisces.js?v=6.7.0"></script>
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=6.7.0"></script>
+<script src="/js/src/post-details.js?v=6.7.0"></script>
+
+
+
+  
+
+
+  <script src="/js/src/bootstrap.js?v=6.7.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

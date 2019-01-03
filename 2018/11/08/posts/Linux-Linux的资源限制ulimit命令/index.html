@@ -1,0 +1,1171 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=6.7.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.7.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.7.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.7.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.7.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '6.7.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="前言ulimit是一个Linux命令, 用于限制shell进程及其子进程的系统资源使用。通俗且不严谨的讲，就是限制登录用户能一次性打开多少个进程，多少个文件等等。  假设有这样一种情况，当一台 Linux 主机上同时登陆了 10 个人，在系统资源无限制的情况下，这 10 个用户同时打开了 500 个文档，而假设每个文档的大小有 10M，这时系统的内存资源就会受到巨大的挑战。">
+<meta name="keywords" content="Linux">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux的资源限制ulimit命令">
+<meta property="og:url" content="http://yoursite.com/2018/11/08/posts/Linux-Linux的资源限制ulimit命令/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="前言ulimit是一个Linux命令, 用于限制shell进程及其子进程的系统资源使用。通俗且不严谨的讲，就是限制登录用户能一次性打开多少个进程，多少个文件等等。  假设有这样一种情况，当一台 Linux 主机上同时登陆了 10 个人，在系统资源无限制的情况下，这 10 个用户同时打开了 500 个文档，而假设每个文档的大小有 10M，这时系统的内存资源就会受到巨大的挑战。">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-12-12T16:14:51.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Linux的资源限制ulimit命令">
+<meta name="twitter:description" content="前言ulimit是一个Linux命令, 用于限制shell进程及其子进程的系统资源使用。通俗且不严谨的讲，就是限制登录用户能一次性打开多少个进程，多少个文件等等。  假设有这样一种情况，当一台 Linux 主机上同时登陆了 10 个人，在系统资源无限制的情况下，这 10 个用户同时打开了 500 个文档，而假设每个文档的大小有 10M，这时系统的内存资源就会受到巨大的挑战。">
+
+
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/11/08/posts/Linux-Linux的资源限制ulimit命令/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>Linux的资源限制ulimit命令 | Hexo</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hexo</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Startseite</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>Über</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>Tags</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>Kategorien</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archiv</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-commonweal">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/404/" rel="section"><i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br>Commonweal 404</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/11/08/posts/Linux-Linux的资源限制ulimit命令/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Linux的资源限制ulimit命令
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+
+              
+                
+              
+
+              <time title="Post created: 2018-11-08 15:32:00" itemprop="dateCreated datePublished" datetime="2018-11-08T15:32:00+08:00">2018-11-08</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Updated at: 2018-12-13 00:14:51" itemprop="dateModified" datetime="2018-12-13T00:14:51+08:00">2018-12-13</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">in</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p><code>ulimit</code>是一个<code>Linux</code>命令, 用于限制<code>shell</code>进程及其子进程的系统资源使用。通俗且不严谨的讲，就是限制登录用户能一次性打开多少个进程，多少个文件等等。</p>
+<blockquote>
+<p>假设有这样一种情况，当一台 Linux 主机上同时登陆了 10 个人，在系统资源无限制的情况下，这 10 个用户同时打开了 500 个文档，而假设每个文档的大小有 10M，这时系统的内存资源就会受到巨大的挑战。</p>
+</blockquote>
+<a id="more"></a>
+<h1 id="参数说明"><a href="#参数说明" class="headerlink" title="参数说明"></a>参数说明</h1><p><code>ulimit</code>限制分为<code>soft</code>软上限和<code>hard</code>硬上限, 使用<code>ulimit</code>命令默认修改<code>soft</code>软上限。</p>
+<ul>
+<li><code>soft</code>软上限: 任何进程都可以修改软上限，但是软上限不能超过硬上限</li>
+<li><code>hard</code>硬上限: 普通进程可以降低硬上限，只有<code>root</code>可以提高硬上限</li>
+</ul>
+<p>命令格式: <code>ulimit [options] [limit]</code></p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center"><code>options</code>参数</th>
+<th style="text-align:center">含义</th>
+<th style="text-align:center">例子</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center"><code>-H</code></td>
+<td style="text-align:center">设置硬资源限制, 一旦设置不能增加。</td>
+<td style="text-align:center"><code>ulimit -Hs 64</code> 限制硬资源, 线程栈大小为 64K。</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>-S</code></td>
+<td style="text-align:center">设置软资源限制, 设置后可以增加, 但是不能超过硬资源设置。</td>
+<td style="text-align:center"><code>ulimit -Sn 32</code> 限制软资源, 32 个文件描述符。</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>-a</code></td>
+<td style="text-align:center">显示当前所有的 limit 信息, 默认显示软上限。</td>
+<td style="text-align:center"><code>ulimit -a</code> 显示当前所有的 limit 信息。</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>-c</code></td>
+<td style="text-align:center">最大的 core 文件的大小, 以 blocks 为单位。</td>
+<td style="text-align:center"><code>ulimit -c unlimited</code>  对生成的 core 文件的大小不进行限制。</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>-d</code></td>
+<td style="text-align:center">进程最大的数据段的大小, 以 Kbytes 为单位。</td>
+<td style="text-align:center"><code>ulimit -d unlimited</code> 对进程的数据段大小不进行限制。</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>-f</code></td>
+<td style="text-align:center">进程可以创建文件的最大值, 以 blocks 为单位。</td>
+<td style="text-align:center"><code>ulimit -f 2048</code> 限制进程可以创建的最大文件大小为 2048 blocks。</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>-l</code></td>
+<td style="text-align:center">最大可加锁内存大小, 以 Kbytes 为单位。</td>
+<td style="text-align:center"><code>ulimit -l 32</code> 限制最大可加锁内存大小为 32 Kbytes。</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>-m</code></td>
+<td style="text-align:center">最大内存大小, 以 Kbytes 为单位。</td>
+<td style="text-align:center"><code>ulimit -m unlimited</code> 对最大内存不进行限制。</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>-n</code></td>
+<td style="text-align:center">可以打开最大文件描述符的数量。</td>
+<td style="text-align:center"><code>ulimit -n 128</code> 限制最大可以使用 128 个文件描述符。</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>-p</code></td>
+<td style="text-align:center">管道缓冲区的大小, 以 Kbytes 为单位。</td>
+<td style="text-align:center"><code>ulimit -p 512</code> 限制管道缓冲区的大小为 512 Kbytes。</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>-s</code></td>
+<td style="text-align:center">线程栈大小, 以 Kbytes 为单位。</td>
+<td style="text-align:center"><code>ulimit -s 512</code> 限制线程栈的大小为 512 Kbytes。</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>-t</code></td>
+<td style="text-align:center">最大的 CPU 占用时间, 以秒为单位。</td>
+<td style="text-align:center"><code>ulimit -t unlimited</code> 对最大的 CPU 占用时间不进行限制。</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>-u</code></td>
+<td style="text-align:center">用户最大可用的进程数。</td>
+<td style="text-align:center"><code>ulimit -u 64</code> 限制用户最多可以使用 64 个进程。</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>-v</code></td>
+<td style="text-align:center">进程最大可用的虚拟内存, 以 Kbytes 为单位。</td>
+<td style="text-align:center"><code>ulimit -v 200000</code> 限制最大可用的虚拟内存为 200000 Kbytes。</td>
+</tr>
+</tbody>
+</table>
+<h1 id="配置方法"><a href="#配置方法" class="headerlink" title="配置方法"></a>配置方法</h1><p><strong>对登录用户进行限制</strong></p>
+<ol>
+<li>在<code>/etc/profile</code>、<code>/etc/bashrc</code>、<code>~/.bash_profile</code>、<code>~/.bashrc</code>文件中写入<code>ulimit</code>命令。</li>
+<li>直接在控制台输入<code>ulimit</code>命令, 这是临时配置, 重启失效。</li>
+</ol>
+<p><strong>对应用程序进行限制</strong></p>
+<ol>
+<li>对<code>Tomcat</code>进行限制, 编写启动脚本<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">ulimit</span> -s 512;</span><br><span class="line">startup.sh</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p><strong>对多个用户或用户组进行限制</strong></p>
+<ol>
+<li>在<code>/etc/security/limits.conf</code>中输入<code>&lt;domain&gt; &lt;type&gt; &lt;item&gt; &lt;value&gt;</code>, 每一行一个限制。<blockquote>
+<p>domain 表示用户或者组的名字，还可以使用 * 作为通配符。Type 可以有两个值，soft 和 hard。Item 则表示需要限定的资源，可以有很多候选值，如 stack，cpu，nofile 等等，分别表示最大的堆栈大小，占用的 cpu 时间，以及打开的文件数。通过添加对应的一行描述，则可以产生相应的限制</p>
+</blockquote>
+</li>
+</ol>
+<p><strong>对系统全局的进程进行限制</strong></p>
+<ol>
+<li>修改<code>/proc</code>下的文件</li>
+</ol>
+<h1 id="常用例子"><a href="#常用例子" class="headerlink" title="常用例子"></a>常用例子</h1><ol>
+<li><code>ulimit -a</code>: 查看当前 <code>shell</code> 的所有资源限制，默认显示软限制</li>
+<li><code>ulimit -Sa</code>: 查看当前 <code>shell</code> 的所有资源限制，<code>-S</code> 表示显示软限制</li>
+<li><code>ulimit -Ha</code>: 查看当前 <code>shell</code> 的所有资源限制，<code>-H</code> 表示显示硬限制</li>
+<li><code>ulimit -n</code>: 显示当前可打开的文件描述符数量，软限制</li>
+<li><code>ulimit -Hn</code>: 显示当前可打开的文件描述符数量，硬限制</li>
+<li><code>ulimit -n 10240</code>: 修改可打开的文件描述符数为 <code>10240</code>，默认软限制，除非指明参数 <code>H</code></li>
+<li><code>ulimit -Hn 51200</code>: 修改可打开的文件描述符数为 <code>51200</code>，硬限制(如果是提高硬限制，则需要 <code>root</code> 权限)</li>
+<li><code>ulimit -s 102400</code>: 修改堆栈大小的软限制为 <code>102400 kbytes</code> 即 <code>100 MB</code></li>
+<li><code>ulimit -Hs unlimited</code>: 修改堆栈大小的硬限制为 <code>unlimited</code>，即不限制上限</li>
+</ol>
+<h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><ul>
+<li><a href="https://www.ibm.com/developerworks/cn/linux/l-cn-ulimit/index.html" target="_blank" rel="noopener">通过 ulimit 改善系统性能</a></li>
+<li><a href="https://www.zfl9.com/ulimit.html" target="_blank" rel="noopener">Linux ulimit详解</a></li>
+</ul>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Linux/" rel="tag"># Linux</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/11/01/posts/Java_SE-数据库查询出的数据转为树形结构/" rel="next" title="数据库查询出的数据转为树形结构">
+                <i class="fa fa-chevron-left"></i> 数据库查询出的数据转为树形结构
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/11/29/posts/Java_Web-JSP的编译流程/" rel="prev" title="JSP的编译流程">
+                JSP的编译流程 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Inhaltsverzeichnis
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Übersicht
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">John Doe</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">177</span>
+                    <span class="site-state-item-name">Artikel</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">20</span>
+                    <span class="site-state-item-name">Kategorien</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">78</span>
+                    <span class="site-state-item-name">Tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参数说明"><span class="nav-number">2.</span> <span class="nav-text">参数说明</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#配置方法"><span class="nav-number">3.</span> <span class="nav-text">配置方法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#常用例子"><span class="nav-number">4.</span> <span class="nav-text">常用例子</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考资料"><span class="nav-number">5.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">Erstellt mit  <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v6.7.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=6.7.0"></script>
+
+  <script src="/js/src/motion.js?v=6.7.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/affix.js?v=6.7.0"></script>
+
+  <script src="/js/src/schemes/pisces.js?v=6.7.0"></script>
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=6.7.0"></script>
+<script src="/js/src/post-details.js?v=6.7.0"></script>
+
+
+
+  
+
+
+  <script src="/js/src/bootstrap.js?v=6.7.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

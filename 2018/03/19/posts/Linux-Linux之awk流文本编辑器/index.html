@@ -1,0 +1,1059 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=6.7.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.7.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.7.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.7.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.7.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '6.7.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="前言awk是Unix的行处理命令, 以行为单位, 依次读入文本的每行进行切片处理。12# 复制测试文件[root@localhost ~]# cp /etc/passwd /tmp/passwd">
+<meta name="keywords" content="Linux">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux之awk流文本编辑器">
+<meta property="og:url" content="http://yoursite.com/2018/03/19/posts/Linux-Linux之awk流文本编辑器/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="前言awk是Unix的行处理命令, 以行为单位, 依次读入文本的每行进行切片处理。12# 复制测试文件[root@localhost ~]# cp /etc/passwd /tmp/passwd">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-12-12T16:14:51.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Linux之awk流文本编辑器">
+<meta name="twitter:description" content="前言awk是Unix的行处理命令, 以行为单位, 依次读入文本的每行进行切片处理。12# 复制测试文件[root@localhost ~]# cp /etc/passwd /tmp/passwd">
+
+
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/03/19/posts/Linux-Linux之awk流文本编辑器/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>Linux之awk流文本编辑器 | Hexo</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hexo</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Startseite</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>Über</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>Tags</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>Kategorien</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archiv</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-commonweal">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/404/" rel="section"><i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br>Commonweal 404</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/19/posts/Linux-Linux之awk流文本编辑器/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Linux之awk流文本编辑器
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+
+              
+                
+              
+
+              <time title="Post created: 2018-03-19 21:54:59" itemprop="dateCreated datePublished" datetime="2018-03-19T21:54:59+08:00">2018-03-19</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Updated at: 2018-12-13 00:14:51" itemprop="dateModified" datetime="2018-12-13T00:14:51+08:00">2018-12-13</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">in</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p><code>awk</code>是<code>Unix</code>的行处理命令, 以<strong>行</strong>为单位, 依次读入文本的每行进行切片处理。<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 复制测试文件</span></span><br><span class="line">[root@localhost ~]<span class="comment"># cp /etc/passwd /tmp/passwd</span></span><br></pre></td></tr></table></figure></p>
+<a id="more"></a>
+<h1 id="使用格式"><a href="#使用格式" class="headerlink" title="使用格式"></a>使用格式</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">awk [option] &apos;[BEGIN&#123;awk 操作命令&#125;]pattern&#123;awk 操作命令&#125;[END&#123;awk 操作命令&#125;]&apos; file(s)</span><br></pre></td></tr></table></figure>
+<p><code>BEGIN{awk 操作命令}</code>: 可选的, 前置操作, 在执行<code>pattern</code>循环之前执行。<br><code>END{awk 操作命令}</code>:   可选的, 后置操作, 在执行<code>pattern</code>循环之后执行。<br><code>pattern{awk 操作命令}</code>: 必选的, 对每行进行处理。<br><code>awk 操作命令</code>: 包括函数调用<code>printf()</code>, 控制指令<code>if else</code>等。</p>
+<h1 id="切片处理"><a href="#切片处理" class="headerlink" title="切片处理"></a>切片处理</h1><p>所谓的<strong>切片处理</strong>, 举个例子就是<code>a:b:c</code>, 可以将<code>:</code>作为分隔符, 划分为<code>3</code>个片段。</p>
+<p><code>-F separator</code>选项: 指定<code>separator</code>作为分隔符, 默认为空格<br><code>$n</code>变量: <code>$0</code>表示当前行的内容, <code>$n</code>表示当前行内, 以上面的<code>separator</code>分割的第<code>n</code>个片段<br><code>NR</code>变量: 每行的行号, <code>The total number of input records seen so far.</code><br><code>NF</code>变量: 分割的片段的数量, <code>The number of fields in the current input record.</code><br><code>FILENAME</code>变量: 正在处理的文件名</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1. 获取以 : 作为分隔符, 第3个片段, 即UID</span></span><br><span class="line">awk -F <span class="string">':'</span> <span class="string">'&#123;print $3&#125;'</span> /tmp/passwd</span><br><span class="line"><span class="comment"># 2. 获取以 : 作为分隔符, 第1和3个片段, 即用户名和UID</span></span><br><span class="line">awk -F <span class="string">':'</span> <span class="string">'&#123;print $1,$3&#125;'</span> /tmp/passwd</span><br><span class="line">awk -F <span class="string">':'</span> <span class="string">'&#123;print $1" "$3&#125;'</span> /tmp/passwd</span><br><span class="line">awk -F <span class="string">':'</span> <span class="string">'&#123;print "USER:"$1"\tUID:"$3&#125;'</span> /tmp/passwd</span><br><span class="line"><span class="comment"># 3. 输出每行的行号NR和片段数NF</span></span><br><span class="line">awk -F <span class="string">':'</span> <span class="string">'&#123;print NR"\t"NF"\tUSER:"$1"\tUID:"$3&#125;'</span> /tmp/passwd</span><br><span class="line"><span class="comment"># 4. 输出处理的文件名</span></span><br><span class="line">awk -F <span class="string">':'</span> <span class="string">'&#123;print FILENAME"\tUSER:"$1"\tUID:"$3&#125;'</span> /tmp/passwd</span><br></pre></td></tr></table></figure>
+<h1 id="pattern"><a href="#pattern" class="headerlink" title="pattern"></a>pattern</h1><p><code>pattern</code>是每行前的一个匹配表达式。分为两种。</p>
+<ol>
+<li><code>~</code>, <code>!~</code>: 匹配正则表达式</li>
+<li><code>==</code>, <code>!=</code>, <code>&lt;</code>, <code>&gt;</code>: 判断逻辑表达式</li>
+</ol>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1. 打印出匹配root的每行行号和内容</span></span><br><span class="line">awk -F <span class="string">':'</span> <span class="string">'/root/&#123;print NR"\t"$0&#125;'</span> /tmp/passwd</span><br><span class="line"><span class="comment"># 2. 打印出UID为1开头的每行行号和UID和用户名</span></span><br><span class="line">awk -F <span class="string">':'</span> <span class="string">'$3~/^1.*/&#123;print NR"\t"$3"\t"$1&#125;'</span> /tmp/passwd</span><br><span class="line"><span class="comment"># 3. 打印出UID不为1开头的每行行号和UID和用户名</span></span><br><span class="line">awk -F <span class="string">':'</span> <span class="string">'$3!~/^1.*/&#123;print NR"\t"$3"\t"$1&#125;'</span> /tmp/passwd</span><br><span class="line"></span><br><span class="line"><span class="comment"># 1. 打印出UID大于100的行号和UID和用户名</span></span><br><span class="line">awk -F <span class="string">':'</span> <span class="string">'&#123;if($3&gt;100) print NR"\t"$3"\t"$1&#125;'</span> /tmp/passwd</span><br><span class="line">awk -F <span class="string">':'</span> <span class="string">'$3&gt;100&#123;print NR"\t"$3"\t"$1&#125;'</span> /tmp/passwd</span><br><span class="line"><span class="comment"># 2. 打印出UID等于0的行号和UID和用户名</span></span><br><span class="line">awk -F <span class="string">':'</span> <span class="string">'$3==0&#123;print NR"\t"$3"\t"$1&#125;'</span> /tmp/passwd</span><br><span class="line"><span class="comment"># 3. 打印出UID不等于0的行号和UID和用户名</span></span><br><span class="line">awk -F <span class="string">':'</span> <span class="string">'$3!=0&#123;print NR"\t"$3"\t"$1&#125;'</span> /tmp/passwd</span><br></pre></td></tr></table></figure>
+<h1 id="函数调用"><a href="#函数调用" class="headerlink" title="函数调用"></a>函数调用</h1><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1. 打印出行号和用户名</span></span><br><span class="line">awk -F <span class="string">':'</span> <span class="string">'&#123;print NR"\t"$1&#125;'</span> /tmp/passwd</span><br><span class="line">awk -F <span class="string">':'</span> <span class="string">'&#123;printf("%s\t%s\n", NR, $1)&#125;'</span> /tmp/passwd</span><br></pre></td></tr></table></figure>
+<h1 id="逻辑计算"><a href="#逻辑计算" class="headerlink" title="逻辑计算"></a>逻辑计算</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">awk [option] &apos;[BEGIN&#123;awk 操作命令&#125;]pattern&#123;awk 操作命令&#125;[END&#123;awk 操作命令&#125;]&apos; file(s)</span><br></pre></td></tr></table></figure>
+<p>这里的<code>BEGIN</code>和<code>END</code>可以进行一些初始化操作和结尾操作。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1. 统计 / 文件夹下所有文件的大小总和, BEGIN可以声明变量</span></span><br><span class="line">ll / | awk <span class="string">'BEGIN&#123;size=0&#125;&#123;size+=$5&#125;END&#123;print "size:"size/1024/1024"M"&#125;'</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 2. 统计 /etc/passwd 下有多少个用户, 用正则表达式 ^$ 排除空行</span></span><br><span class="line">awk -F <span class="string">':'</span> <span class="string">'BEGIN&#123;count=0&#125;$1!~/^$/&#123;count++&#125;END&#123;print "count:"count&#125;'</span> /etc/passwd</span><br><span class="line"></span><br><span class="line"><span class="comment"># 3. 打印出UID大于100的行号和用户名, 加上表头和表尾</span></span><br><span class="line">awk -F <span class="string">':'</span> <span class="string">'BEGIN&#123;print "NR\tUsername"&#125;&#123;if($3&gt;100) print NR"\t"$1&#125;END&#123;print "-------"FILENAME"-------"&#125;'</span> /etc/passwd</span><br><span class="line"></span><br><span class="line"><span class="comment"># 4. 使用数组记录所有UID大于100的用户名</span></span><br><span class="line">awk -F <span class="string">':'</span> <span class="string">'BEGIN&#123;count=0&#125;&#123;if($3&gt;100)name[count++]=$1&#125;END&#123;for(i=0;i&lt;count;i++) print i"\t"name[i]&#125;'</span> /etc/passwd</span><br><span class="line"></span><br><span class="line"><span class="comment"># 5. 分别统计LISTEN和CONNECTED的连接数量</span></span><br><span class="line">netstat -anp | awk <span class="string">'$6~/(LISTEN)|(CONNECTED)/&#123;sum[$6]++&#125;END&#123;for(i in sum) print i" : "sum[i]&#125;'</span></span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Linux/" rel="tag"># Linux</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/03/19/posts/编程杂谈-GitHub删除敏感commit/" rel="next" title="GitHub删除敏感commit">
+                <i class="fa fa-chevron-left"></i> GitHub删除敏感commit
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/03/19/posts/Linux-Linux之sed流文本编辑器/" rel="prev" title="Linux之sed流文本编辑器">
+                Linux之sed流文本编辑器 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Inhaltsverzeichnis
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Übersicht
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">John Doe</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">177</span>
+                    <span class="site-state-item-name">Artikel</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">20</span>
+                    <span class="site-state-item-name">Kategorien</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">78</span>
+                    <span class="site-state-item-name">Tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#使用格式"><span class="nav-number">2.</span> <span class="nav-text">使用格式</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#切片处理"><span class="nav-number">3.</span> <span class="nav-text">切片处理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#pattern"><span class="nav-number">4.</span> <span class="nav-text">pattern</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#函数调用"><span class="nav-number">5.</span> <span class="nav-text">函数调用</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#逻辑计算"><span class="nav-number">6.</span> <span class="nav-text">逻辑计算</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">Erstellt mit  <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v6.7.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=6.7.0"></script>
+
+  <script src="/js/src/motion.js?v=6.7.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/affix.js?v=6.7.0"></script>
+
+  <script src="/js/src/schemes/pisces.js?v=6.7.0"></script>
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=6.7.0"></script>
+<script src="/js/src/post-details.js?v=6.7.0"></script>
+
+
+
+  
+
+
+  <script src="/js/src/bootstrap.js?v=6.7.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

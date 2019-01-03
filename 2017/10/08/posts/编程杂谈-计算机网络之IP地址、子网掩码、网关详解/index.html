@@ -1,0 +1,1148 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=6.7.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.7.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.7.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.7.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.7.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '6.7.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="IP地址由于IPv6尚未普及，这里的 IP地址为IPv4地址。IP地址相当于互联网上的门牌号, 由 4字节, 也就是 32位 的二进制码组成，包含了网络号( net-id )和主机号( host-id )。  网络号( net-id ): 标志主机(或路由器)所连接到的网络。 主机号( host-id ): 网络号范围内唯一的主机(或路由器)。">
+<meta name="keywords" content="计算机网络">
+<meta property="og:type" content="article">
+<meta property="og:title" content="计算机网络之IP地址、子网掩码、网关详解">
+<meta property="og:url" content="http://yoursite.com/2017/10/08/posts/编程杂谈-计算机网络之IP地址、子网掩码、网关详解/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="IP地址由于IPv6尚未普及，这里的 IP地址为IPv4地址。IP地址相当于互联网上的门牌号, 由 4字节, 也就是 32位 的二进制码组成，包含了网络号( net-id )和主机号( host-id )。  网络号( net-id ): 标志主机(或路由器)所连接到的网络。 主机号( host-id ): 网络号范围内唯一的主机(或路由器)。">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-12-12T16:14:51.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="计算机网络之IP地址、子网掩码、网关详解">
+<meta name="twitter:description" content="IP地址由于IPv6尚未普及，这里的 IP地址为IPv4地址。IP地址相当于互联网上的门牌号, 由 4字节, 也就是 32位 的二进制码组成，包含了网络号( net-id )和主机号( host-id )。  网络号( net-id ): 标志主机(或路由器)所连接到的网络。 主机号( host-id ): 网络号范围内唯一的主机(或路由器)。">
+
+
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/10/08/posts/编程杂谈-计算机网络之IP地址、子网掩码、网关详解/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>计算机网络之IP地址、子网掩码、网关详解 | Hexo</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hexo</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Startseite</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>Über</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>Tags</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>Kategorien</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archiv</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-commonweal">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/404/" rel="section"><i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br>Commonweal 404</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/08/posts/编程杂谈-计算机网络之IP地址、子网掩码、网关详解/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">计算机网络之IP地址、子网掩码、网关详解
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+
+              
+                
+              
+
+              <time title="Post created: 2017-10-08 23:55:11" itemprop="dateCreated datePublished" datetime="2017-10-08T23:55:11+08:00">2017-10-08</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Updated at: 2018-12-13 00:14:51" itemprop="dateModified" datetime="2018-12-13T00:14:51+08:00">2018-12-13</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">in</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/编程杂谈/" itemprop="url" rel="index"><span itemprop="name">编程杂谈</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="IP地址"><a href="#IP地址" class="headerlink" title="IP地址"></a>IP地址</h1><p>由于IPv6尚未普及，这里的 IP地址为IPv4地址。<br>IP地址相当于互联网上的门牌号, 由 <code>4字节</code>, 也就是 <code>32位</code> 的二进制码组成，包含了网络号( <code>net-id</code> )和主机号( <code>host-id</code> )。</p>
+<ul>
+<li>网络号( <code>net-id</code> ): 标志主机(或路由器)所连接到的网络。</li>
+<li>主机号( <code>host-id</code> ): 网络号范围内唯一的主机(或路由器)。</li>
+</ul>
+<a id="more"></a>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">IP地址种类</th>
+<th style="text-align:center">二进制组成(前缀位+网络位+主机位)</th>
+<th style="text-align:center">IP范围</th>
+<th style="text-align:center">网络数</th>
+<th style="text-align:center">主机数/网络</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">A类地址</td>
+<td style="text-align:center">0+7位网络号+24位主机号</td>
+<td style="text-align:center">1.0.0.0 - 127.255.255.255</td>
+<td style="text-align:center">2^7-2</td>
+<td style="text-align:center">2^24-2</td>
+</tr>
+<tr>
+<td style="text-align:center">B类地址</td>
+<td style="text-align:center">10+14位网络号+16位主机号</td>
+<td style="text-align:center">128.0.0.0 - 191.255.255.255</td>
+<td style="text-align:center">2^14-1</td>
+<td style="text-align:center">2^16-2</td>
+</tr>
+<tr>
+<td style="text-align:center">C类地址</td>
+<td style="text-align:center">110+21位网络号+8位主机号</td>
+<td style="text-align:center">192.0.0.0 - 223.255.255.255</td>
+<td style="text-align:center">2^21-1</td>
+<td style="text-align:center">2^8-2</td>
+</tr>
+<tr>
+<td style="text-align:center">D类地址</td>
+<td style="text-align:center">1110+多播地址(用于多播)</td>
+<td style="text-align:center">224.0.0.0 - 239.255.255.255</td>
+<td style="text-align:center">-</td>
+<td style="text-align:center">-</td>
+</tr>
+<tr>
+<td style="text-align:center">E类地址</td>
+<td style="text-align:center">1111+保留位(不开放, 保留使用)</td>
+<td style="text-align:center">240.0.0.0-249.255.255.255</td>
+<td style="text-align:center">-</td>
+<td style="text-align:center">-</td>
+</tr>
+</tbody>
+</table>
+<p>前缀位标识是什么种类的网络, 0为A类地址, 10为B类地址, 110为C类地址, 依次类推。</p>
+<h2 id="网络数计算"><a href="#网络数计算" class="headerlink" title="网络数计算"></a>网络数计算</h2><p>网络数就是一种网络的子网数, 比如A类地址, 可以分为多少个子网。<br>看表格可以推出网络数的计算公式为:  <code>2^网络号位数</code>。<br>规定网络地址全为 <code>0</code> 的IP地址是保留地址，意思是“本网络”。</p>
+<ul>
+<li>在A类地址中，实际上 <code>0.0.0.0</code> 是不指派的，而可以指派的最小网络是 <code>1.0.0.0</code>；网络地址为 <code>127</code> 的A类IP地址(比如常用的 <code>127.0.0.1</code>)保留作为本地软件环回测试本主机的进程之间的通信。所以A类地址网络数为 <code>2^7-2</code>。</li>
+<li>在B类地址中，实际上 <code>128.0.0.0</code> 是不指派的，而可以指派的最小网络是 <code>128.1.0.0</code>，所以B类地址网络数是 <code>2^14-1</code>。</li>
+<li>在C类地址中，实际上 <code>192.0.0.0</code> 是不指派的，而可以指派的最小网络是 <code>192.0.1.0</code>，所以C类地址网络数是 <code>2^21-1</code>。</li>
+</ul>
+<h2 id="主机数计算"><a href="#主机数计算" class="headerlink" title="主机数计算"></a>主机数计算</h2><p>主机数就是一个子网里面可以容纳多少台主机。<br>看表格可以推出主机数的计算公式为:  <code>2^主机号位数-2</code>。<br>主机号全为0表示该网络，而主机号全为1表示广播地址, 排除掉这两个。<br>比如A类地址 <code>1.0.0.0</code> 表示主机所在的网段的网络地址,  <code>1.255.255.255</code> 为该网段的广播地址。</p>
+<h2 id="私有IP地址"><a href="#私有IP地址" class="headerlink" title="私有IP地址"></a>私有IP地址</h2><p>经常可以看到 <code>192.168.1.101</code> 这类的IP地址, 这些是私有IP地址, 专用地址, 也就是局域网分配的地址。<br>公网IP地址是需要掏钱申请的，私有IP地址不用掏钱, 但是仅限内网使用, 目的是为了节约公网IP。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">IP地址种类</th>
+<th style="text-align:center">私有IP范围</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">A类地址</td>
+<td style="text-align:center">10.0.0.0 - 10.255.255.255</td>
+</tr>
+<tr>
+<td style="text-align:center">B类地址</td>
+<td style="text-align:center">172.16.0.0 - 172.31.255.255</td>
+</tr>
+<tr>
+<td style="text-align:center">C类地址</td>
+<td style="text-align:center">192.168.0.0 - 192.168.255.255</td>
+</tr>
+</tbody>
+</table>
+<p>路由器看到专用地址就不转发，所以说专用地址作为目的地址是不可能在因特网上传送的。专用IP地址也可叫做可重用地址。那好，问题来了，如果配置了这些专用地址的主机想和因特网上的主机通信，怎么办呢？NAT(network address translation: 网络地址转换)在这种情况下就应运而生了。NAT就是将这种地址转换成有效的外部全球IP地址，使得整个专用网只需要一个全球IP地址就可以与因特网联通。</p>
+<p>使用NAT技术，需要在专用网(整个网络内部都是使用的这种地址)连接到因特网的路由器上安装NAT软件。装有NAT软件的路由器叫做NAT路由器，它至少有一个有效的外部全球IP地址。但是NAT并不能从根本上解决IP地址的耗尽问题，因为NAT并不能从根本上解决IP地址的耗尽问题，因为NAT并没有增加IP地址的个数。而真正解决IP地址耗尽问题的是IPv6。</p>
+<h1 id="子网掩码"><a href="#子网掩码" class="headerlink" title="子网掩码"></a>子网掩码</h1><p>计算网络地址就是判断网络中的计算机在不在同一网段,在就能通,不在就不能通。<br>将IP地址和子网掩码都换算成二进制,然后进行与运算,结果就是网络地址, 也就是网络号。<br>子网掩码的1和0必须连续, 比如 <code>11111111.00000000.00000000.00000000</code>, 即 <code>255.0.0.0</code>。</p>
+<p>以上的主机数和网络数都是使用标准子网掩码算出来的, 比如A类地址的标准子网掩码为 <code>255.0.0.0</code>, B类地址的标准子网掩码为 <code>255.255.0.0</code>, C类地址的标准子网掩码为 <code>255.255.255.0</code>。</p>
+<p>比如 <code>126.1.2.3</code> 和 <code>255.0.0.0</code>进行二进制的按位与运算, 得到网络地址 <code>126.0.0.0</code>。这个 <code>126.0.0.0</code>也就是上面计算主机数排除掉的该网段内其中一位IP地址。</p>
+<p>当然还有非标准的子网掩码。具体参考 <code>常用计算例子</code> 章节的第1题。</p>
+<h1 id="网关"><a href="#网关" class="headerlink" title="网关"></a>网关</h1><p>网关是用来进行跨网段通信的工具, 本质是一个IP地址。</p>
+<p>比如一个C类网 A<code>192.168.1.101</code> 想要和 B<code>192.168.0.101</code> 通信, 标准的子网掩码是 <code>255.255.255.0</code>, 进行按位与运算获得的网络地址为 <code>192.168.1.0</code> 和 <code>192.168.0.0</code>, 也就是不在同一个网段内, 那么只通过交换机是不能进行通信的, 必须借助路由器。</p>
+<p>可以把网关想象一个国家的外交部。A想要和B通信, 但是A在中国, B在美国, 那么就不能直接面对面谈话(借助交换机), 这时候, A可以把信息传递给中国的外交部X, 由X交给美国的外交部Y, 再由Y交给B。</p>
+<p>也就是说, 如果内网IP地址想要访问不是同一网段的主机, 那么必须借助网关. 将数据发送到另一个网关。</p>
+<h1 id="常用计算例子"><a href="#常用计算例子" class="headerlink" title="常用计算例子"></a>常用计算例子</h1><p>1、利用子网数目计算子网掩码<br>把B类地址 <code>172.16.0.0</code> 划分成 <code>30</code> 个子网络，它的子网掩码是多少？<br>①将子网络数目 <code>30</code> 转换成二进制表示 <code>11110</code><br>②统计一下这个二进制的数共有 <code>5</code> 位<br>③注意：当二进制数中只有一个1的时候，所统计的位数需要减1（例如：10000要统计为4位）<br>④将B类地址的子网掩码 <code>255.255.0.0</code> 主机地址部分的前 <code>5</code> 位变成 <code>1</code><br>⑤这就得到了所要的子网掩码<code>（11111111.11111111.11111000.00000000 ）255.255.248.0</code>。</p>
+<p>2、利用主机数目计算子网掩码<br>把B类地址 <code>172.16.0.0</code> 划分成若干子网络，每个子网络能容纳 <code>500</code> 台主机，它的子网掩码是多少？<br>①把 <code>500</code> 转换成二进制表示 <code>111110100</code><br>②统计一下这个二进制的数共有 <code>9</code> 位<br>③将子网掩码 <code>255.255.255.255</code> 从后向前的 <code>9</code> 位变成 <code>0</code><br>④这就得到了所要的子网掩码<code>（11111111.11111111.11111110.00000000）255.255.254.0</code>。</p>
+<p>3、利用子网掩码计算最大有效子网数<br>A类IP地址，子网掩码为 <code>255.224.0.0</code> ，它所能划分的最大有效子网数是多少？<br>①将子网掩码转换成二进制表示 <code>11111111.11100000.00000000.00000000</code><br>②统计一下它的网络位共有 <code>11</code> 位<br>③A类地址网络位的基础数是 <code>8</code> ，二者之间的位数差是 <code>3</code><br>④最大有效子网数就是<code>2^3</code>，即最多可以划分 <code>8</code> 个子网络。</p>
+<p>4、利用子网掩码计算最大可用主机数<br>A类IP地址，子网掩码为 <code>255.252.0.0</code> ，将它划分成若干子网络，每个子网络中可用主机数有多少？<br>①将子网掩码转换成二进制表示 <code>11111111.11111100.00000000.00000000</code><br>②统计一下它的主机位共有 <code>18</code> 位<br>③最大可用主机数就是 <code>2^18-2</code>（除去全是0的网络地址和全是1广播地址），即每个子网络最多有 <code>262142</code> 台主机可用。</p>
+<p>5、利用子网掩码确定子网络的起止地址<br>B类IP地址 <code>172.16.0.0</code> ，子网掩码为 <code>255.255.192.0</code> ，它所能划分的子网络起止地址是多少？<br>①利用子网掩码计算，最多可以划分 <code>4</code> 个子网络<br>②利用子网掩码计算，每个子网络可容纳 <code>16384</code> 台主机（包括网络地址和广播地址）<br>③用 <code>16384</code> 除以 <code>256</code> （网段内包括网络地址和广播地址的全部主机数），结果是 <code>64</code><br>④具体划分网络起止方法如下：<br>172.16.0.0～172.16.63.255<br>172.16.64.0～172.16.127.255<br>172.16.128.0～172.16.191.255<br>172.16.192.0～172.16.255.255</p>
+<h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><ul>
+<li><a href="http://blog.sciencenet.cn/blog-2355761-1036878.html" target="_blank" rel="noopener">TCP/IP之IP地址详解</a></li>
+<li><a href="http://blog.sina.com.cn/s/blog_5753d0930101fxdf.html" target="_blank" rel="noopener">子网数、主机数与子网掩码的关系</a></li>
+<li><a href="http://www.cnblogs.com/JuneWang/p/3917697.html" target="_blank" rel="noopener">IP地址，子网掩码，默认网关，DNS服务器详解</a></li>
+</ul>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/计算机网络/" rel="tag"># 计算机网络</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/10/03/posts/Java_Web-Quartz之整合Spring/" rel="next" title="Quartz之整合Spring">
+                <i class="fa fa-chevron-left"></i> Quartz之整合Spring
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/10/09/posts/Linux-Linux之SSH协议/" rel="prev" title="Linux之SSH协议">
+                Linux之SSH协议 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Inhaltsverzeichnis
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Übersicht
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">John Doe</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">177</span>
+                    <span class="site-state-item-name">Artikel</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">20</span>
+                    <span class="site-state-item-name">Kategorien</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">78</span>
+                    <span class="site-state-item-name">Tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#IP地址"><span class="nav-number">1.</span> <span class="nav-text">IP地址</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#网络数计算"><span class="nav-number">1.1.</span> <span class="nav-text">网络数计算</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#主机数计算"><span class="nav-number">1.2.</span> <span class="nav-text">主机数计算</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#私有IP地址"><span class="nav-number">1.3.</span> <span class="nav-text">私有IP地址</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#子网掩码"><span class="nav-number">2.</span> <span class="nav-text">子网掩码</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#网关"><span class="nav-number">3.</span> <span class="nav-text">网关</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#常用计算例子"><span class="nav-number">4.</span> <span class="nav-text">常用计算例子</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考资料"><span class="nav-number">5.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">Erstellt mit  <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v6.7.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=6.7.0"></script>
+
+  <script src="/js/src/motion.js?v=6.7.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/affix.js?v=6.7.0"></script>
+
+  <script src="/js/src/schemes/pisces.js?v=6.7.0"></script>
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=6.7.0"></script>
+<script src="/js/src/post-details.js?v=6.7.0"></script>
+
+
+
+  
+
+
+  <script src="/js/src/bootstrap.js?v=6.7.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

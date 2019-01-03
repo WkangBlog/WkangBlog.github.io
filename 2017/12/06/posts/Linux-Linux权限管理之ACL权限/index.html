@@ -1,0 +1,1099 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=6.7.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.7.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.7.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.7.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.7.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '6.7.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="前言ACL权限 Access Control List适用于当一个用户不满足所有者owner, 所属组group, 其他人other的情况。比如一个家庭账本权限为-rwxrwx---, 所有者owner是我, 所属组group是直系亲属, 其他人other是陌生人。现在三姑六婆想阅读这个家庭账本, 要求权限为r--, 不满足拥有者(我), 所属组(直系亲属), 其他人(陌生人), 这时候就是使用A">
+<meta name="keywords" content="Linux">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux权限管理之ACL权限">
+<meta property="og:url" content="http://yoursite.com/2017/12/06/posts/Linux-Linux权限管理之ACL权限/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="前言ACL权限 Access Control List适用于当一个用户不满足所有者owner, 所属组group, 其他人other的情况。比如一个家庭账本权限为-rwxrwx---, 所有者owner是我, 所属组group是直系亲属, 其他人other是陌生人。现在三姑六婆想阅读这个家庭账本, 要求权限为r--, 不满足拥有者(我), 所属组(直系亲属), 其他人(陌生人), 这时候就是使用A">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-12-12T16:14:51.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Linux权限管理之ACL权限">
+<meta name="twitter:description" content="前言ACL权限 Access Control List适用于当一个用户不满足所有者owner, 所属组group, 其他人other的情况。比如一个家庭账本权限为-rwxrwx---, 所有者owner是我, 所属组group是直系亲属, 其他人other是陌生人。现在三姑六婆想阅读这个家庭账本, 要求权限为r--, 不满足拥有者(我), 所属组(直系亲属), 其他人(陌生人), 这时候就是使用A">
+
+
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/12/06/posts/Linux-Linux权限管理之ACL权限/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>Linux权限管理之ACL权限 | Hexo</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hexo</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Startseite</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>Über</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>Tags</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>Kategorien</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archiv</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-commonweal">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/404/" rel="section"><i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br>Commonweal 404</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/12/06/posts/Linux-Linux权限管理之ACL权限/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Linux权限管理之ACL权限
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+
+              
+                
+              
+
+              <time title="Post created: 2017-12-06 23:18:45" itemprop="dateCreated datePublished" datetime="2017-12-06T23:18:45+08:00">2017-12-06</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Updated at: 2018-12-13 00:14:51" itemprop="dateModified" datetime="2018-12-13T00:14:51+08:00">2018-12-13</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">in</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>ACL权限 Access Control List<br>适用于当一个用户不满足所有者<code>owner</code>, 所属组<code>group</code>, 其他人<code>other</code>的情况。<br>比如一个家庭账本权限为<code>-rwxrwx---</code>, 所有者<code>owner</code>是我, 所属组<code>group</code>是直系亲属, 其他人<code>other</code>是陌生人。<br>现在三姑六婆想阅读这个家庭账本, 要求权限为<code>r--</code>, 不满足拥有者(我), 所属组(直系亲属), 其他人(陌生人), 这时候就是使用ACL权限的时候。</p>
+<a id="more"></a>
+<h1 id="开启ACL权限"><a href="#开启ACL权限" class="headerlink" title="开启ACL权限"></a>开启ACL权限</h1><p>执行以下<code>shell</code>脚本, 查看是否已经开启了<code>ACL</code>权限。<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line">[[ <span class="variable">$UID</span> != <span class="string">"0"</span> ]] &amp;&amp; <span class="built_in">echo</span> <span class="string">"you must be root"</span> &amp;&amp; <span class="built_in">exit</span> 1;</span><br><span class="line"></span><br><span class="line">filesystem=$(mount | grep <span class="string">" / "</span> | cut -d <span class="string">" "</span> -f 5)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> [[ <span class="variable">$&#123;filesystem&#125;</span> == <span class="string">"ext3"</span> ]];<span class="keyword">then</span></span><br><span class="line">    /sbin/dumpe2fs -h /dev/sda2 | grep <span class="string">"acl"</span></span><br><span class="line">    [[ $? == <span class="string">"0"</span> ]] &amp;&amp; <span class="built_in">echo</span> <span class="string">"enabled acl"</span> || <span class="built_in">echo</span> <span class="string">"disabled acl"</span></span><br><span class="line"><span class="keyword">fi</span></span><br></pre></td></tr></table></figure></p>
+<p>一般默认开启, 如果没有开启, 进行以下配置即可<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1. 临时配置, 重新挂载/根目录, 加入ACL权限</span></span><br><span class="line">[ahao@localhost ~]$ mount -o remount,acl /</span><br><span class="line"><span class="comment"># 2. 永久配置, 写入/etc/fstab文件, 重启生效</span></span><br><span class="line">[root@localhost ~]<span class="comment"># vim /etc/fstab </span></span><br><span class="line">LABEL=/                 /                       ext3    defaults,acl        1 1</span><br></pre></td></tr></table></figure></p>
+<h1 id="查看和设置文件ACL权限"><a href="#查看和设置文件ACL权限" class="headerlink" title="查看和设置文件ACL权限"></a>查看和设置文件ACL权限</h1><p>设置ACL权限用<code>setfacl -m [u|g]:[用户名|组名]:权限 文件名</code>命令。<br>查看ACL权限用<code>getfacl 文件名</code></p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">选项</th>
+<th style="text-align:center">说明</th>
+<th style="text-align:center">使用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">m</td>
+<td style="text-align:center">设置ACL权限</td>
+<td style="text-align:center">setfacl -m [u&#124;g]:[用户名&#124;组名]:权限 文件名</td>
+</tr>
+<tr>
+<td style="text-align:center">x</td>
+<td style="text-align:center">删除指定ACL权限</td>
+<td style="text-align:center">setfacl -x [u&#124;g]:[用户名&#124;组名] 文件名</td>
+</tr>
+<tr>
+<td style="text-align:center">b</td>
+<td style="text-align:center">删除全部ACL权限</td>
+<td style="text-align:center">setfacl -b 文件名</td>
+</tr>
+<tr>
+<td style="text-align:center">d</td>
+<td style="text-align:center">设定默认ACL权限(子文件继承目录ACL权限)</td>
+<td style="text-align:center">setfacl -m d:[u&#124;g]:[用户名&#124;组名]:权限 文件名</td>
+</tr>
+<tr>
+<td style="text-align:center">k</td>
+<td style="text-align:center">删除默认ACL权限(子文件继承目录ACL权限)</td>
+<td style="text-align:center">setfacl -m</td>
+</tr>
+<tr>
+<td style="text-align:center">R</td>
+<td style="text-align:center">递归设置ACL权限(容易给文件x权限)</td>
+<td style="text-align:center">setfacl -m [u&#124;g]:[用户名&#124;组名]:权限 -R 目录名</td>
+</tr>
+</tbody>
+</table>
+<p>这是一个例子。<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1. 创建权限为drwxrwx---, 用户和用户组为root的dir目录</span></span><br><span class="line">[root@localhost ~]<span class="comment"># mkdir ~ahao/dir </span></span><br><span class="line">[root@localhost ~]<span class="comment"># chmod 770 ~ahao/dir</span></span><br><span class="line">[root@localhost ~]<span class="comment"># ll ~ahao</span></span><br><span class="line">总用量 0</span><br><span class="line">drwxrwx---. 2 root root 6 11月  4 22:32 dir</span><br><span class="line"></span><br><span class="line"><span class="comment"># 2. 操作1: ahao用户尝试进入dir目录失败, 权限不足</span></span><br><span class="line">[ahao@localhost ~]$ <span class="built_in">cd</span> dir</span><br><span class="line">-bash: <span class="built_in">cd</span>: dir: 权限不够</span><br><span class="line"></span><br><span class="line"><span class="comment"># 3. root用户设置ACL权限, 给ahao用户赋予rx权限</span></span><br><span class="line">[root@localhost ~]<span class="comment"># setfacl -m u:ahao:rx ~ahao/dir</span></span><br><span class="line">[ahao@localhost ~]$ ll</span><br><span class="line">总用量 0</span><br><span class="line">drwxrwx---+ 2 root root 6 11月  4 22:32 dir</span><br><span class="line"></span><br><span class="line"><span class="comment"># 4. 操作2: ahao用户尝试进入dir目录成功, dir的+权限位代表ACL权限</span></span><br><span class="line">[ahao@localhost ~]$ <span class="built_in">cd</span> dir</span><br><span class="line">[ahao@localhost dir]$ <span class="comment"># 成功进入dir目录 </span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 5. 操作3: 查看ACL权限</span></span><br><span class="line">[ahao@localhost dir]$ getfacl ~ahao/dir/ </span><br><span class="line">getfacl: Removing leading <span class="string">'/'</span> from absolute path names</span><br><span class="line"><span class="comment"># file: home/ahao/dir/</span></span><br><span class="line"><span class="comment"># owner: root</span></span><br><span class="line"><span class="comment"># group: root</span></span><br><span class="line">user::rwx</span><br><span class="line">user:ahao:r-x <span class="comment"># ACL权限</span></span><br><span class="line">group::rwx</span><br><span class="line">mask::rwx</span><br><span class="line">other::---</span><br></pre></td></tr></table></figure></p>
+<h1 id="mask掩码"><a href="#mask掩码" class="headerlink" title="mask掩码"></a>mask掩码</h1><p>上面的例子在使用<code>getfacl dir</code>之后, 可以看到有一项是<code>mask</code>。<br>这个和默认权限<code>umask</code>差不多, 也是一个权限掩码, 表示所能赋予的权限最大值。<br>这里的<code>mask</code>和<code>ACL权限</code>进行<code>&amp;与</code>运算, 得到的才是真正的<code>ACL权限</code>。<br>用人话讲, 就是</p>
+<blockquote>
+<p>你考一百分是因为实力只有一百分<br>我考一百分是因为总分只有一百分</p>
+</blockquote>
+<p><code>mask</code>限制了权限的最高值。<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1. 修改ACL权限mask为r-x</span></span><br><span class="line">[root@localhost ~]<span class="comment"># setfacl -m m:rx ~ahao/tmp/av </span></span><br><span class="line">[root@localhost ~]<span class="comment"># getfacl ~ahao/tmp/av</span></span><br><span class="line">getfacl: Removing leading <span class="string">'/'</span> from absolute path names</span><br><span class="line"><span class="comment"># file: home/ahao/tmp/av</span></span><br><span class="line"><span class="comment"># owner: root</span></span><br><span class="line"><span class="comment"># group: root</span></span><br><span class="line">user::rwx</span><br><span class="line">group::r-x</span><br><span class="line">mask::r-x <span class="comment"># 修改ACL权限mask为r-x</span></span><br><span class="line">other::---</span><br><span class="line"></span><br><span class="line"><span class="comment"># 2. 为用户ahao添加ACL权限rwx</span></span><br><span class="line">[root@localhost ~]<span class="comment"># setfacl -m u:ahao:rwx ~ahao/tmp/av/ </span></span><br><span class="line">[root@localhost ~]<span class="comment"># getfacl ~ahao/tmp/av</span></span><br><span class="line">getfacl: Removing leading <span class="string">'/'</span> from absolute path names</span><br><span class="line"><span class="comment"># file: home/ahao/tmp/av</span></span><br><span class="line"><span class="comment"># owner: root</span></span><br><span class="line"><span class="comment"># group: root</span></span><br><span class="line">user::rwx</span><br><span class="line">user:ahao:rwx</span><br><span class="line">group::r-x</span><br><span class="line">mask::rwx <span class="comment"># 注意, 这里的mask掩码会改变, 因为赋予的ACL权限大于mask</span></span><br><span class="line">other::---</span><br><span class="line"></span><br><span class="line"><span class="comment"># 3. 修改ACL权限mask为r-x</span></span><br><span class="line">[root@localhost ~]<span class="comment"># setfacl -m m:rx ~ahao/tmp/av</span></span><br><span class="line">[root@localhost ~]<span class="comment"># getfacl ~ahao/tmp/av</span></span><br><span class="line">getfacl: Removing leading <span class="string">'/'</span> from absolute path names</span><br><span class="line"><span class="comment"># file: home/ahao/tmp/av</span></span><br><span class="line"><span class="comment"># owner: root</span></span><br><span class="line"><span class="comment"># group: root</span></span><br><span class="line">user::rwx</span><br><span class="line">user:ahao:rwx			<span class="comment">#effective:r-x # 这里会提示真实的ACL权限为r-x</span></span><br><span class="line">group::r-x</span><br><span class="line">mask::r-x <span class="comment"># 这里mask不会再改变</span></span><br><span class="line">other::---</span><br></pre></td></tr></table></figure></p>
+<ol>
+<li><code>mask</code> 会限制 <code>ACL</code> 权限的最大值。</li>
+<li>赋予<code>ACL</code> 权限大于 <code>mask</code> 的时候, 会将 <code>mask</code> <strong>撑大</strong>。</li>
+</ol>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Linux/" rel="tag"># Linux</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/12/06/posts/Linux-Linux用户管理之配置文件/" rel="next" title="Linux用户管理之配置文件">
+                <i class="fa fa-chevron-left"></i> Linux用户管理之配置文件
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/02/02/posts/Java_Web-SpringMVC检测异常链接/" rel="prev" title="SpringMVC检测异常链接">
+                SpringMVC检测异常链接 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Inhaltsverzeichnis
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Übersicht
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">John Doe</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">177</span>
+                    <span class="site-state-item-name">Artikel</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">20</span>
+                    <span class="site-state-item-name">Kategorien</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">78</span>
+                    <span class="site-state-item-name">Tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#开启ACL权限"><span class="nav-number">2.</span> <span class="nav-text">开启ACL权限</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#查看和设置文件ACL权限"><span class="nav-number">3.</span> <span class="nav-text">查看和设置文件ACL权限</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#mask掩码"><span class="nav-number">4.</span> <span class="nav-text">mask掩码</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">Erstellt mit  <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v6.7.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=6.7.0"></script>
+
+  <script src="/js/src/motion.js?v=6.7.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/affix.js?v=6.7.0"></script>
+
+  <script src="/js/src/schemes/pisces.js?v=6.7.0"></script>
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=6.7.0"></script>
+<script src="/js/src/post-details.js?v=6.7.0"></script>
+
+
+
+  
+
+
+  <script src="/js/src/bootstrap.js?v=6.7.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

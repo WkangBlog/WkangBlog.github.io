@@ -1,0 +1,1154 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=6.7.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.7.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.7.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.7.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.7.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '6.7.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="查看文件权限在Linux使用 ll -ah 可以看到以下命令。文件权限就存储在 drwxr-xr-x 这十个字符之中。">
+<meta name="keywords" content="Linux">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux文件权限">
+<meta property="og:url" content="http://yoursite.com/2017/10/03/posts/Linux-Linux文件权限/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="查看文件权限在Linux使用 ll -ah 可以看到以下命令。文件权限就存储在 drwxr-xr-x 这十个字符之中。">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-12-12T16:14:51.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Linux文件权限">
+<meta name="twitter:description" content="查看文件权限在Linux使用 ll -ah 可以看到以下命令。文件权限就存储在 drwxr-xr-x 这十个字符之中。">
+
+
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/10/03/posts/Linux-Linux文件权限/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>Linux文件权限 | Hexo</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hexo</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Startseite</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>Über</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>Tags</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>Kategorien</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archiv</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-commonweal">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/404/" rel="section"><i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br>Commonweal 404</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/03/posts/Linux-Linux文件权限/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Linux文件权限
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+
+              
+                
+              
+
+              <time title="Post created: 2017-10-03 11:24:32" itemprop="dateCreated datePublished" datetime="2017-10-03T11:24:32+08:00">2017-10-03</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Updated at: 2018-12-13 00:14:51" itemprop="dateModified" datetime="2018-12-13T00:14:51+08:00">2018-12-13</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">in</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="查看文件权限"><a href="#查看文件权限" class="headerlink" title="查看文件权限"></a>查看文件权限</h1><p>在Linux使用 <code>ll -ah</code> 可以看到以下命令。<br>文件权限就存储在 <code>drwxr-xr-x</code> 这十个字符之中。</p>
+<a id="more"></a>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">drwx------ 21 ahao ahao 4.0K 09-22 04:06 .</span><br><span class="line">drwxr-xr-x  4 root root 4.0K 09-21 19:26 ..</span><br><span class="line">-rw-------  1 ahao ahao 2.0K 09-22 02:59 .bash_history</span><br><span class="line">-rw-r--r--  1 ahao ahao   33 2009-01-22 .bash_logout</span><br><span class="line">-rw-r--r--  1 ahao ahao  176 2009-01-22 .bash_profile</span><br><span class="line">-rw-r--r--  1 ahao ahao  124 2009-01-22 .bashrc</span><br><span class="line">drwx------  2 ahao ahao 4.0K 09-21 19:29 .chewing</span><br><span class="line">drwxr-xr-x  2 ahao ahao 4.0K 09-21 19:42 Desktop</span><br></pre></td></tr></table></figure>
+<h1 id="权限分析"><a href="#权限分析" class="headerlink" title="权限分析"></a>权限分析</h1><p>Linux的文件权限分为<code>用户权限user</code> 、 <code>用户所在群组权限group</code> 、 <code>其他用户权限other</code>。<br>分别对应各个权限对这个文件的权限。<br>权限也分为 <code>读r</code> 、<code>写w</code> 、 <code>执行x</code> 三种。<br>所以<code>3*3=9</code>, 对应 <code>drwxr-xr-x</code> 后面九个字符。<br>最前面的字符, 则对应着文件的类型, <code>Linux</code>不是以文件后缀名来确定文件类型的。</p>
+<ol>
+<li>第1位是文件类型</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">文件类型</th>
+<th style="text-align:center">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">d</td>
+<td style="text-align:center">Directory、目录、文件夹</td>
+</tr>
+<tr>
+<td style="text-align:center">-</td>
+<td style="text-align:center">普通文件</td>
+</tr>
+<tr>
+<td style="text-align:center">l</td>
+<td style="text-align:center">软链接文件, Link快捷方式</td>
+</tr>
+<tr>
+<td style="text-align:center">b</td>
+<td style="text-align:center">区块(block)文件, 储存数据, 以提供系统随机存取的接口设备</td>
+</tr>
+<tr>
+<td style="text-align:center">c</td>
+<td style="text-align:center">字符(character)设备文件, 一些串行端口的接口设备, 例如键盘、鼠标(一次性读取装置)</td>
+</tr>
+<tr>
+<td style="text-align:center">s</td>
+<td style="text-align:center">数据接口文件(sockets), 通常被用在网络上的数据传输</td>
+</tr>
+<tr>
+<td style="text-align:center">f</td>
+<td style="text-align:center">数据输送文件(FIFO, pipe), 解决多个程序同时存取一个文件所造成的错误问题</td>
+</tr>
+</tbody>
+</table>
+<ol start="2">
+<li>后面九个字符, 三个为一组, 分别是 <code>用户权限user</code> 、 <code>用户所在群组权限group</code> 、 <code>其他用户权限other</code>。每一组有三个权限 <code>读r</code> 、<code>写w</code> 、 <code>执行x</code>, 如果没有权限, 则用 <code>-</code> 代替。</li>
+</ol>
+<p>比如 <code>drwxr-xr-x</code><br>说明这是一个目录, 文件所有者有读、写、执行的权限。<br>文件拥有者所在的群组有读、执行权限, 没有写的权限。<br>不在文件拥有者所在群组的用户具有读、执行权限, 没有写的权限。</p>
+<h1 id="普通权限"><a href="#普通权限" class="headerlink" title="普通权限"></a>普通权限</h1><h2 id="修改群组和拥有者"><a href="#修改群组和拥有者" class="headerlink" title="修改群组和拥有者"></a>修改群组和拥有者</h2><ul>
+<li>修改群组change group, <code>chgrp [选项] 群组名 文件名</code>, 群组必须在 <code>/etc/group</code> 中存在。 使用 <code>-R</code> 可以递归recursive修改。</li>
+<li>修改拥有者change owner, <code>chown [选项] 用户名 文件名</code>, 用户必须在 <code>/etc/passwd</code> 中存在。 使用 <code>-R</code> 可以递归recursive修改。</li>
+</ul>
+<h2 id="修改文件权限-数字形式"><a href="#修改文件权限-数字形式" class="headerlink" title="修改文件权限(数字形式)"></a>修改文件权限(数字形式)</h2><p>经常可以看到 <code>chmod [选项] 770 文件名</code>这种形式。 使用 <code>-R</code> 可以递归recursive修改。<br><code>Linux</code>将读、写、执行的权限赋予了权值。<code>读4</code> 、 <code>写2</code> 、 <code>执行1</code>。<br>为什么这样赋值, 这和二进制有关。<code>1</code>为<code>001</code>, <code>2</code>为<code>010</code>, <code>4</code>为<code>100</code>。组合后不会产生冲突。<br>比如说<code>drwxr-xr-x</code></p>
+<ol>
+<li><code>rwx</code> , 读写执行, <code>r+w+x=4+2+1=7</code></li>
+<li><code>r-x</code> , 读执行, <code>r+x=4+1=5</code></li>
+</ol>
+<p>所以修改权限的命令为 <code>chmod 755 文件名</code>。</p>
+<h2 id="修改文件权限-字符形式"><a href="#修改文件权限-字符形式" class="headerlink" title="修改文件权限(字符形式)"></a>修改文件权限(字符形式)</h2><p>有人说算术记不住, Linux还提供了字符的形式赋予权限。<br>范围有 <code>用户u</code>、<code>用户所在群组g</code>、<code>其他用户o</code>、<code>以上三个a</code>。<br>权限有 <code>读r</code> 、<code>写w</code> 、 <code>执行x</code>。<br>操作运算符有 <code>新增+</code>、<code>移除-</code> 、 <code>赋予=</code>。<br>比如，要设定 <code>drwx------</code> 为 <code>dr-xr-xr-x</code>。<br>则使用<code>chomd u-w,g+rx,o=rx 文件名</code></p>
+<h1 id="默认权限"><a href="#默认权限" class="headerlink" title="默认权限"></a>默认权限</h1><p>使用<code>umask</code>命令查看或修改默认权限掩码。默认权限掩码影响创建文件时赋予的默认权限。<br><code>umask</code>命令是临时修改重启失效, 永久修改在<code>/etc/profile</code>文件中修改。<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[ahao@localhost ~]$ <span class="built_in">umask</span> </span><br><span class="line">0002</span><br><span class="line">[ahao@localhost tmp]$ touch file1</span><br><span class="line">[ahao@localhost tmp]$ mkdir dir</span><br><span class="line">[ahao@localhost tmp]$ <span class="built_in">umask</span> 0022 &amp;&amp; touch file2</span><br><span class="line">[ahao@localhost tmp]$ ll</span><br><span class="line">总用量 2</span><br><span class="line">drwxrwxr-x. 2 ahao ahao   6 11月  4 16:17 dir</span><br><span class="line">-rw-rw-r--. 1 ahao ahao   0 11月  4 16:16 file1</span><br><span class="line">-rw-r--r--. 1 ahao ahao   0 11月  4 16:16 file2</span><br></pre></td></tr></table></figure></p>
+<p>这里的<code>0002</code>的第一位代表特殊权限(稍后介绍), 后三位代表读写执行的权限掩码。<br>先看后<code>3</code>位。</p>
+<ol>
+<li>文件默认权限最大为<code>666</code>, 也就是<code>rw-rw-rw-</code>, 不能被执行。出于安全性考虑。</li>
+<li>目录默认权限最大为<code>777</code>, 也就是<code>rwxrwxrwx</code>, 可以被执行, 也就是进入目录。</li>
+<li><code>umask</code>权限用来和最大权限换算成字母后进行相减运算, <code>-</code>位不允许再减。</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">比如文件默认最大权限为666, umask为022</span><br><span class="line">换算成字母, 666(rw-rw-rw-) 减去 022(----w--w-) 得到默认权限 644(rw-r--r--)</span><br><span class="line"></span><br><span class="line">比如文件默认最大权限为666, umask为033</span><br><span class="line">换算成字母, 666(rw-rw-rw-) 减去 033(---wx-wx-) 得到默认权限 644(rw-r--r--)</span><br></pre></td></tr></table></figure>
+<p>所以可以看到上面的运算, 不能简单的使用数字运算, 需要转为字母进行运算, 或者进行二进制的不借位减法。</p>
+<h1 id="特殊权限-不安全"><a href="#特殊权限-不安全" class="headerlink" title="特殊权限(不安全)"></a>特殊权限(不安全)</h1><p><strong>特殊权限尽量少修改! 不安全!</strong><br>给执行该文件的用户临时赋予另一个用户(组)的权限, 比如<code>root</code>权限。<br>特殊权限也有<code>421</code>的值, <code>4</code>为<code>SUID</code>, <code>2</code>为<code>SGID</code>, <code>1</code>为<code>SBIT</code>。</p>
+<h2 id="SUID-SET-USER-ID"><a href="#SUID-SET-USER-ID" class="headerlink" title="SUID(SET USER ID)"></a>SUID(SET USER ID)</h2><ol>
+<li><code>SUID</code>权限仅对二进制程序有效</li>
+<li>执行者对于该程序需要具有<code>x</code>的可执行权限</li>
+<li>本权限仅在执行该程序的过程中有效</li>
+<li>执行者将具有该程序<strong>所有者</strong>的权限</li>
+</ol>
+<p>比如<strong>设置密码</strong><br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[ahao@localhost tmp]$ ll /etc/shadow /usr/bin/passwd </span><br><span class="line">----------. 1 root root  1232 10月  6 05:47 /etc/shadow</span><br><span class="line">-rwsr-xr-x. 1 root root 27832 6月  10 2014 /usr/bin/passwd</span><br></pre></td></tr></table></figure></p>
+<p><code>/etc/shadow</code>文件只能被<code>root</code>用户修改。<br>但是执行<code>passwd</code>二进制文件的普通用户, 可以临时变成<code>passwd</code>拥有者<code>root</code>, 来修改<code>/etc/shadow</code>文件。<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1. 创建两个文件</span></span><br><span class="line">[ahao@localhost tmp]$ touch file1 file2</span><br><span class="line">[ahao@localhost tmp]$ ll</span><br><span class="line">总用量 0</span><br><span class="line">-rw-rw-r--. 1 ahao ahao 0 11月 21 21:13 file1</span><br><span class="line">-rw-rw-r--. 1 ahao ahao 0 11月 21 21:13 file2</span><br><span class="line"></span><br><span class="line"><span class="comment"># 2. 创建脚本打印文件, 添加SUID权限, 或者chmod u+s  file</span></span><br><span class="line">[ahao@localhost tmp]$ chmod 4755 file1 </span><br><span class="line">[ahao@localhost tmp]$ chmod 4655 file2</span><br><span class="line">[ahao@localhost tmp]$ ll</span><br><span class="line">总用量 0</span><br><span class="line">-rwsr-xr-x. 1 root root 0 11月  6 23:53 file1</span><br><span class="line">-rwSr-xr-x. 1 root root 0 11月  6 23:54 file2</span><br><span class="line"></span><br><span class="line"><span class="comment"># 3. 取消SUID权限, 或者chmod u-s  file</span></span><br><span class="line">[ahao@localhost tmp]$ chmod 0755 file1</span><br><span class="line">[ahao@localhost tmp]$ chmod 0655 file2</span><br></pre></td></tr></table></figure></p>
+<p>可以看到<code>x</code>执行权限的位置被<code>s</code>替换了。<br><code>4755</code>和<code>4655</code>的区别在于文件本身有没有<code>x</code>执行权限。<br>并且可以得知<code>s=S+x</code>。大写<code>S</code>是没有意义的。<br>只有小写<code>s</code>才能正确设定<code>SUID</code>权限。</p>
+<h2 id="SGID-SET-GROUP-ID"><a href="#SGID-SET-GROUP-ID" class="headerlink" title="SGID(SET GROUP ID)"></a>SGID(SET GROUP ID)</h2><p>和<code>SUID</code>一样, 区别在于用户会临时赋予文件所属用户组<code>group</code>的身份, 而不是用户<code>user</code>身份。</p>
+<ol>
+<li><code>SGID</code>对二进制程序有用</li>
+<li>程序执行者对该程序需具备<code>x</code>权限</li>
+<li>执行者在执行过程中会获得该程序<strong>用户组</strong>的支持</li>
+</ol>
+<p>比如<strong>locate命令</strong><br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]<span class="comment"># ll /usr/bin/locate /var/lib/mlocate/mlocate.db </span></span><br><span class="line">-rwx--s--x. 1 root slocate   40512 11月  5 2016 /usr/bin/locate</span><br><span class="line">-rw-r-----. 1 root slocate 3678432 11月 21 23:21 /var/lib/mlocate/mlocate.db</span><br></pre></td></tr></table></figure></p>
+<p><code>/var/lib/mlocate/mlocate.db</code>文件只能被<code>slocate</code>组查看。<br>但是借助<code>locate</code>命令, 普通用户可以临时变成<code>slocate</code><strong>(<code>s</code>在group权限的范围)</strong>来查看<code>/var/lib/mlocate/mlocate.db</code>文件。</p>
+<p>除了和<code>SUID</code>差不多的功能外。<br><code>SGID</code>对目录还有另一个功能。<br>就是<strong>进入该目录后</strong>, 用户的用户组会变成<strong>SGID对应的用户组</strong>。<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1. root用户创建test目录并赋予777权限</span></span><br><span class="line">[root@localhost ~]<span class="comment"># mkdir ~ahao/test</span></span><br><span class="line">[root@localhost ~]<span class="comment"># chmod 777 ~ahao/test</span></span><br><span class="line">[root@localhost ~]<span class="comment"># ll -d ~ahao/test</span></span><br><span class="line">drwxrwxrwx. 2 root root 6 11月 21 23:39 /home/ahao/<span class="built_in">test</span></span><br><span class="line">[root@localhost ~]<span class="comment"># exit</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 2. ahao用户在test目录下创建file1</span></span><br><span class="line">[ahao@localhost ~]$ touch ~ahao/<span class="built_in">test</span>/file1</span><br><span class="line">[ahao@localhost ~]$ ll ~ahao/<span class="built_in">test</span>/file1</span><br><span class="line">总用量 0</span><br><span class="line">-rw-rw-r--. 1 ahao ahao 0 11月 21 23:43 file1</span><br><span class="line"></span><br><span class="line"><span class="comment"># 3. root用户为test目录赋予SGID权限</span></span><br><span class="line">[ahao@localhost <span class="built_in">test</span>]$ su -c <span class="string">"chmod 2777 ~ahao/test"</span> root</span><br><span class="line">[ahao@localhost <span class="built_in">test</span>]$ ll -d ~ahao/<span class="built_in">test</span>/</span><br><span class="line">drwxrwsrwx. 2 root root 19 11月 21 23:43 /home/ahao/<span class="built_in">test</span>/</span><br><span class="line">      ^</span><br><span class="line"></span><br><span class="line"><span class="comment"># 4. ahao用户在赋予SGID的test目录下创建file2</span></span><br><span class="line">[ahao@localhost <span class="built_in">test</span>]$ touch file2</span><br><span class="line">[ahao@localhost <span class="built_in">test</span>]$ ll</span><br><span class="line">总用量 0</span><br><span class="line">-rw-rw-r--. 1 ahao ahao 0 11月 21 23:43 file1</span><br><span class="line">-rw-rw-r--. 1 ahao root 0 11月 21 23:45 file2</span><br></pre></td></tr></table></figure></p>
+<p>可以看到赋予<code>SGID</code>后, <code>ahao</code>用户创建的<code>file2</code>的所属组是<code>root</code>。</p>
+<h2 id="SBIT-sticky-bit"><a href="#SBIT-sticky-bit" class="headerlink" title="SBIT(sticky bit)"></a>SBIT(sticky bit)</h2><p>除了<code>user</code>的<code>SUID</code>、<code>group</code>的<code>SGID</code>外, 还有<code>other</code>的<code>sticky bit</code>。</p>
+<p><code>sticky bit</code>有两个要求</p>
+<ol>
+<li>只对目录有效。</li>
+<li>文件权限为<code>rwxrwxrwx</code>, 也就是<code>777</code>的权限。<br>比如<code>/tmp</code>目录。</li>
+</ol>
+<p>那么任何用户都能对目录下的文件进行读写执行操作, 这是很不安全的。<br>比如一个目录, 允许用户(<code>other</code>)创建文件(写权限), 拥有了写权限的用户也同样拥有了删除权限。<br>也就是说在<code>777</code>权限的目录下, A用户创建的文件可能被B用户删除。<br><code>sticky bit</code>就是为了解决这个问题。<br>赋予目录<code>sticky bit</code>后。</p>
+<ol>
+<li>只有<code>root</code>有删除权限。</li>
+<li>其他用户只能删除自己创建的文件。</li>
+<li>其他用户拥有写权限。</li>
+</ol>
+<p>下面举个例子<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1. root用户创建test目录并赋予777权限</span></span><br><span class="line">[root@localhost ~]<span class="comment"># mkdir ~ahao/test</span></span><br><span class="line">[root@localhost ~]<span class="comment"># chmod 777 ~ahao/test/</span></span><br><span class="line">[root@localhost ~]<span class="comment"># ll -d ~ahao/test/</span></span><br><span class="line">drwxrwxrwx. 2 root root 6 11月 22 23:23 /home/ahao/<span class="built_in">test</span>/</span><br><span class="line"></span><br><span class="line"><span class="comment"># 2. root用户创建file文件</span></span><br><span class="line">[root@localhost ~]<span class="comment"># echo "hello" &gt; ~ahao/test/file</span></span><br><span class="line">[root@localhost ~]<span class="comment"># ll ~ahao/test/</span></span><br><span class="line">总用量 4</span><br><span class="line">-rw-r--r--. 1 root root 6 11月 22 23:26 file</span><br><span class="line"></span><br><span class="line"><span class="comment"># 3. ahao用户删除file文件成功, 因为ahao用户对test目录有w写权限</span></span><br><span class="line">[ahao@localhost ~]$ rm -rf ~ahao/<span class="built_in">test</span>/file</span><br><span class="line"></span><br><span class="line"><span class="comment"># 4. root用户对test目录赋予sticky bit权限</span></span><br><span class="line">[root@localhost ~]<span class="comment"># chmod 0777 ~ahao/test/ # 取消sticky bit, 或chmod o-t ~ahao/test/</span></span><br><span class="line">[root@localhost ~]<span class="comment"># chmod 1777 ~ahao/test/ # 赋予sticky bit, 或chmod o+t ~ahao/test/</span></span><br><span class="line">[root@localhost ~]<span class="comment"># ll -d ~ahao/test/</span></span><br><span class="line">drwxrwxrwt. 2 root root 6 11月 22 23:27 /home/ahao/<span class="built_in">test</span>/</span><br><span class="line">         ^</span><br><span class="line"></span><br><span class="line"><span class="comment"># 5. root用户创建file文件</span></span><br><span class="line">[root@localhost ~]<span class="comment"># echo "hello" &gt; ~ahao/test/file</span></span><br><span class="line">[root@localhost ~]<span class="comment"># ll ~ahao/test/</span></span><br><span class="line">总用量 4</span><br><span class="line">-rw-r--r--. 1 root root 6 11月 22 23:32 file</span><br><span class="line"></span><br><span class="line"><span class="comment"># 6. ahao用户删除file文件失败, 即使ahao用户对test目录有w写权限</span></span><br><span class="line">[ahao@localhost ~]$ rm -rf ~ahao/<span class="built_in">test</span>/file</span><br><span class="line">rm: 无法删除<span class="string">"/home/ahao/test/file"</span>: 不允许的操作</span><br></pre></td></tr></table></figure></p>
+<h2 id="检查系统新增的SUID和SGID文件"><a href="#检查系统新增的SUID和SGID文件" class="headerlink" title="检查系统新增的SUID和SGID文件"></a>检查系统新增的SUID和SGID文件</h2><p>特殊权限太危险了, 当有人使用特殊权限, 需要及时的发现。<br>将以下脚本加入定时任务中, 即可及时发现新增的特殊权限文件。<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1. 先查找所有拥有SUID(4)和SGID(2)的文件</span></span><br><span class="line">find / -perm -4000 -o -perm -2000 &gt; /tmp/suid.list</span><br><span class="line"></span><br><span class="line"><span class="comment"># 2. 编写Shell脚本</span></span><br><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"><span class="comment"># 2.1 查找所有拥有SUID(4)或SGID(2)的文件, 并保存到临时文件suid.check中</span></span><br><span class="line">find / -perm -4000 -o -perm -2000 &gt; /tmp/suid.check</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> line <span class="keyword">in</span> $(cat /tmp/suid.check)</span><br><span class="line"><span class="keyword">do</span></span><br><span class="line">    <span class="comment"># 2.3 遍历临时文件suid.check中的记录, 和最初查找到的文件/tmp/suid.list进行比较。</span></span><br><span class="line">    grep <span class="variable">$line</span> /tmp/suid.list &gt; /dev/null</span><br><span class="line">    <span class="comment"># 2.4 不存在则写入log文件中</span></span><br><span class="line">    <span class="keyword">if</span> [ <span class="string">"$?"</span> != <span class="string">"0"</span> ];<span class="keyword">then</span></span><br><span class="line">        <span class="built_in">echo</span> <span class="string">"<span class="variable">$i</span> isn't in listfile! "</span> &gt;&gt; /tmp/suid_log_$(date +%F)</span><br><span class="line">    <span class="keyword">fi</span></span><br><span class="line"><span class="keyword">done</span></span><br><span class="line">rm -rf /tmp/suid.check</span><br><span class="line"><span class="built_in">echo</span> <span class="string">"/tmp/suid_log_<span class="variable">$(date +%F)</span>"</span></span><br><span class="line">cat /tmp/suid_log_$(date +%F)</span><br></pre></td></tr></table></figure></p>
+<h1 id="隐藏权限-chattr"><a href="#隐藏权限-chattr" class="headerlink" title="隐藏权限 chattr"></a>隐藏权限 chattr</h1><p><code>SBIT</code>只是防止删除的情况。<br>但是不排除被篡改文件的情况出现。</p>
+<p>如果用户对文件有<code>w</code>写权限, 即使加了<code>SBIT</code>权限, 用户依然可以把文件内容清空, 虽然没删除, 但也和删除的情况差不多了。</p>
+<p>如果对<strong>文件</strong>设置<code>i</code>属性, 那么不允许对文件进行删除、改名, 也不能添加和删除数据;<br>如果对<strong>目录</strong>设置<code>i</code>属性, 那么只能修改目录下文件的数据, 但不允许建立和删除文件。</p>
+<p>如果对<strong>文件</strong>设置<code>a</code>属性, 那么只能在文件中增加数据, 但是不能删除也不能修改数据;<br>如果对<strong>目录</strong>设置<code>a</code>属性, 那么只允许目录中建立和修改文件, 但是不允许删除。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1. 创建隐藏权限文件</span></span><br><span class="line">[root@localhost ~]<span class="comment"># touch ~ahao/test/file1</span></span><br><span class="line">[root@localhost ~]<span class="comment"># chattr +i ~ahao/test/file1 </span></span><br><span class="line">[root@localhost ~]<span class="comment"># lsattr ~ahao/test/file1 </span></span><br><span class="line">----i----------- /home/ahao/<span class="built_in">test</span>/file1</span><br><span class="line"></span><br><span class="line"><span class="comment"># 2. root也不能修改文件</span></span><br><span class="line">[root@localhost ~]<span class="comment"># echo "hello" &gt;&gt; ~ahao/test/file1 </span></span><br><span class="line">-bash: /home/ahao/<span class="built_in">test</span>/file1: 权限不够</span><br><span class="line"></span><br><span class="line"><span class="comment"># 3. 去掉隐藏权限</span></span><br><span class="line">[root@localhost ~]<span class="comment"># chattr -i ~ahao/test/file1</span></span><br></pre></td></tr></table></figure>
+<h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><ul>
+<li><a href="http://cn.linux.vbird.org/linux_basic/0210filepermission_2.php" target="_blank" rel="noopener">鸟哥的Linux私房菜 - 第六章、Linux 的文件权限与目录配置</a></li>
+</ul>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Linux/" rel="tag"># Linux</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/09/24/posts/编程杂谈-单例模式的最佳实践/" rel="next" title="单例模式的最佳实践">
+                <i class="fa fa-chevron-left"></i> 单例模式的最佳实践
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/10/03/posts/Java_Web-Environment详解/" rel="prev" title="Environment详解">
+                Environment详解 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Inhaltsverzeichnis
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Übersicht
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">John Doe</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">177</span>
+                    <span class="site-state-item-name">Artikel</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">20</span>
+                    <span class="site-state-item-name">Kategorien</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">78</span>
+                    <span class="site-state-item-name">Tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#查看文件权限"><span class="nav-number">1.</span> <span class="nav-text">查看文件权限</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#权限分析"><span class="nav-number">2.</span> <span class="nav-text">权限分析</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#普通权限"><span class="nav-number">3.</span> <span class="nav-text">普通权限</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#修改群组和拥有者"><span class="nav-number">3.1.</span> <span class="nav-text">修改群组和拥有者</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#修改文件权限-数字形式"><span class="nav-number">3.2.</span> <span class="nav-text">修改文件权限(数字形式)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#修改文件权限-字符形式"><span class="nav-number">3.3.</span> <span class="nav-text">修改文件权限(字符形式)</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#默认权限"><span class="nav-number">4.</span> <span class="nav-text">默认权限</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#特殊权限-不安全"><span class="nav-number">5.</span> <span class="nav-text">特殊权限(不安全)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#SUID-SET-USER-ID"><span class="nav-number">5.1.</span> <span class="nav-text">SUID(SET USER ID)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SGID-SET-GROUP-ID"><span class="nav-number">5.2.</span> <span class="nav-text">SGID(SET GROUP ID)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SBIT-sticky-bit"><span class="nav-number">5.3.</span> <span class="nav-text">SBIT(sticky bit)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#检查系统新增的SUID和SGID文件"><span class="nav-number">5.4.</span> <span class="nav-text">检查系统新增的SUID和SGID文件</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#隐藏权限-chattr"><span class="nav-number">6.</span> <span class="nav-text">隐藏权限 chattr</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考资料"><span class="nav-number">7.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">Erstellt mit  <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v6.7.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=6.7.0"></script>
+
+  <script src="/js/src/motion.js?v=6.7.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/affix.js?v=6.7.0"></script>
+
+  <script src="/js/src/schemes/pisces.js?v=6.7.0"></script>
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=6.7.0"></script>
+<script src="/js/src/post-details.js?v=6.7.0"></script>
+
+
+
+  
+
+
+  <script src="/js/src/bootstrap.js?v=6.7.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

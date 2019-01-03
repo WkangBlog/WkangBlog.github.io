@@ -1,0 +1,1076 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=6.7.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.7.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.7.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.7.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.7.0" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '6.7.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="前言原文: Encryption keys 这里有单独的关于加密文件的文档。 仓库Repository中的.travis.yml文件可以具有“加密值”，例如环境变量，通知设置和部署api的key。这些加密后的值可以由任何人添加，但只能由Travis CI解密读取。仓库Repository拥有者不保留任何加密key。 请注意，加密的环境变量不适用于pull requests。">
+<meta name="keywords" content="Travis-CI,翻译">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Travis-CI加密变量">
+<meta property="og:url" content="http://yoursite.com/2018/05/04/posts/编程杂谈-TravisCI加密变量/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="前言原文: Encryption keys 这里有单独的关于加密文件的文档。 仓库Repository中的.travis.yml文件可以具有“加密值”，例如环境变量，通知设置和部署api的key。这些加密后的值可以由任何人添加，但只能由Travis CI解密读取。仓库Repository拥有者不保留任何加密key。 请注意，加密的环境变量不适用于pull requests。">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-12-12T16:14:51.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Travis-CI加密变量">
+<meta name="twitter:description" content="前言原文: Encryption keys 这里有单独的关于加密文件的文档。 仓库Repository中的.travis.yml文件可以具有“加密值”，例如环境变量，通知设置和部署api的key。这些加密后的值可以由任何人添加，但只能由Travis CI解密读取。仓库Repository拥有者不保留任何加密key。 请注意，加密的环境变量不适用于pull requests。">
+
+
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/05/04/posts/编程杂谈-TravisCI加密变量/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>Travis-CI加密变量 | Hexo</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hexo</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Startseite</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>Über</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>Tags</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>Kategorien</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archiv</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-commonweal">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/404/" rel="section"><i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br>Commonweal 404</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/04/posts/编程杂谈-TravisCI加密变量/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Travis-CI加密变量
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+
+              
+                
+              
+
+              <time title="Post created: 2018-05-04 23:46:00" itemprop="dateCreated datePublished" datetime="2018-05-04T23:46:00+08:00">2018-05-04</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Updated at: 2018-12-13 00:14:51" itemprop="dateModified" datetime="2018-12-13T00:14:51+08:00">2018-12-13</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">in</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/编程杂谈/" itemprop="url" rel="index"><span itemprop="name">编程杂谈</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>原文: <a href="https://docs.travis-ci.com/user/encryption-keys/" target="_blank" rel="noopener">Encryption keys</a></p>
+<p><strong>这里有单独的关于<a href="https://docs.travis-ci.com/user/encrypting-files/" target="_blank" rel="noopener">加密文件</a>的文档。</strong></p>
+<p>仓库<code>Repository</code>中的<code>.travis.yml</code>文件可以具有“加密值”，例如<a href="https://docs.travis-ci.com/user/environment-variables/" target="_blank" rel="noopener">环境变量</a>，通知设置和部署<code>api</code>的<code>key</code>。这些加密后的值可以由任何人添加，但只能由<code>Travis CI</code>解密读取。仓库<code>Repository</code>拥有者不保留任何加密<code>key</code>。</p>
+<p><strong>请注意，加密的环境变量不适用于<a href="https://docs.travis-ci.com/user/pull-requests#Pull-Requests-and-Security-Restrictions" target="_blank" rel="noopener">pull requests</a>。</strong></p>
+<a id="more"></a>
+<h1 id="加密方案"><a href="#加密方案" class="headerlink" title="加密方案"></a>加密方案</h1><p><code>Travis CI</code> 使用<strong>非对称密码学</strong>. 对于每个注册过的仓库<code>Repository</code>, <code>Travis CI</code> 会生成一对<code>RSA</code>密钥对.<br><code>Travis CI</code> 拥有私钥, 但是可以让每个人都可以使用该公钥. </p>
+<p>例如, <code>GitHub</code>仓库<code>foo/bar</code> 的<strong>公钥</strong>可以在<code>https://api.travis-ci.org/repos/foo/bar/key</code>获取. 任何人都可以在任何仓库<code>Repository</code>运行<code>travis encrypt</code>, 使用<strong>公钥</strong>来加密参数.<br>因此, <code>foo/bar</code>的<strong>加密后的值</strong>可以被<code>Travis CI</code>使用<code>foo/bar</code>的<strong>私钥</strong>解密, 但这些<strong>加密后的值</strong>不能被任何人解密, 即使是加密这些值的人, 或者是仓库的拥有者, 任何人都不能解密.</p>
+<h1 id="用法"><a href="#用法" class="headerlink" title="用法"></a>用法</h1><p>使用公钥加密某些东西的最简单方法是使用<code>Travis CLI</code>工具。 这个工具是用<code>Ruby</code>编写的，并以<code>gem</code>的形式发布。 首先，你需要安装gem：<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 译者追加</span></span><br><span class="line">$ yum install -y gcc ruby ruby-devel <span class="comment"># 安装gcc和ruby环境</span></span><br><span class="line">$ gem sources --add https://gems.ruby-china.org/ --remove https://rubygems.org/ <span class="comment"># 改为国内gem源</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 原文</span></span><br><span class="line">$ gem install travis</span><br></pre></td></tr></table></figure></p>
+<p>然后, 你可以使用<code>encrypt</code>命令去加密数据( 这个例子假设你的工作目录<code>pwd</code>是在仓库<code>Repository</code>下面, 如果不是, 请追加<code>-r 用户名/项目名</code> )<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 译者追加</span></span><br><span class="line">$ travis encrypt 变量名=<span class="string">"待加密的值"</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 原文</span></span><br><span class="line">$ travis encrypt SOMEVAR=<span class="string">"secretvalue"</span></span><br></pre></td></tr></table></figure></p>
+<p>这将输出一个字符串，如下所示：<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 译者追加</span></span><br><span class="line">secure: <span class="string">"加密后的值"</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 原文</span></span><br><span class="line">secure: <span class="string">".... encrypted data ...."</span></span><br></pre></td></tr></table></figure></p>
+<p>现在你可以把它放在<code>.travis.yml</code>文件中.<br>你也可以跳过上面的步骤, 直接追加参数<code>--add</code>, 自动添加到<code>.travis.yml</code>文件中.<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ travis encrypt SOMEVAR=<span class="string">"secretvalue"</span> --add</span><br></pre></td></tr></table></figure></p>
+<p>请注意，环境变量的名称及其值都由<code>travis encrypt</code>生成的字符串进行编码。您必须将生成的<code>secure: &quot;.... encrypted data ....&quot;</code>添加到您的<code>.travis.yml</code>中。这样您的程序就可以使用环境变量<code>SOMEVAR</code>。</p>
+<p>您可以使用多个加密变量, 添加到您的<code>.travis.yml</code>文件中。它们都可用于您的程序。</p>
+<p>加密后的值可用于<a href="https://docs.travis-ci.com/user/environment-variables#Defining-Variables-in-.travis.yml" target="_blank" rel="noopener">secure environment variables in the build matrix</a> 和<a href="https://docs.travis-ci.com/user/notifications" target="_blank" rel="noopener">notifications</a>.</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 译者追加</span></span><br><span class="line"><span class="comment"># .travis.yml</span></span><br><span class="line"><span class="attr">env:</span></span><br><span class="line"><span class="attr">  global:</span></span><br><span class="line"><span class="attr">  - secure:</span> <span class="string">执行travis</span> <span class="string">encrypt得到的加密值</span></span><br><span class="line"><span class="attr">  - secure:</span> <span class="string">可以存在多个加密变量</span></span><br></pre></td></tr></table></figure>
+<h2 id="关于转义某些符号的注意事项"><a href="#关于转义某些符号的注意事项" class="headerlink" title="关于转义某些符号的注意事项"></a>关于转义某些符号的注意事项</h2><p>当你使用<code>travis encrypt</code>去加密敏感数据时, 请注意<code>travis encrypt</code>将作为<code>bash</code>语句处理.<br>这意味着你正在加密的数据不能出现<code>bash</code>语法错误.<br>不完整的数据会导致<code>bash</code>将错误<code>statement</code>语句存储到日志文件中, 这个日志文件会包含你的敏感数据. 并且是明文显示.</p>
+<p>所以你需要对<a href="(http://www.tldp.org/LDP/abs/html/special-chars.html">特殊字符</a>进行转义, 就像<code>{}</code>、<code>()</code>、<code>\</code>、<code>|</code>之类的特殊字符.</p>
+<p>例如，当您想要将字符串<code>6&amp;a(5!1Ab\</code>分配到<code>FOO</code>变量中，您需要执行：<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ travis encrypt <span class="string">"FOO=6\\&amp;a\\(5\\!1Ab\\\\"</span></span><br></pre></td></tr></table></figure></p>
+<p><code>travis</code>加密了字符串<code>FOO=6\&amp;a\(5\!1Ab\\</code>,然后<code>bash</code>使用加密后的字符串在构建环境中<code>evaluate</code>.<br>你也可以这样做, 这和上面的加密语句等价.<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ travis encrypt <span class="string">'FOO=6\&amp;a\(5\!1AB\\'</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="Notifications-例子"><a href="#Notifications-例子" class="headerlink" title="Notifications 例子"></a>Notifications 例子</h2><p>我们想要添加一个<code>campfire notifications</code>到<code>.travis.yml</code>文件中, 但是我们不想暴露我们的<code>API token</code>.<br>应该在<code>.travis.yml</code>中使用以下格式:<br><figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">notifications:</span></span><br><span class="line"><span class="attr">  campfire:</span></span><br><span class="line"><span class="attr">    rooms:</span> <span class="string">[subdomain]:[api</span> <span class="string">token]@[room</span> <span class="string">id]</span></span><br></pre></td></tr></table></figure></p>
+<p>举个例子, 比如<code>rooms: somedomain:abcxyz@14</code><br>我们加密这个字符串<code>somedomain:abcxyz@14</code><br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ travis encrypt somedomain:abcxyz@14</span><br></pre></td></tr></table></figure></p>
+<p>会输出以下内容<br><figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">Please</span> <span class="string">add</span> <span class="string">the</span> <span class="string">following</span> <span class="string">to</span> <span class="string">your</span> <span class="string">.travis.yml</span> <span class="attr">file:</span></span><br><span class="line"><span class="attr">  secure:</span> <span class="string">"ABC5OwLpwB7L6Ca...."</span></span><br></pre></td></tr></table></figure></p>
+<p>我们将其加入到<code>.travis.yml</code>文件中<br><figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">notifications:</span></span><br><span class="line"><span class="attr">  campfire:</span></span><br><span class="line"><span class="attr">    rooms:</span></span><br><span class="line"><span class="attr">      secure:</span> <span class="string">"ABC5OwLpwB7L6Ca...."</span></span><br></pre></td></tr></table></figure></p>
+<p>这样就完成了</p>
+<h2 id="详细讨论"><a href="#详细讨论" class="headerlink" title="详细讨论"></a>详细讨论</h2><p><strong>安全变量系统</strong>在配置<code>YAML</code>中采用<code>{ &#39;secure&#39; =&gt; &#39;encrypted string&#39; }</code>形式的值，并将其替换为解密后的字符串。</p>
+<p>所以会发生如下变化<br><figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">notifications:</span></span><br><span class="line"><span class="attr">  campfire:</span></span><br><span class="line"><span class="attr">    rooms:</span></span><br><span class="line"><span class="attr">      secure:</span> <span class="string">"加密后的值"</span></span><br><span class="line"><span class="comment"># 变成</span></span><br><span class="line"><span class="attr">notifications:</span></span><br><span class="line"><span class="attr">  campfire:</span></span><br><span class="line"><span class="attr">    rooms:</span> <span class="string">"解密后的值"</span></span><br></pre></td></tr></table></figure></p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">notifications:</span></span><br><span class="line"><span class="attr">  campfire:</span></span><br><span class="line"><span class="attr">    rooms:</span></span><br><span class="line"><span class="attr">      - secure:</span> <span class="string">"加密后的值"</span></span><br><span class="line"><span class="comment"># 变成</span></span><br><span class="line"><span class="attr">notifications:</span></span><br><span class="line"><span class="attr">  campfire:</span></span><br><span class="line"><span class="attr">    rooms:</span></span><br><span class="line"><span class="bullet">      -</span> <span class="string">"解密后的值"</span></span><br></pre></td></tr></table></figure>
+<p>如果是环境变量, 则会发生如下变化<br><figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">env:</span></span><br><span class="line"><span class="attr">  - secure:</span> <span class="string">"加密后的值"</span></span><br><span class="line"><span class="comment"># 变成</span></span><br><span class="line"><span class="attr">env:</span></span><br><span class="line"><span class="bullet">  -</span> <span class="string">"解密后的值"</span></span><br></pre></td></tr></table></figure></p>
+<h1 id="为您的仓库Repository获取公钥"><a href="#为您的仓库Repository获取公钥" class="headerlink" title="为您的仓库Repository获取公钥"></a>为您的仓库<code>Repository</code>获取公钥</h1><p>你可以通过<code>Travis API</code>获取公钥, 使用<code>/repos/用户名/仓库名/key</code>或者<code>/repos/:id/key</code>来获取公钥<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://api.travis-ci.org/repos/travis-ci/travis-ci/key</span><br></pre></td></tr></table></figure></p>
+<p>你也可以使用<code>travis pubkey</code>命令行获取公钥.<br>如果你不在项目文件夹下, 则使用<code>travis pubkey -r 用户名/项目名</code>获取指定项目的公钥.</p>
+<p>请注意, <code>Travis</code>在您的项目中使用<code>travis.slug</code>来确定端点是否存在（通过使用<code>git config --local travis.slug</code>来检查), 如果您重命名您的仓库或将您的仓库移动到另一个用户/组织，则可能需要对其进行更改。</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Travis-CI/" rel="tag"># Travis-CI</a>
+          
+            <a href="/tags/翻译/" rel="tag"># 翻译</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/05/04/posts/编程杂谈-TravisCI加密文件/" rel="next" title="Travis-CI加密文件">
+                <i class="fa fa-chevron-left"></i> Travis-CI加密文件
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/05/04/posts/JavaScript-缺少分号导致IIFE失效/" rel="prev" title="缺少分号导致IIFE失效">
+                缺少分号导致IIFE失效 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Inhaltsverzeichnis
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Übersicht
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">John Doe</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">177</span>
+                    <span class="site-state-item-name">Artikel</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">20</span>
+                    <span class="site-state-item-name">Kategorien</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">78</span>
+                    <span class="site-state-item-name">Tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#加密方案"><span class="nav-number">2.</span> <span class="nav-text">加密方案</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#用法"><span class="nav-number">3.</span> <span class="nav-text">用法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#关于转义某些符号的注意事项"><span class="nav-number">3.1.</span> <span class="nav-text">关于转义某些符号的注意事项</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Notifications-例子"><span class="nav-number">3.2.</span> <span class="nav-text">Notifications 例子</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#详细讨论"><span class="nav-number">3.3.</span> <span class="nav-text">详细讨论</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#为您的仓库Repository获取公钥"><span class="nav-number">4.</span> <span class="nav-text">为您的仓库Repository获取公钥</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">Erstellt mit  <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v6.7.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/src/utils.js?v=6.7.0"></script>
+
+  <script src="/js/src/motion.js?v=6.7.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/src/affix.js?v=6.7.0"></script>
+
+  <script src="/js/src/schemes/pisces.js?v=6.7.0"></script>
+
+
+
+  
+  <script src="/js/src/scrollspy.js?v=6.7.0"></script>
+<script src="/js/src/post-details.js?v=6.7.0"></script>
+
+
+
+  
+
+
+  <script src="/js/src/bootstrap.js?v=6.7.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
